@@ -170,8 +170,10 @@ helm-chart-build:
       echo "building ${DIR} chart"
       echo "app version ${APP_VER}"
       echo "helm version ${HELM_VER}"
+      echo "helm dependency build ${DIR}"
       helm dependency build "${DIR}"/
-      helm package "${DIR}"/ --destination ./package --app-version ${APP_VER} --version ${HELM_VER}
+      echo "helm package '${DIR}/' --destination ./package --app-version ${APP_VER} --version ${HELM_VER}"
+      helm package "${DIR}/" --destination ./package --app-version ${APP_VER} --version ${HELM_VER}
     done
   artifacts:
     paths:
