@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "grocy.fullname" . }}
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- range .Values.ports }}
+    - protocol: {{ .protocol }}
+      port: {{ .servicePort }} # services in-cluster port
+      targetPort: {{ .name }} # port of container/ pod
+      name: {{ .name }}
+    {{- end }}
+  selector:
+    {{- include "grocy.selectorLabels" . | nindent 4 }}
