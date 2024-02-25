@@ -1,0 +1,13 @@
+helm-chart-lint:
+  stage: lint
+  image:
+    name: alpine/helm:latest
+    entrypoint: ["/bin/sh", "-c"]
+  script:
+    - |
+      for dir in ${CHARTS_DIR}/*/
+      do
+        dir=${dir%*/} # removes trailing "/"
+        echo "linting ${dir} chart"
+        helm lint "${dir}"/
+      done
