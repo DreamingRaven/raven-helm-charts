@@ -29,6 +29,9 @@ variables:
   rules:
     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_COMMIT_TAG == "" && $CI_PIPELINE_SOURCE == "push"
 
+include:
+- local: /.gitlab/helm/helm.yaml
+
 ## for every branch build container artifact for x86
 #docker_build_branch:
 #  stage: build
@@ -134,72 +137,6 @@ variables:
 #  needs:
 #  - job: helm-chart-build
 #    artifacts: true
-
-helm-chart-lint:
-  stage: lint
-  image:
-    name: alpine/helm:latest
-    entrypoint: ["/bin/sh", "-c"]
-  script:
-    - |
-      for dir in ${CHARTS_DIR}/*/
-      do
-        dir=${dir%*/} # removes trailing "/"
-        echo "linting ${dir} chart"
-        helm lint "${dir}"/
-      done
-
-helm-chart-build:
-  stage: build
-  image:
-    name: alpine/helm:latest
-    entrypoint: ["/bin/sh", "-c"]
-  script:
-  - apk add --no-cache grep yq
-  - git fetch --unshallow || echo "unshallow failed"
-  - helm plugin install https://github.com/chartmuseum/helm-push.git
-  - mkdir -p ./package
-  - |
-    for dir in ${CHARTS_DIR}/*/
-    do
-      DIR=${dir%*/} # removes trailing "/"
-      #APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
-      APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"')
-      HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
-      #HELM_VER=$(git describe --abbrev=0 | tr -d '"' | tr -d 'v')
-      echo "building ${DIR} chart (app: ${APP_VER}, chart: ${HELM_VER})"
-      echo "helm dependency build ${DIR}"
-      helm dependency build "${DIR}"/
-      echo "helm package '${DIR}/' --destination ./package --app-version ${APP_VER} --version=${HELM_VER}"
-      helm package "${DIR}/" --destination ./package --app-version ${APP_VER} --version=${HELM_VER}
-    done
-  artifacts:
-    paths:
-    - package/
-
-# https://docs.gitlab.com/ee/user/packages/helm_repository/index.html#use-cicd-to-publish-a-helm-package
-helm-chart-push:
-  stage: deploy
-  only:
-  - tags
-  image:
-    name: curlimages/curl:latest
-    entrypoint: ["/bin/sh", "-c"]
-  script:
-  - cd package
-  # - export PACKAGE_FILE="$(ls)"
-  - export HELM_PACKAGE_REGISTRY="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/${CHANNEL}/charts"
-  - |
-    for file in *
-    do
-      echo "exporting ${file}"
-      curl --request POST --fail-with-body --user gitlab-ci-token:${CI_JOB_TOKEN} --form "chart=@${file}" "${HELM_PACKAGE_REGISTRY}"
-    done
-  - echo "published to ${HELM_PACKAGE_REGISTRY}"
-  needs:
-  - job: helm-chart-build
-    artifacts: true
-
 
 #pages:
 #  stage: deploy
