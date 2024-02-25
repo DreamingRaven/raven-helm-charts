@@ -167,9 +167,7 @@ helm-chart-build:
       APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"')
       HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
       #HELM_VER=$(git describe --abbrev=0 | tr -d '"' | tr -d 'v')
-      echo "building ${DIR} chart"
-      echo "app version ${APP_VER}"
-      echo "helm version ${HELM_VER}"
+      echo "building ${DIR} chart (app: ${APP_VER}, chart: ${HELM_VER})"
       echo "helm dependency build ${DIR}"
       helm dependency build "${DIR}"/
       echo "helm package '${DIR}/' --destination ./package --app-version ${APP_VER} --version=${HELM_VER}"
