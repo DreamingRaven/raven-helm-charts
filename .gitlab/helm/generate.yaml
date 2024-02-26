@@ -4,11 +4,11 @@ generate-helm-readme:
     name: alpine/helm:latest
     entrypoint: ["/bin/sh", "-c"]
   script:
-  - apk add --no-cache --update grep yq npm
+  - apk add --no-cache --update grep yq go
   - git fetch --unshallow || echo "unshallow failed"
-  - git clone --depth 1 --branch 2.6.0 https://github.com/bitnami/readme-generator-for-helm.git
-  - npm install -g commander
-  - npm install -g ./readme-generator-for-helm
+  - go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.0
+  - export PATH=$PATH:$(go env GOPATH)/bin
+  - helm-docs
   - |
     for dir in ${CHARTS_DIR}/*/
     do
@@ -18,6 +18,4 @@ generate-helm-readme:
       HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
       #HELM_VER=$(git describe --abbrev=0 | tr -d '"' | tr -d 'v')
       echo "generating ${DIR} chart README.md parameters"
-      echo 'readme-generator --values ${DIR}/values.yaml --readme ${DIR}/README.md --schema "/tmp/schema.json"'
-      readme-generator --values ${DIR}/values.yaml --readme ${DIR}/README.md --schema "/tmp/schema.json"
     done
