@@ -8,11 +8,7 @@ generate-helm-readme:
   - git fetch --unshallow || echo "unshallow failed"
   - git clone https://github.com/bitnami/readme-generator-for-helm.git
   - cd readme-generator-for-helm
-  - npm install
-  - npm install -g pkg
-  - mkdir -p build
-  - pkg . -o build/readme-generator-for-helm
-  - export PATH=$PATH:$(pwd)/build
+  - npm install -g ./readme-generator-for-helm
   - |
     for dir in ${CHARTS_DIR}/*/
     do
