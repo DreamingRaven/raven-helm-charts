@@ -6,7 +6,8 @@ generate-helm-readme:
   script:
   - apk add --no-cache --update grep yq npm
   - git fetch --unshallow || echo "unshallow failed"
-  - git clone https://github.com/bitnami/readme-generator-for-helm.git
+  - git clone --depth 1 --branch 2.6.0 https://github.com/bitnami/readme-generator-for-helm.git
+  - npm install -g commander
   - npm install -g ./readme-generator-for-helm
   - |
     for dir in ${CHARTS_DIR}/*/
