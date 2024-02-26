@@ -32,4 +32,5 @@ variables:
 include:
 - local: /.gitlab/helm/lint.yaml
 - local: /.gitlab/helm/build.yaml
-- local: /.gitlab/helm/push.yaml
+- local: /.gitlab/helm/generate.yaml
+- local: /.gitlab/helm/deploy.yaml
