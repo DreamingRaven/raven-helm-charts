@@ -1,0 +1,23 @@
+generate-helm-readme:
+  stage: build
+  image:
+    name: alpine/helm:latest
+    entrypoint: ["/bin/sh", "-c"]
+  script:
+  - apk add --no-cache --update grep yq npm
+  - git fetch --unshallow || echo "unshallow failed"
+  - git clone https://github.com/bitnami/readme-generator-for-helm.git
+  - npm install ./readme-generator-for-helm
+  - mkdir -p ./package
+  - |
+    for dir in ${CHARTS_DIR}/*/
+    do
+      DIR=${dir%*/} # removes trailing "/"
+      #APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
+      APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"')
+      HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
+      #HELM_VER=$(git describe --abbrev=0 | tr -d '"' | tr -d 'v')
+      echo "generating ${DIR} chart README.md parameters"
+      echo 'readme-generator --values ${DIR}/values.yaml --readme ${DIR}/README.md --schema "/tmp/schema.json"'
+      readme-generator --values ${DIR}/values.yaml --readme ${DIR}/README.md --schema "/tmp/schema.json"
+    done
