@@ -1,10 +1,14 @@
 stages:
+  - .pre
   - lint
   - build
   - test
   - deploy
 
 variables:
+  PRE_COMMIT_DEDUPLICATE_MR_AND_BRANCH: false
+  PRE_COMMIT_AUTO_FIX_BRANCH_ONLY: true
+
   CHANNEL: "stable"
   CHARTS_DIR: "charts"
 
@@ -34,3 +38,4 @@ include:
 - local: /.gitlab/helm/build.yaml
 - local: /.gitlab/helm/generate.yaml
 - local: /.gitlab/helm/deploy.yaml
+#- local: /.gitlab/commit/pre-commit.yaml
