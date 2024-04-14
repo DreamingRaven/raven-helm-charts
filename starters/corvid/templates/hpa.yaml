@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "corvid.fullname" . }}
+  name: {{ include "<CHARTNAME>.fullname" . }}
   labels:
-    {{- include "corvid.labels" . | nindent 4 }}
+    {{- include "<CHARTNAME>.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "corvid.fullname" . }}
+    name: {{ include "<CHARTNAME>.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
