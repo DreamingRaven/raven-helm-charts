@@ -11,6 +11,12 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+persistence:
+  enabled: true
+  size: 8Gi
+  accessModes:
+  - ReadWriteOnce
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
