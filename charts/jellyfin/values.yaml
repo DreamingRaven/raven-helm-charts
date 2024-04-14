@@ -9,7 +9,7 @@ image:
   repository: linuxserver/jellyfin
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "10.8.13"
 
 persistence:
   enabled: true
