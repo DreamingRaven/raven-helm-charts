@@ -1,3 +1,4 @@
+{{- $svcPort := (first .Values.ports).servicePort }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -11,5 +12,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "<CHARTNAME>.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "<CHARTNAME>.fullname" . }}:{{ $svcPort }}']
   restartPolicy: Never
