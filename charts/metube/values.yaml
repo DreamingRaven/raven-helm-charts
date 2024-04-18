@@ -36,7 +36,10 @@ env:
   value: "dark"
 - name: DOWNLOAD_DIR
   value: "/downloads"
-
+- name: UID
+  value: "1001"
+- name: GID
+  value: "1001"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -70,7 +73,7 @@ service:
 ## @param ports [array] Ports to expose, tie to the service, and ingress
 ports:
 - name: http
-  containerPort: 8080
+  containerPort: 8081
   servicePort: 80
   protocol: TCP
 
@@ -121,15 +124,15 @@ autoscaling:
 # Additional volumes on the output Deployment definition.
 volumes:
 - name: data
-  mountPath: /downloads
-  subPath: media
-  readOnly: false
+  persistentVolumeClaim:
+    claimName: metube # change me to the name of pvc
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- name: data
+  mountPath: /downloads
+  subPath: downloads
+  readOnly: false
 
 nodeSelector: {}
 
