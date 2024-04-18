@@ -17,6 +17,9 @@ persistence:
   accessModes:
   - ReadWriteOnce
 
+command:
+args:
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
