@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  registry: docker.io
-  repository: corvid/corvid
+  registry: registry.gitlab.com
+  repository: georgeraven/raven-helm-charts
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -35,7 +35,7 @@ secrets: []
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
 env:
-- name: corvid_EXAMPLE_VARIABLE
+- name: CORVID_EXAMPLE_VARIABLE
   value: "false"
 
 
