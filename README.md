@@ -9,7 +9,7 @@ This repository aims to provide the following:
 - A consistent `values.yaml` for each chart that is familiar to many users but also self-consistent when breaking any convention that limits functionality.
 - Side-loadable secrets and configuration for each chart to make it easier to integrate with GitOps.
 
-Please note this is still a work in progress as I am currently collating my various charts together into this one repository and integrating them nicely.
+Please note this is still a work in progress as I am currently collating my various charts together into this one repository and integrating them nicely. This includes, for the sake of continued mantenance, integrating all charts into a common "corvid" base library chart. So that updates can be uniformly integrated with minimum repition.
 
 ## Quick Start
 
