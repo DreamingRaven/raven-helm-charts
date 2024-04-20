@@ -2,9 +2,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "common.fullname" . }}
+  name: {{ include "corvid.fullname" . }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "corvid.labels" . | nindent 4 }}
 spec:
   accessModes:
   {{- range .Values.persistence.accessModes }}
