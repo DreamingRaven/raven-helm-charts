@@ -12,8 +12,12 @@ helm-chart-build:
     for dir in ${CHARTS_DIR}/*/
     do
       DIR=${dir%*/} # removes trailing "/"
-      #APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
       APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"')
+      if [ -n "${APP_VER}" ]; then
+        APP_VER=${APP_VER}
+      else
+        APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
+      fi
       HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
       #HELM_VER=$(git describe --abbrev=0 | tr -d '"' | tr -d 'v')
       echo "building ${DIR} chart (app: ${APP_VER}, chart: ${HELM_VER})"
