@@ -14,8 +14,10 @@ helm-chart-build:
       DIR=${dir%*/} # removes trailing "/"
       APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"')
       if [ -n "${APP_VER}" ]; then
+        echo "appVersion found in ${DIR}/values.yaml"
         APP_VER=${APP_VER}
       else
+        echo "appVersion falling back to ${DIR}/Chart.yaml"
         APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
       fi
       HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
