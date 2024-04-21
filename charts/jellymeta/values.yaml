@@ -1,0 +1,93 @@
+jellyfin:
+  enabled: true
+
+  persistence:
+    enabled: true
+    size: 8Gi
+    accessModes:
+    - ReadWriteMany # Note this is to allow filebrowser access
+
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: jellymeta-jellyfin # changed to meta charts pvc name
+
+  volumeMounts:
+  # media dirs
+  - name: data
+    mountPath: /data
+    subPath: media
+    readOnly: true
+  # config dir
+  - name: data
+    mountPath: /config
+    subPath: config
+    readOnly: false
+
+metube:
+  enabled: true
+
+  persistence:
+    enabled: true
+    size: 8Gi
+    accessModes:
+    - ReadWriteMany # Note this is to allow filebrowser access
+
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: jellymeta-metube # changed to meta charts pvc name
+
+  volumeMounts:
+  - name: data
+    mountPath: /downloads
+    subPath: downloads
+    readOnly: false
+
+filebrowser:
+  enabled: true
+
+  persistence:
+    enabled: true
+    size: 8Gi
+    accessModes:
+    - ReadWriteOnce
+
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: jellymeta-filebrowser # changed to meta charts pvc name
+  - name: config
+    configMap:
+      name: filebrowser
+      items:
+      - key: .filebrowser.json
+        path: .filebrowser.json
+  - name: jellyfin
+    persistentVolumeClaim:
+      claimName: jellymeta-jellyfin # changed to meta charts pvc name
+  - name: metube
+    persistentVolumeClaim:
+      claimName: jellymeta-metube # changed to meta charts pvc name
+
+  volumeMounts:
+  - name: data
+    mountPath: /database
+    subPath: database
+    readOnly: false
+  - name: data
+    mountPath: /srv
+    subPath: files
+    readOnly: false
+  - name: config
+    mountPath: /.filebrowser.json
+    subPath: .filebrowser.json
+    readOnly: false
+  - name: jellyfin
+    mountPath: /srv/jellyfin
+    subPath: media
+    readOnly: false
+  - name: metube
+    mountPath: /srv/metube
+    subPath: downloads
+    readOnly: false
