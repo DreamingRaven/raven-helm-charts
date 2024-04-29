@@ -1,3 +1,4 @@
+{{- define "corvid.ing.tpl" -}}
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "corvid.fullname" . -}}
 {{- $svcPort := (first .Values.ports).name }}
@@ -59,3 +60,7 @@ spec:
           {{- end }}
     {{- end }}
 {{- end }}
+{{- end -}}
+{{- define "corvid.ing" -}}
+{{- include "corvid.util.merge" (append . "corvid.ing.tpl") -}}
+{{- end -}}

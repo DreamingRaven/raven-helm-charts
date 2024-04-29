@@ -1,0 +1,3 @@
+{{- include "corvid.ing" (list . "corvid-test.ing") -}}
+{{- define "corvid-test.ing" -}}
+{{- end -}}
