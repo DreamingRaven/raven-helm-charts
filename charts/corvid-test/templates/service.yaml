@@ -1,3 +1,3 @@
-{{- include "corvid.service" (list . "corvid-test.service") -}}
-{{- define "corvid-test.service" -}}
+{{- include "corvid.svc" (list . "corvid-test.svc") -}}
+{{- define "corvid-test.svc" -}}
 {{- end -}}
