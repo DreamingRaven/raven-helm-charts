@@ -1,0 +1,3 @@
+{{- include "corvid.hpa" (list . "corvid-test.hpa") -}}
+{{- define "corvid-test.hpa" -}}
+{{- end -}}
