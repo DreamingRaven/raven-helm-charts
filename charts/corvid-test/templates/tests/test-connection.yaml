@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "corvid-test.testConnectivity") -}}
+{{- define "corvid-test.testConnectivity" -}}
+{{- end -}}

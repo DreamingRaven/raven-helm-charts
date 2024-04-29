@@ -1,3 +1,4 @@
+{{- define "corvid.testConnectivity.tpl" -}}
 {{- $svcPort := (first .Values.ports).servicePort }}
 apiVersion: v1
 kind: Pod
@@ -14,3 +15,7 @@ spec:
       command: ['wget']
       args: ['{{ include "corvid.fullname" . }}:{{ $svcPort }}']
   restartPolicy: Never
+{{- end -}}
+{{- define "corvid.testConnectivity" -}}
+{{- include "corvid.util.merge" (append . "corvid.testConnectivity.tpl") -}}
+{{- end -}}
