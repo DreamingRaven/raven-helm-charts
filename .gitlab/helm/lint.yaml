@@ -9,5 +9,6 @@ helm-chart-lint:
       do
         dir=${dir%*/} # removes trailing "/"
         echo "linting ${dir} chart"
+        helm dependency build "${dir}"
         helm lint "${dir}"/
       done
