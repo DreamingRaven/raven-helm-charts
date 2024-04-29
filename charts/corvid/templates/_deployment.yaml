@@ -1,3 +1,4 @@
+{{- define "corvid.deploy.tpl" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -89,3 +90,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end -}}
+{{- define "corvid.deploy" -}}
+{{- include "corvid.util.merge" (append . "corvid.deploy.tpl") -}}
+{{- end -}}

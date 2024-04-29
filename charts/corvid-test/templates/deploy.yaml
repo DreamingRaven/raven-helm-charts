@@ -1,0 +1,3 @@
+{{- include "corvid.deploy" (list . "corvid-test.deploy") -}}
+{{- define "corvid-test.deploy" -}}
+{{- end -}}
