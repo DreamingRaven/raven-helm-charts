@@ -1,3 +1,4 @@
+{{- define "corvid.service.tpl" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -15,3 +16,7 @@ spec:
   {{- end }}
   selector:
     {{- include "corvid.selectorLabels" . | nindent 4 }}
+{{- end -}}
+{{- define "corvid.service" -}}
+{{- include "corvid.util.merge" (append . "corvid.service.tpl") -}}
+{{- end -}}

@@ -1,0 +1,3 @@
+{{- include "corvid.service" (list . "corvid-test.service") -}}
+{{- define "corvid-test.service" -}}
+{{- end -}}
