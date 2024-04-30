@@ -1,14 +1,3 @@
-{{- if .Values.persistence.enabled }}
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: {{ include "foundryvtt.fullname" . }}
-spec:
-  accessModes:
-  {{- range .Values.persistence.accessModes }}
-    - {{ . | quote }}
-  {{- end }}
-  resources:
-    requests:
-      storage: {{ .Values.persistence.size | quote }}
-{{- end }}
+{{- include "corvid.pvc" (list . "corvid-test.pvc") -}}
+{{- define "corvid-test.pvc" -}}
+{{- end -}}
