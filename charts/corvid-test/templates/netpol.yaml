@@ -1,0 +1,3 @@
+{{- include "corvid.netpol" (list . "corvid-test.netpol") -}}
+{{- define "corvid-test.netpol" -}}
+{{- end -}}

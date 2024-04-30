@@ -137,3 +137,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+netpol:
+  enabled: true
