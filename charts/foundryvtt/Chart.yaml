@@ -27,4 +27,9 @@ maintainers:
 - name: GeorgeRaven
   url: https://gitlab.com/GeorgeRaven
 
-icon: https://www.planarally.io/logos/pa-logo.svg
+icon: https://foundryvtt.com/static/assets/icons/fvtt.png
+
+dependencies:
+- name: corvid
+  version: 0.2.0
+  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
