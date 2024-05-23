@@ -1,0 +1,47 @@
+{{- define "corvid.container.tpl" -}}
+name: {{ .Chart.Name }}
+securityContext:
+  {{- toYaml .Values.securityContext | nindent 2 }}
+image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{- with .Values.command }}
+command:
+{{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.args }}
+args:
+{{- toYaml . | nindent 2 }}
+{{- end }}
+ports:
+  {{- range .Values.ports }}
+  - name: {{ .name }}
+    containerPort: {{ .containerPort }}
+    protocol: {{ .protocol }}
+  {{- end }}
+env:
+{{- .Values.env | toYaml | nindent 2 }}
+{{- range .Values.secrets }}
+{{- $secretContext := . }}
+{{- range .lookup }}
+- name: {{ .env }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretContext.name }}
+      key: {{ .key }}
+      optional: false
+{{- end }}
+{{- end }}
+livenessProbe:
+  {{- toYaml .Values.livenessProbe | nindent 2 }}
+readinessProbe:
+  {{- toYaml .Values.readinessProbe | nindent 2 }}
+resources:
+  {{- toYaml .Values.resources | nindent 2 }}
+{{- with .Values.volumeMounts }}
+volumeMounts:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end -}}
+{{- define "corvid.container" -}}
+{{- include "corvid.util.merge" (append . "corvid.container.tpl") -}}
+{{- end -}}

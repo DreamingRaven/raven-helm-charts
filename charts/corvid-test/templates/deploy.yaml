@@ -1,3 +1,11 @@
-{{- include "corvid.deploy" (list . "corvid-test.deploy") -}}
-{{- define "corvid-test.deploy" -}}
+{{- define "corvid-test-container" -}}
+name: OVERRIDE # example override
 {{- end -}}
+{{- define "corvid-test.deploy" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "corvid.container" (list . "corvid-test-container") | indent 8 | trim }}
+{{- end -}}
+{{- include "corvid.deploy" (list . "corvid-test.deploy") -}}
