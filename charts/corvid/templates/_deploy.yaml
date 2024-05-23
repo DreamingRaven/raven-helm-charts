@@ -32,48 +32,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.command }}
-          command:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.args }}
-          args:
-          {{- toYaml . | nindent 12 }}
-          {{- end }}
-          ports:
-            {{- range .Values.ports }}
-            - name: {{ .name }}
-              containerPort: {{ .containerPort }}
-              protocol: {{ .protocol }}
-            {{- end }}
-          env:
-          {{- .Values.env | toYaml | nindent 10 }}
-          {{- range .Values.secrets }}
-          {{- $secretContext := . }}
-          {{- range .lookup }}
-          - name: {{ .env }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ $secretContext.name }}
-                key: {{ .key }}
-                optional: false
-          {{- end }}
-          {{- end }}
-          livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+      - {{ include "corvid.container.tpl" . | indent 8 | trim }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
