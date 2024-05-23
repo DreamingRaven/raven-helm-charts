@@ -13,7 +13,7 @@ image:
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-  tag: "11.315.1"
+  tag: "12.324.0"
 
 ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
 secrets:
