@@ -179,7 +179,7 @@ barcode:
     ## @param image.pullPolicy [string] Image pull policy
     pullPolicy: IfNotPresent
     ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-    tag: "v1.8.1.7"
+    tag: "v1.8.1.8"
 
   ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
   secrets: []
