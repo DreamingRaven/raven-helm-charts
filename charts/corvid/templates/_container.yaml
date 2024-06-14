@@ -18,9 +18,14 @@ ports:
     containerPort: {{ .containerPort }}
     protocol: {{ .protocol }}
   {{- end }}
+{{- with .Values.envFrom }}
+envFrom:
+{{- toYaml . | nindent 2 }}
+{{- end }}
 env:
 {{- .Values.env | toYaml | nindent 2 }}
-{{- range .Values.secrets }}
+{{- with .Values.secrets }}
+{{- range . }}
 {{- $secretContext := . }}
 {{- range .lookup }}
   - name: {{ .env }}
@@ -29,6 +34,7 @@ env:
         name: {{ $secretContext.name }}
         key: {{ .key }}
         optional: false
+{{- end }}
 {{- end }}
 {{- end }}
 livenessProbe:

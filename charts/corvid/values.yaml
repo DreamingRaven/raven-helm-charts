@@ -38,6 +38,15 @@ env:
 - name: CORVID_EXAMPLE_VARIABLE
   value: "false"
 
+## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+envFrom:
+- configMapRef:
+    name: someConfigMap
+    optional: false
+- secretRef:
+    name: someSecret
+    optional: false
+
 
 serviceAccount:
   # Specifies whether a service account should be created

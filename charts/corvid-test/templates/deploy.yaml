@@ -1,5 +1,5 @@
 {{- define "corvid-test-container" -}}
-name: OVERRIDE # example override
+# name: OVERRIDE # example override
 {{- end -}}
 {{- define "corvid-test.deploy" -}}
 spec:
