@@ -23,12 +23,12 @@ env:
 {{- range .Values.secrets }}
 {{- $secretContext := . }}
 {{- range .lookup }}
-- name: {{ .env }}
-  valueFrom:
-    secretKeyRef:
-      name: {{ $secretContext.name }}
-      key: {{ .key }}
-      optional: false
+  - name: {{ .env }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ $secretContext.name }}
+        key: {{ .key }}
+        optional: false
 {{- end }}
 {{- end }}
 livenessProbe:

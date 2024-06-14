@@ -32,13 +32,13 @@ nameOverride: ""
 fullnameOverride: ""
 
 ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
-secrets: []
-#- name: corvid-test
-#  lookup:
-#  - key: corvid-testUsername
-#    env: corvid-test_USERNAME
-#  - key: corvid-testPassword
-#    env: corvid-test_PASSWORD
+secrets:
+- name: corvid-test
+  lookup:
+  - key: corvid-testUsername
+    env: corvid-test_USERNAME
+  - key: corvid-testPassword
+    env: corvid-test_PASSWORD
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
 env:
