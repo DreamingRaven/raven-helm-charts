@@ -1,0 +1,3 @@
+{{- define "corvid-test.job" -}}
+{{- end -}}
+{{- include "corvid.job" (list . "corvid-test.job") -}}

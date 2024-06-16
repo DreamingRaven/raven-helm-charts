@@ -1,0 +1,26 @@
+{{- define "corvid.job.tpl" -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "corvid.fullname" . }}
+  labels:
+    {{- include "corvid.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "corvid.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+      - {{ include "corvid.container.tpl" . | indent 8 | trim }}
+{{- end -}}
+{{- define "corvid.job" -}}
+{{- include "corvid.util.merge" (append . "corvid.job.tpl") -}}
+{{- end -}}
