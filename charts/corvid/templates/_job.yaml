@@ -20,6 +20,7 @@ spec:
     spec:
       containers:
       - {{ include "corvid.container.tpl" . | indent 8 | trim }}
+      restartPolicy: Never
 {{- end -}}
 {{- define "corvid.job" -}}
 {{- include "corvid.util.merge" (append . "corvid.job.tpl") -}}

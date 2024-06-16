@@ -24,6 +24,8 @@ persistence:
 command:
 args:
 
+restartPolicy: Always
+
 ## @param imagePullSecrets [array] Image pull secrets
 imagePullSecrets: []
 ## @param nameOverride [string] Partial name override
