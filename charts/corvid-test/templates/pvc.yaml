@@ -1,3 +1,5 @@
+{{- if .Values.persistence.enabled }}
 {{- include "corvid.pvc" (list . "corvid-test.pvc") -}}
+{{- end }}
 {{- define "corvid-test.pvc" -}}
 {{- end -}}
