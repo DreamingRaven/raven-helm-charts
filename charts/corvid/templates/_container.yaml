@@ -37,12 +37,18 @@ env:
 {{- end }}
 {{- end }}
 {{- end }}
+{{- with .Values.livenessProbe }}
 livenessProbe:
-  {{- toYaml .Values.livenessProbe | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.readinessProbe }}
 readinessProbe:
-  {{- toYaml .Values.readinessProbe | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.resources }}
 resources:
-  {{- toYaml .Values.resources | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 {{- with .Values.volumeMounts }}
 volumeMounts:
   {{- toYaml . | nindent 2 }}
