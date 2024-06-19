@@ -8,7 +8,8 @@ metadata:
     {{- include "corvid.labels" . | nindent 4 }}
 spec:
   podSelector:
-    {{- include "corvid.selectorLabels" . | nindent 4 }}
+    matchLabels:
+      {{- include "corvid.selectorLabels" . | nindent 6 }}
   policyTypes:
   - Egress
   egress:
