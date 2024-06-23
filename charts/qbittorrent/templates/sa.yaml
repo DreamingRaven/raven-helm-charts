@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "qbittorrent.sa") -}}
+{{- end }}
+{{- define "qbittorrent.sa" -}}
+{{- end -}}

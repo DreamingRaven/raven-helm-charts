@@ -1,0 +1,13 @@
+{{- define "qbittorrent-container" -}}
+volumeMounts:
+# media dirs
+- name: data
+  mountPath: /downloads
+  subPath: downloads
+  readOnly: false
+# config dir
+- name: data
+  mountPath: /config
+  subPath: config
+  readOnly: false
+{{- end -}}

@@ -1,0 +1,5 @@
+{{- if .Values.autoscaling.enabled }}
+{{- include "corvid.pvc" (list . "qbittorrent.pvc") -}}
+{{- end }}
+{{- define "qbittorrent.pvc" -}}
+{{- end -}}

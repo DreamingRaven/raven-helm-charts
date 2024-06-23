@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "qbittorrent.testConnectivity") -}}
+{{- define "qbittorrent.testConnectivity" -}}
+{{- end -}}
