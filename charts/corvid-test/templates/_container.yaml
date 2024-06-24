@@ -1,3 +1,2 @@
 {{- define "corvid-test-container" -}}
-# name: OVERRIDE # example override
 {{- end -}}

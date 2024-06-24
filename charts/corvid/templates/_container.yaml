@@ -6,11 +6,11 @@ image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.i
 imagePullPolicy: {{ .Values.image.pullPolicy }}
 {{- with .Values.command }}
 command:
-{{- toYaml . | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- with .Values.args }}
 args:
-{{- toYaml . | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
 {{- end }}
 ports:
   {{- range .Values.ports }}
@@ -20,7 +20,7 @@ ports:
   {{- end }}
 {{- with .Values.envFrom }}
 envFrom:
-{{- toYaml . | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
 {{- end }}
 env:
 {{- .Values.env | toYaml | nindent 2 }}

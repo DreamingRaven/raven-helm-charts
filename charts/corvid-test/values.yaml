@@ -35,7 +35,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
-secrets:
+secrets: []
 # - name: corvid-test
 #   lookup:
 #   - key: corvid-testUsername
