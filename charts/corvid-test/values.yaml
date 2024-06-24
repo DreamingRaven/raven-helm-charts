@@ -23,6 +23,7 @@ persistence:
 
 command:
 args:
+runtimeClassName:
 
 restartPolicy: Always
 
