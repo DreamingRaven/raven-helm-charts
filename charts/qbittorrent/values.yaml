@@ -23,6 +23,46 @@ persistence:
 
 command:
 args:
+runtimeClassName:
+
+## @param initContainers Add bespoke init containers to the pods
+initContainers:
+# optional gluetun VPN client sidecar
+# https://github.com/qdm12/gluetun
+# https://github.com/qdm12/gluetun-wiki/pull/7
+- name: gluetun # init sidecar for VPN connection
+  image: "ghcr.io/qdm12/gluetun:latest"
+  restartPolicy: Always # makes this init into a sidecar container k8s 1.29
+  imagePullPolicy: Always
+  ports:
+    - name: http-proxy
+      containerPort: 8888
+      protocol: TCP
+    - name: tcp-shadowsocks
+      containerPort: 8388
+      protocol: TCP
+    - name: udp-shadowsocks
+      containerPort: 8388
+      protocol: UDP
+  envFrom:
+  # a secret named gluetun to configure the VPN
+  # via environment variables of which there are many
+  - secretRef:
+    name: gluetun
+    optional: false
+  env:
+  - name: TZ
+    value: "Europe/London"
+  #- name: FIREWALL_DEBUG
+  #  value: "on"
+  #- name: FIREWALL_INPUT_PORTS
+  #  value: "8080"
+  securityContext:
+    capabilities:
+      add:
+      - NET_ADMIN
+      #drop:
+      #- ALL
 
 restartPolicy: Always
 
