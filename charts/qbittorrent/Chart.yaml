@@ -3,7 +3,7 @@ appVersion: "4.6.5-r0-ls336"
 description: A Helm chart for Kubernetes
 name: qbittorrent
 type: application
-version: 0.1.0
+version: 0.1.1
 dependencies:
 - name: corvid
   version: 0.5.2

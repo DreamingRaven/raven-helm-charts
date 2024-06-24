@@ -44,8 +44,12 @@ secrets:
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
 env:
-- name: qbittorrent_EXAMPLE_VARIABLE
-  value: "false"
+- name: PUID
+  value: "1000"
+- name: GUID
+  value: "1000"
+- name: TZ
+  value: "Europe/London"
 
 ## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
 envFrom:
@@ -76,13 +80,13 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 ## @param securityContext [object] Security context
-securityContext:
- capabilities:
-   drop:
-   - ALL
- readOnlyRootFilesystem: false
- runAsNonRoot: true
- runAsUser: 1000
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: false
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 service:
   ## @param service.type [string] Service type
