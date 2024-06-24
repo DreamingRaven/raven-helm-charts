@@ -1,0 +1,30 @@
+{{- define "corvid.podSpec.tpl" -}}
+{{- with .Values.runtimeClassName }}
+runtimeClassName: {{ . }}
+{{- end }}
+{{- with .Values.imagePullSecrets }}
+imagePullSecrets:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+serviceAccountName: {{ include "corvid.serviceAccountName" . }}
+securityContext:
+  {{- toYaml .Values.podSecurityContext | nindent 2 }}
+containers:
+- {{ include "corvid.container.tpl" . | indent 2 | trim }}
+{{- with .Values.volumes }}
+volumes:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.nodeSelector }}
+nodeSelector:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.affinity }}
+affinity:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.tolerations }}
+tolerations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
