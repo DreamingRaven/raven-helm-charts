@@ -19,6 +19,16 @@ persistence:
 
 command:
 args:
+runtimeClassName:
+
+## @param initContainers add bespoke init containers to the pod spec
+initContainers:
+# - name: some-pod-name
+#   image: some-image
+#   imagePullPolicy: Always
+#   ports:
+#     - name: some-port
+#       containerPort: 1234
 
 imagePullSecrets: []
 nameOverride: ""

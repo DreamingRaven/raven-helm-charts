@@ -25,6 +25,15 @@ command:
 args:
 runtimeClassName:
 
+## @param initContainers Add bespoke init containers to the pods
+initContainers:
+- name: some-pod-name
+  image: some-image
+  imagePullPolicy: Always
+  ports:
+    - name: some-port
+      containerPort: 1234
+
 restartPolicy: Always
 
 ## @param imagePullSecrets [array] Image pull secrets
