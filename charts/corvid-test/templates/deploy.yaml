@@ -1,3 +1,7 @@
-{{- define "corvid-test.deploy" -}}
-{{- end -}}
-{{- include "corvid.deploy" (list . "corvid-test.deploy") -}}
+{{- define "corvid-test.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "corvid-test-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "corvid-test.deploy") }}

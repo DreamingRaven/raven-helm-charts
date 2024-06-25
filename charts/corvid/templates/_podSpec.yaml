@@ -32,3 +32,6 @@ tolerations:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 {{- end }}
+{{- define "corvid.podSpec" -}}
+{{- include "corvid.util.merge" (append . "corvid.podSpec.tpl") -}}
+{{- end -}}
