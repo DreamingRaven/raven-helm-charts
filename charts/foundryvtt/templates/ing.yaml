@@ -1,3 +1,5 @@
+{{- if .Values.ingress.enabled }}
 {{- include "corvid.ing" (list . "foundryvtt.ing") -}}
+{{- end }}
 {{- define "foundryvtt.ing" -}}
 {{- end -}}

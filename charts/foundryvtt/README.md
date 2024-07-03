@@ -1,3 +1,0 @@
-# FoundryVTT Helm Chart
-
-## Parameters

@@ -1,0 +1,3 @@
+{{- define "foundryvtt-container" -}}
+name: {{ .Chart.Name }}-override
+{{- end -}}

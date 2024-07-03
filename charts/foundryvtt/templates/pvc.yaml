@@ -1,0 +1,5 @@
+{{- if .Values.persistence.enabled }}
+{{- include "corvid.pvc" (list . "foundryvtt.pvc") -}}
+{{- end }}
+{{- define "foundryvtt.pvc" -}}
+{{- end -}}

@@ -1,3 +1,0 @@
-{{- include "corvid.hpa" (list . "foundryvtt.hpa") -}}
-{{- define "foundryvtt.hpa" -}}
-{{- end -}}

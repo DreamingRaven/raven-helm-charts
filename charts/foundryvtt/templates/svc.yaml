@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "foundryvtt.svc") -}}
+{{- define "foundryvtt.svc" -}}
+{{- end -}}

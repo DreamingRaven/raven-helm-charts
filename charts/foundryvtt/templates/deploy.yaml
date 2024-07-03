@@ -1,0 +1,7 @@
+{{- define "foundryvtt.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "foundryvtt-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "foundryvtt.deploy") }}

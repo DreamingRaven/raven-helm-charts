@@ -1,0 +1,4 @@
+{{- define "foundryvtt-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "foundryvtt-container") | indent 2 | trim }}
+{{- end -}}

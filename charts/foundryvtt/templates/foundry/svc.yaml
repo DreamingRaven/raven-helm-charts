@@ -1,3 +1,0 @@
-{{- include "corvid.svc" (list . "corvid-test.svc") -}}
-{{- define "corvid-test.svc" -}}
-{{- end -}}

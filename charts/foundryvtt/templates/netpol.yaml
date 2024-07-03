@@ -1,3 +1,5 @@
+{{- if .Values.netpol.enabled }}
 {{- include "corvid.netpol" (list . "foundryvtt.netpol") -}}
+{{- end }}
 {{- define "foundryvtt.netpol" -}}
 {{- end -}}
