@@ -15,9 +15,17 @@ initContainers:
 {{- end }}
 containers:
 - {{ include "corvid.container.tpl" . | indent 2 | trim }}
-{{- with .Values.volumes }}
+# if volumes set or persistence enabled
+{{- if or .Values.volumes .Values.persistence.enabled }}
 volumes:
-  {{- toYaml . | nindent 2 }}
+  {{- if .Values.persistence.enabled }}
+  - name: data
+    persistentVolumeClaim:
+      claimName: {{ include "corvid.fullname" . }}
+  {{- end }}
+  {{- with .Values.volumes }}
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- with .Values.nodeSelector }}
 nodeSelector:
