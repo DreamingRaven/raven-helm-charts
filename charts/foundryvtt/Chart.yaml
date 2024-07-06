@@ -16,5 +16,5 @@ maintainers:
 dependencies:
 - name: corvid
   version: 0.6.3
-  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
-  #repository: "file://../corvid"
+  #repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
+  repository: "file://../corvid"
