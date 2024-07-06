@@ -16,7 +16,7 @@ image:
   tag: "12.328.0"
 
 persistence:
-  enabled: true
+  enabled: false
   size: 8Gi
   accessModes:
   - ReadWriteOnce
