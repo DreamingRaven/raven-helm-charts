@@ -1,3 +1,14 @@
 {{- define "corvid-test-container" -}}
 name: {{ .Chart.Name }}-override
+{{- if or .Values.volumeMounts .Values.persistence.enabled }}
+volumeMounts:
+{{- if .Values.persistence.enabled }}
+- name: data
+  mountPath: /data/
+  subpath: data
+{{- end }}
+{{- with .Values.volumeMounts }}
+{{- toYaml . | nindent 0 }}
+{{- end }}
+{{- end }}
 {{- end -}}
