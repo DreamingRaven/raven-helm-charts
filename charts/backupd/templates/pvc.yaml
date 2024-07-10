@@ -9,11 +9,15 @@ spec:
   {{- range .Values.persistence.accessModes }}
     - {{ . | quote }}
   {{- end }}
+  {{- if .Values.persistence.dataSourceRef }}
+  dataSourceRef: {{ toYaml .Values.persistence.dataSourceRef | nindent 4 }}
+  {{- else }}
   {{- if .Values.restore.enabled }}
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: {{ include "backupd.fullname" . }}
+  {{- end }}
   {{- end }}
   resources:
     requests:

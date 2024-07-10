@@ -2,6 +2,17 @@ persistence:
   size: 8Gi
   accessModes:
   - ReadWriteOnce
+  # dataSourceRef is only used to initialy migrate data
+  # to the new generated pvc. Please ensure backup is enabled
+  # to backup the initial data from this pvc
+  dataSourceRef: {}
+    # #source initial data from snapshot
+    # name: new-snapshot-test
+    # kind: VolumeSnapshot
+    # apiGroup: snapshot.storage.k8s.io
+    # #source initial data from cloned pvc
+    # kind: PersistentVolumeClaim
+    # name: pvc-1
 
 backup:
   enabled: false
