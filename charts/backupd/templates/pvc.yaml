@@ -1,9 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "backup.fullname" . }}
+  name: {{ include "backupd.fullname" . }}
   labels:
-    {{- include "backup.labels" . | nindent 4 }}
+    {{- include "backupd.labels" . | nindent 4 }}
 spec:
   accessModes:
   {{- range .Values.persistence.accessModes }}

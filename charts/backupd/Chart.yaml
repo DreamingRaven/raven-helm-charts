@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: 0.1.0
-description: Corvid approved backup manifests
-name: backup
+description: Corvid approved backupd manifests
+name: backupd
 type: application
 version: 0.1.0

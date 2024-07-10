@@ -1,14 +1,14 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: {{ include "backup.fullname" . }}
+  name: {{ include "backupd.fullname" . }}
   labels:
-    {{- include "backup.labels" . | nindent 4 }}
+    {{- include "backupd.labels" . | nindent 4 }}
 spec:
   trigger:
     schedule: {{ .Values.restore.schedule }}
   restic:
-    repository: {{ include "backup.fullname" . }}
+    repository: {{ include "backupd.fullname" . }}
     copyMethod: Snapshot
     accessModes:
     {{- range .Values.persistence.accessModes }}
