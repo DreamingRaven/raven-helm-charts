@@ -9,10 +9,12 @@ spec:
   {{- range .Values.persistence.accessModes }}
     - {{ . | quote }}
   {{- end }}
+  {{- if .Values.restore.enabled }}
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: {{ include "backupd.fullname" . }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.persistence.size | quote }}
