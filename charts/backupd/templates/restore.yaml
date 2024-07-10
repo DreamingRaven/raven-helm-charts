@@ -9,7 +9,7 @@ spec:
   trigger:
     schedule: {{ .Values.restore.schedule }}
   restic:
-    repository: {{ include "backupd.fullname" . }}
+    repository: {{ .Values.existingSecret | default (include "backupd.fullname" .) }}
     copyMethod: Snapshot
     accessModes:
     {{- range .Values.persistence.accessModes }}

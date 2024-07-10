@@ -14,6 +14,8 @@ persistence:
     # kind: PersistentVolumeClaim
     # name: pvc-1
 
+existingSecret: ""
+
 backup:
   enabled: false
   schedule: "0 * * * 1"

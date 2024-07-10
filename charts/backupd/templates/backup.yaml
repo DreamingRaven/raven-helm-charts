@@ -14,7 +14,7 @@ spec:
     # Prune the repository (repack to free space) every week
     pruneIntervalDays: {{ .Values.backup.pruneIntervalDays }}
     # Name of the Secret with the connection information
-    repository: {{ include "backupd.fullname" . }}
+    repository: {{ .Values.existingSecret | default (include "backupd.fullname" .) }}
     # Retention policy for backupds
     retain: {{- toYaml .Values.backup.retain | nindent 6 }}
     # Clone the source volume prior to taking a backupd to ensure a
