@@ -1,0 +1,13 @@
+persistence:
+  size: 8Gi
+  accessModes:
+  - ReadWriteOnce
+
+backup:
+  enabled: true
+  schedule: "0 * * * 1"
+  pruneIntervalDays: 1
+
+restore:
+  enabled: false
+  schedule: "1 * * * 1"
