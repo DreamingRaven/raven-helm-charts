@@ -2,7 +2,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: {{ include "backupd.fullname" . }}
+  name: {{ include "backupd.fullname" . }}-backup
   labels:
     {{- include "backupd.labels" . | nindent 4 }}
 spec:
@@ -16,12 +16,7 @@ spec:
     # Name of the Secret with the connection information
     repository: {{ include "backupd.fullname" . }}
     # Retention policy for backupds
-    retain:
-      hourly: 5
-      daily: 4
-      weekly: 3
-      monthly: 2
-      yearly: 1
+    retain: {{- toYaml .Values.backup.retain | nindent 6 }}
     # Clone the source volume prior to taking a backupd to ensure a
     # point-in-time image.
     copyMethod: Snapshot #Clone

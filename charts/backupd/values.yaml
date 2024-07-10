@@ -4,9 +4,15 @@ persistence:
   - ReadWriteOnce
 
 backup:
-  enabled: true
+  enabled: false
   schedule: "0 * * * 1"
   pruneIntervalDays: 1
+  retain:
+    hourly: 5
+    daily: 4
+    weekly: 3
+    monthly: 2
+    yearly: 1
 
 restore:
   enabled: false
