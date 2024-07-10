@@ -33,6 +33,10 @@ restore:
   enabled: false
   schedule: "1 * * * 1"
 
+backupDirect:
+  enabled: false
+  pvc: ""
+
 migrationSnapshot:
   enabled: false
   pvc: ""

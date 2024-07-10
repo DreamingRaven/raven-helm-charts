@@ -7,7 +7,11 @@ metadata:
     {{- include "backupd.labels" . | nindent 4 }}
 spec:
   # The PVC to be backed up
+  {{- if .Values.backupDirect.enabled }}
+  sourcePVC: {{ .Values.backupDirect.pvc }}
+  {{- else }}
   sourcePVC: {{ include "backupd.fullname" . }}
+  {{- end }}
   trigger:
     schedule: {{ .Values.backup.schedule }}
   restic:
