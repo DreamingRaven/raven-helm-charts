@@ -4,7 +4,9 @@ persistence:
   - ReadWriteOnce
   # dataSourceRef is only used to initialy migrate data
   # to the new generated pvc. Please ensure backup is enabled
-  # to backup the initial data from this pvc
+  # to backup the initial data from this pvc.
+  # Consider using migrationSnapshot to do the initial migration
+  # instead.
   dataSourceRef: {}
     # #source initial data from snapshot
     # name: new-snapshot-test
@@ -30,3 +32,7 @@ backup:
 restore:
   enabled: false
   schedule: "1 * * * 1"
+
+migrationSnapshot:
+  enabled: false
+  pvc: ""
