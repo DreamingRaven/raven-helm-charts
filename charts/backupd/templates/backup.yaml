@@ -7,11 +7,7 @@ metadata:
     {{- include "backupd.labels" . | nindent 4 }}
 spec:
   # The PVC to be backed up
-  {{- if .Values.backupDirect.enabled }}
-  sourcePVC: {{ .Values.backupDirect.pvc }}
-  {{- else }}
-  sourcePVC: {{ include "backupd.fullname" . }}
-  {{- end }}
+  sourcePVC: {{ .Values.existingPVC | default (include "backupd.fullname" .) }}
   trigger:
     schedule: {{ .Values.backup.schedule }}
   restic:
@@ -23,7 +19,7 @@ spec:
     retain: {{- toYaml .Values.backup.retain | nindent 6 }}
     # Clone the source volume prior to taking a backupd to ensure a
     # point-in-time image.
-    copyMethod: Snapshot #Clone
+    copyMethod: {{ .Values.backup.copyMethod }}
     # The StorageClass to use when creating the PiT copy (same as source PVC if omitted)
     #storageClassName: my-sc-name
     # The VSC to use if the copy method is Snapshot (default if omitted)

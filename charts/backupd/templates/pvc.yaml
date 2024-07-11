@@ -1,3 +1,4 @@
+{{- if .Values.persistence.generate }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -9,19 +10,11 @@ spec:
   {{- range .Values.persistence.accessModes }}
     - {{ . | quote }}
   {{- end }}
-  {{- if .Values.migrationSnapshot.enabled }}
-  dataSourceRef:
-    name: {{ include "backupd.fullname" . }}-migration
-    kind: VolumeSnapshot
-    apiGroup: snapshot.storage.k8s.io
-  {{- else if .Values.persistence.dataSourceRef }}
-  dataSourceRef: {{ toYaml .Values.persistence.dataSourceRef | nindent 4 }}
-  {{- else if .Values.restore.enabled }}
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: {{ include "backupd.fullname" . }}
-  {{- end }}
+    name: {{ include "backupd.fullname" . }}-restore
   resources:
     requests:
       storage: {{ .Values.persistence.size | quote }}
+{{- end }}

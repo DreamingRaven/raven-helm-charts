@@ -3,4 +3,4 @@ appVersion: 0.1.0
 description: Corvid approved backupd manifests
 name: backupd
 type: application
-version: 0.5.0
+version: 0.6.0

@@ -1,27 +1,20 @@
 persistence:
+  generate: true
   size: 8Gi
   accessModes:
   - ReadWriteOnce
-  # dataSourceRef is only used to initialy migrate data
-  # to the new generated pvc. Please ensure backup is enabled
-  # to backup the initial data from this pvc.
-  # Consider using migrationSnapshot to do the initial migration
-  # instead.
-  dataSourceRef: {}
-    # #source initial data from snapshot
-    # name: new-snapshot-test
-    # kind: VolumeSnapshot
-    # apiGroup: snapshot.storage.k8s.io
-    # #source initial data from cloned pvc
-    # kind: PersistentVolumeClaim
-    # name: pvc-1
 
 existingSecret: ""
+# note this is only useful for backups not for restores
+# please use dataSourceRef to pull from ReplicationDestination
+# in the existing pvc itself
+existingPVC: ""
 
 backup:
   enabled: false
   schedule: "0 * * * 1"
   pruneIntervalDays: 1
+  copyMethod: Snapshot # Snapshot or Clone or Direct see: https://volsync.readthedocs.io/en/stable/usage/restic/index.html#backup-options
   retain:
     hourly: 5
     daily: 4
@@ -32,11 +25,3 @@ backup:
 restore:
   enabled: false
   schedule: "1 * * * 1"
-
-backupDirect:
-  enabled: false
-  pvc: ""
-
-migrationSnapshot:
-  enabled: false
-  pvc: ""
