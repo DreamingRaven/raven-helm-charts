@@ -24,6 +24,7 @@ persistence:
 command:
 args:
 runtimeClassName:
+schedule: "@midnight"
 
 ## @param initContainers Add bespoke init containers to the pods
 initContainers:

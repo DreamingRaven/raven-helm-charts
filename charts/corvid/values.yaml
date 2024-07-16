@@ -20,6 +20,7 @@ persistence:
 command:
 args:
 runtimeClassName:
+schedule: "@midnight"
 
 ## @param initContainers add bespoke init containers to the pod spec
 initContainers:

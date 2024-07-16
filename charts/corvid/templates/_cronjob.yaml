@@ -1,0 +1,29 @@
+{{- define "corvid.cronjob.tpl" -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "corvid.fullname" . }}
+  labels:
+    {{- include "corvid.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "corvid.labels" . | nindent 12 }}
+            {{- with .Values.podLabels }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+        spec:
+          {{- include "corvid.podSpec.tpl" . | indent 10 }}
+          restartPolicy: Never
+{{- end -}}
+{{- define "corvid.cronjob" -}}
+{{- include "corvid.util.merge" (append . "corvid.cronjob.tpl") -}}
+{{- end -}}
