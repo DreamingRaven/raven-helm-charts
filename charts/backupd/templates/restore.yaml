@@ -6,8 +6,13 @@ metadata:
   labels:
     {{- include "backupd.labels" . | nindent 4 }}
 spec:
+  {{- if .Values.restore.trigger }}
+  trigger:
+    {{- toYaml .Values.restore.trigger | nindent 4 }}
+  {{- else }}
   trigger:
     schedule: {{ .Values.restore.schedule }}
+  {{- end }}
   restic:
     repository: {{ .Values.existingSecret | default (include "backupd.fullname" .) }}
     copyMethod: Snapshot

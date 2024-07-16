@@ -13,6 +13,7 @@ existingPVC: ""
 backup:
   enabled: false
   schedule: "0 * * * 1"
+  trigger: {}
   pruneIntervalDays: 1
   copyMethod: Snapshot # Snapshot or Clone or Direct see: https://volsync.readthedocs.io/en/stable/usage/restic/index.html#backup-options
   retain:
@@ -25,3 +26,4 @@ backup:
 restore:
   enabled: false
   schedule: "1 * * * 1"
+  trigger: {}

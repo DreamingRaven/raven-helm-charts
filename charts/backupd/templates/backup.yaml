@@ -8,8 +8,13 @@ metadata:
 spec:
   # The PVC to be backed up
   sourcePVC: {{ .Values.existingPVC | default (include "backupd.fullname" .) }}
+  {{- if .Values.backup.trigger }}
+  trigger:
+    {{- toYaml .Values.backup.trigger | nindent 4 }}
+  {{- else }}
   trigger:
     schedule: {{ .Values.backup.schedule }}
+  {{- end }}
   restic:
     # Prune the repository (repack to free space) every week
     pruneIntervalDays: {{ .Values.backup.pruneIntervalDays }}
