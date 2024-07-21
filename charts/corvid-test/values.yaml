@@ -28,13 +28,13 @@ runtimeClassName:
 schedule: "@midnight"
 
 ## @param initContainers Add bespoke init containers to the pods
-initContainers:
-- name: some-pod-name
-  image: some-image
-  imagePullPolicy: Always
-  ports:
-    - name: some-port
-      containerPort: 1234
+initContainers: []
+# - name: some-pod-name
+#   image: some-image
+#   imagePullPolicy: Always
+#   ports:
+#     - name: some-port
+#       containerPort: 1234
 
 restartPolicy: Always
 
