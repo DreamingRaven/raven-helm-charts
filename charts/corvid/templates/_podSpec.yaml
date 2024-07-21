@@ -16,9 +16,13 @@ initContainers:
 containers:
 - {{ include "corvid.container.tpl" . | indent 2 | trim }}
 # if volumes set or persistence enabled
-{{- if or .Values.volumes .Values.persistence.enabled }}
+{{- if or .Values.volumes (or .Values.persistence.enabled .Values.persistence.existingClaim) }}
 volumes:
-  {{- if .Values.persistence.enabled }}
+  {{- if .Values.persistence.existingClaim }}
+  - name: data
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistence.existingClaim }}
+  {{- else if .Values.persistence.enabled }}
   - name: data
     persistentVolumeClaim:
       claimName: {{ include "corvid.fullname" . }}

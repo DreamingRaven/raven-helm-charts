@@ -2,6 +2,19 @@
 
 ## Changelog
 
+### 0.6.5
+
+This release introduces existingClaim persistence for the podSpec template. Thus this effects almost all usages, but only if ``.persistence.existingClaim`` is set.
+
+By default please add the following to your values.yaml, although this is not required:
+
+```yaml
+persistence:
+	existingClaim: ""
+```
+
+No changes are required in the templating itself, this is backwards compatible.
+
 ### 0.6.4
 
 This release of corvid introduces CronJob templates. This is backwards compatible since the only new variables are part of a new template altogether to define a CronJob.
@@ -18,3 +31,5 @@ They will also need to invoke this new template in their templates (substituting
 {{- end -}}
 {{- include "corvid.cronjob" (list . "corvid-test.cronjob") -}}
 ```
+
+This is backwards compatible.

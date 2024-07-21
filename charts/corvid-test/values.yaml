@@ -20,6 +20,7 @@ persistence:
   size: 8Gi
   accessModes:
   - ReadWriteOnce
+  existingClaim: ""
 
 command:
 args:
