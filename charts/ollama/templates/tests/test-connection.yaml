@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "ollama.testConnectivity") -}}
+{{- define "ollama.testConnectivity" -}}
+{{- end -}}

@@ -1,0 +1,7 @@
+{{- define "ollama.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "ollama-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "ollama.deploy") }}

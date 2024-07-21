@@ -1,0 +1,4 @@
+{{- define "ollama-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "ollama-container") | indent 2 | trim }}
+{{- end -}}

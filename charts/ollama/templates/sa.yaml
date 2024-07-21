@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "ollama.sa") -}}
+{{- end }}
+{{- define "ollama.sa" -}}
+{{- end -}}
