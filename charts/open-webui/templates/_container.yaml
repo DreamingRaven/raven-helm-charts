@@ -1,0 +1,13 @@
+{{- define "open-webui-container" -}}
+{{- if or .Values.volumeMounts .Values.persistence.enabled }}
+volumeMounts:
+{{- if .Values.persistence.enabled }}
+- name: data
+  mountPath: /app/backend/data/
+  subpath: data
+{{- end }}
+{{- with .Values.volumeMounts }}
+{{- toYaml . | nindent 0 }}
+{{- end }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "open-webui.testConnectivity") -}}
+{{- define "open-webui.testConnectivity" -}}
+{{- end -}}

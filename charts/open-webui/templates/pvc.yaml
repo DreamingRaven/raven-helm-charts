@@ -1,0 +1,5 @@
+{{- if .Values.persistence.enabled }}
+{{- include "corvid.pvc" (list . "open-webui.pvc") -}}
+{{- end }}
+{{- define "open-webui.pvc" -}}
+{{- end -}}

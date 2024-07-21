@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "open-webui.sa") -}}
+{{- end }}
+{{- define "open-webui.sa" -}}
+{{- end -}}

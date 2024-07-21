@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "open-webui.svc") -}}
+{{- define "open-webui.svc" -}}
+{{- end -}}

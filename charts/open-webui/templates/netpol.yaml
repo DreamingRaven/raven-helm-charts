@@ -1,0 +1,5 @@
+{{- if .Values.netpol.enabled }}
+{{- include "corvid.netpol" (list . "open-webui.netpol") -}}
+{{- end }}
+{{- define "open-webui.netpol" -}}
+{{- end -}}

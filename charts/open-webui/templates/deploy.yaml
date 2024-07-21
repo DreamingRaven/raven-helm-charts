@@ -1,0 +1,7 @@
+{{- define "open-webui.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "open-webui-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "open-webui.deploy") }}

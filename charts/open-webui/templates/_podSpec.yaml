@@ -1,0 +1,4 @@
+{{- define "open-webui-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "open-webui-container") | indent 2 | trim }}
+{{- end -}}

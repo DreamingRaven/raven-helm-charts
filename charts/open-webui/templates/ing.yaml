@@ -1,0 +1,5 @@
+{{- if .Values.ingress.enabled }}
+{{- include "corvid.ing" (list . "open-webui.ing") -}}
+{{- end }}
+{{- define "open-webui.ing" -}}
+{{- end -}}
