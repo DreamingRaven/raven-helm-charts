@@ -1,0 +1,28 @@
+{{- define "corvid.daemonset.tpl" -}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "corvid.fullname" . }}
+  labels:
+    {{- include "corvid.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "corvid.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "corvid.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "corvid.podSpec.tpl" . | indent 6 }}
+{{- end -}}
+{{- define "corvid.daemonset" -}}
+{{- include "corvid.util.merge" (append . "corvid.daemonset.tpl") -}}
+{{- end -}}

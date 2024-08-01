@@ -2,6 +2,17 @@
 
 ## Changelog
 
+### 0.7.0
+
+This release introduces a daemonset template. This is backwards compatible since no changes to values.yaml. If you would like to use this new template you can do something akin to the following. Replace ``corvid-test`` with your charts name:
+
+```yaml
+{{- define "corvid-test.daemonset" }}
+# your daemonset overrides here
+{{- end }}
+{{- include "corvid.daemonset" (list . "corvid-test.daemonset") }}
+```
+
 ### 0.6.5
 
 This release introduces existingClaim persistence for the podSpec template. Thus this effects almost all usages, but only if ``.persistence.existingClaim`` is set.
@@ -28,6 +39,7 @@ They will also need to invoke this new template in their templates (substituting
 
 ```yaml
 {{- define "corvid-test.cronjob" -}}
+# your cronjob overrides here
 {{- end -}}
 {{- include "corvid.cronjob" (list . "corvid-test.cronjob") -}}
 ```

@@ -1,0 +1,7 @@
+{{- define "corvid-test.daemonset" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "corvid-test-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.daemonset" (list . "corvid-test.daemonset") }}
