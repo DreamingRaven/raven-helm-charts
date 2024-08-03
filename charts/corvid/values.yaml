@@ -5,8 +5,11 @@
 replicaCount: 1
 
 image:
-  registry: registry.gitlab.com
-  repository: georgeraven/raven-helm-charts
+  ## @param image.registry [string] Image container registry
+  registry: docker.io
+  ## @param image.repository [string] Image repository
+  repository: corvid-test/corvid-test
+  ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.1.0"
