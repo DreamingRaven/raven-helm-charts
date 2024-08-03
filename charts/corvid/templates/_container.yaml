@@ -37,6 +37,10 @@ env:
 {{- end }}
 {{- end }}
 {{- end }}
+{{- with .Values.startupProbe }}
+startupProbe:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 {{- with .Values.livenessProbe }}
 livenessProbe:
   {{- toYaml . | nindent 2 }}

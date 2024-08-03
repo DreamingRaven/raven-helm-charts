@@ -141,6 +141,10 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+startupProbe:
+  httpGet:
+    path: /
+    port: http
 livenessProbe:
   httpGet:
     path: /

@@ -2,6 +2,20 @@
 
 ## Changelog
 
+### 0.7.1
+
+This release adds previously missing inbuilt startup probe configuration.
+This is backwards compatible since no changes to values.yaml and it does not change the default behaviour.
+
+To add a startup probe you can add the following to your values.yaml for the most basic startup probe:
+
+```yaml
+startupProbe:
+	httpGet:
+		path: /
+		port: http # the port name if it is not call http
+```
+
 ### 0.7.0
 
 This release introduces a daemonset template. This is backwards compatible since no changes to values.yaml. If you would like to use this new template you can do something akin to the following. Replace ``corvid-test`` with your charts name:
