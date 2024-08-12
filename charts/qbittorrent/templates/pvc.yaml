@@ -1,5 +1,7 @@
 {{- if .Values.persistence.enabled }}
+{{- if not .Values.persistence.existingClaim }}
 {{- include "corvid.pvc" (list . "qbittorrent.pvc") -}}
+{{- end }}
 {{- end }}
 {{- define "qbittorrent.pvc" -}}
 {{- end -}}
