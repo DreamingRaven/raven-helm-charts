@@ -1,0 +1,4 @@
+{{- define "qbittorrent-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "qbittorrent-container") | indent 2 | trim }}
+{{- end -}}

@@ -1,5 +1,8 @@
 {{- define "qbittorrent-container" -}}
+name: {{ .Chart.Name }}-override
+{{- if or .Values.volumeMounts .Values.persistence.enabled }}
 volumeMounts:
+{{- if .Values.persistence.enabled }}
 # media dirs
 - name: data
   mountPath: /downloads
@@ -10,4 +13,9 @@ volumeMounts:
   mountPath: /config
   subPath: config
   readOnly: false
+{{- end }}
+{{- with .Values.volumeMounts }}
+{{- toYaml . | nindent 0 }}
+{{- end }}
+{{- end }}
 {{- end -}}

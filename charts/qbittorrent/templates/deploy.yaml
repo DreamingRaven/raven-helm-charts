@@ -1,12 +1,7 @@
-{{- define "qbittorrent.deploy" -}}
+{{- define "qbittorrent.deploy" }}
 spec:
   template:
     spec:
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ include "corvid.fullname" . }}
-      containers:
-      - {{ include "corvid.container" (list . "qbittorrent-container") | indent 8 | trim }}
-{{- end -}}
-{{- include "corvid.deploy" (list . "qbittorrent.deploy") -}}
+      {{ include "corvid.podSpec" (list . "qbittorrent-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "qbittorrent.deploy") }}
