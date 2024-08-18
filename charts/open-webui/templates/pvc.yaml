@@ -1,4 +1,4 @@
-{{- if .Values.persistence.enabled }}
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
 {{- include "corvid.pvc" (list . "open-webui.pvc") -}}
 {{- end }}
 {{- define "open-webui.pvc" -}}

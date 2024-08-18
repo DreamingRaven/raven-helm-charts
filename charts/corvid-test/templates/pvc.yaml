@@ -1,4 +1,4 @@
-{{- if .Values.persistence.enabled }}
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
 {{- include "corvid.pvc" (list . "corvid-test.pvc") -}}
 {{- end }}
 {{- define "corvid-test.pvc" -}}

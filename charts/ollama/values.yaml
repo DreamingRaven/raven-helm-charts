@@ -17,6 +17,7 @@ image:
 
 persistence:
   enabled: false
+  existingClaim: ""
   size: 8Gi
   accessModes:
   - ReadWriteOnce
