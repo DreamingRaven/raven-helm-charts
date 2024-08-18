@@ -5,6 +5,7 @@ helm-chart-lint:
     entrypoint: ["/bin/sh", "-c"]
   script:
     - |
+      go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.7
       for dir in ${CHARTS_DIR}/*/
       do
         dir=${dir%*/} # removes trailing "/"
