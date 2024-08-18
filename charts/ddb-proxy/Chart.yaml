@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 0.0.25 # renovate: datasource=github-releases depName=MrPrimate/ddb-proxy
+description: A Helm chart for Kubernetes
+name: ddb-proxy
+type: application
+version: 0.1.0
+dependencies:
+- name: corvid
+  version: 0.7.1
+  repository: "file://../corvid"

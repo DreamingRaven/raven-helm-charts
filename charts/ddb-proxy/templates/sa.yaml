@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "ddb-proxy.sa") -}}
+{{- end }}
+{{- define "ddb-proxy.sa" -}}
+{{- end -}}

@@ -1,0 +1,5 @@
+{{- if .Values.netpol.enabled }}
+{{- include "corvid.netpol" (list . "ddb-proxy.netpol") -}}
+{{- end }}
+{{- define "ddb-proxy.netpol" -}}
+{{- end -}}

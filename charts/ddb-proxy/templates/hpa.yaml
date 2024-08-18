@@ -1,0 +1,5 @@
+{{- define "ddb-proxy.hpa" -}}
+{{- end -}}
+{{- if .Values.autoscaling.enabled }}
+{{- include "corvid.hpa" (list . "ddb-proxy.hpa") -}}
+{{- end }}
