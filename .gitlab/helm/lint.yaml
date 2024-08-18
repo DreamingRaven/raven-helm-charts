@@ -11,4 +11,5 @@ helm-chart-lint:
         echo "linting ${dir} chart"
         helm dependency build "${dir}"
         helm lint "${dir}"/
+        helm template "${dir}"/ | kubeconform -strict -kubernetes-version ${K8S_VERSION}
       done
