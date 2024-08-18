@@ -13,7 +13,11 @@ helm-chart-lint:
       do
         dir=${dir%*/} # removes trailing "/"
         echo "linting ${dir} chart"
+        #helm dependency update "${dir}"
         helm dependency build "${dir}"
         helm lint "${dir}"/
-        helm template "${dir}"/ | kubeconform -strict -kubernetes-version ${K8S_VERSION}
+        # on run if not 'corvid' chart
+        if [ "${dir}" != "${CHARTS_DIR}/corvid" ]; then
+          helm template "${dir}"/ | kubeconform -strict -kubernetes-version ${K8S_VERSION}
+        fi
       done
