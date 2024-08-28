@@ -19,7 +19,8 @@ helm-chart-lint:
         # on run if not 'corvid' chart
         if [ "${dir}" != "${CHARTS_DIR}/corvid" ]; then
           helm template "${dir}"/ | kubeconform -strict -kubernetes-version ${K8S_VERSION} \
-            -schema-location default -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+            -schema-location default \
+            -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
             -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
         fi
       done
