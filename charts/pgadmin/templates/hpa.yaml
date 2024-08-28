@@ -1,0 +1,5 @@
+{{- define "pgadmin.hpa" -}}
+{{- end -}}
+{{- if .Values.autoscaling.enabled }}
+{{- include "corvid.hpa" (list . "pgadmin.hpa") -}}
+{{- end }}

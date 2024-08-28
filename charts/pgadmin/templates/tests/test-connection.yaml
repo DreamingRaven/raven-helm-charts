@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "pgadmin.testConnectivity") -}}
+{{- define "pgadmin.testConnectivity" -}}
+{{- end -}}

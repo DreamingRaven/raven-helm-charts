@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "pgadmin.sa") -}}
+{{- end }}
+{{- define "pgadmin.sa" -}}
+{{- end -}}

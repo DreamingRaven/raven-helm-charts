@@ -1,0 +1,4 @@
+{{- define "pgadmin-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "pgadmin-container") | indent 2 | trim }}
+{{- end -}}

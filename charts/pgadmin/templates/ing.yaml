@@ -1,0 +1,5 @@
+{{- if .Values.ingress.enabled }}
+{{- include "corvid.ing" (list . "pgadmin.ing") -}}
+{{- end }}
+{{- define "pgadmin.ing" -}}
+{{- end -}}

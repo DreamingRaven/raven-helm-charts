@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "pgadmin.svc") -}}
+{{- define "pgadmin.svc" -}}
+{{- end -}}
