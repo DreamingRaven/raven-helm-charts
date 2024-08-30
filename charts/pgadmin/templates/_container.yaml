@@ -5,7 +5,7 @@ volumeMounts:
 {{- if .Values.persistence.enabled }}
 - name: data
   mountPath: /var/lib/pgadmin
-  subpath: data
+  subPath: data
 {{- end }}
 {{- with .Values.volumeMounts }}
 {{- toYaml . | nindent 0 }}

@@ -5,7 +5,7 @@ volumeMounts:
 {{- if .Values.persistence.enabled }}
 - name: data
   mountPath: /data/
-  subpath: data
+  subPath: data
 {{- end }}
 {{- with .Values.volumeMounts }}
 {{- toYaml . | nindent 0 }}
