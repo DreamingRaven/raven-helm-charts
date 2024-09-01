@@ -16,6 +16,12 @@ spec:
   restic:
     repository: {{ .Values.existingSecret | default (include "backupd.fullname" .) }}
     copyMethod: Snapshot
+    {{- with .Values.restore.asOf }}
+    restoreAsOf: {{ . | quote }}
+    {{- end }}
+    {{- with .Values.restore.previous }}
+    previous: {{ . }}
+    {{- end }}
     accessModes:
     {{- range .Values.persistence.accessModes }}
       - {{ . | quote }}
