@@ -2,6 +2,33 @@
 
 ## Changelog
 
+### 0.8.0
+
+This release adds dnsPolicy and dnsConfig to the podSpec template.
+This is backwards compatible since this will be ignored if the values do not exist.
+To use this new template you can do something akin to the following as per your needs:
+
+```yaml
+dnsPolicy: "None"
+dnsConfig:
+	nameservers:
+	- 1.1.1.1
+	options:
+	- name: ndots
+	  value: "1"
+```
+
+However this should only be used if you know what you are doing, there are very specific cases where this might be required.
+One such instance is VPNs in containers.
+Otherwise it should be left empty:
+
+```yaml
+dnsPolicy: ""
+dnsConfig: {}
+```
+
+see: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+
 ### 0.7.1
 
 This release adds previously missing inbuilt startup probe configuration.
