@@ -1,0 +1,166 @@
+# Default values for renovate.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @param replicaCount [string] Server deployment replica count
+replicaCount: 1
+
+image:
+  ## @param image.registry [string] Image container registry
+  registry: docker.io
+  ## @param image.repository [string] Image repository
+  repository: renovate/renovate
+  ## @param image.pullPolicy [string] Image pull policy
+  pullPolicy: IfNotPresent
+  ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
+  tag: "38-full"
+
+persistence:
+  enabled: false
+  size: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  existingClaim: ""
+
+command:
+args:
+runtimeClassName:
+schedule: "@hourly"
+
+## @param initContainers Add bespoke init containers to the pods
+initContainers: []
+# - name: some-pod-name
+#   image: some-image
+#   imagePullPolicy: Always
+#   ports:
+#     - name: some-port
+#       containerPort: 1234
+
+restartPolicy: Always
+
+## @param imagePullSecrets [array] Image pull secrets
+imagePullSecrets: []
+## @param nameOverride [string] Partial name override
+nameOverride: ""
+## @param fullnameOverride [string] Full name override
+fullnameOverride: ""
+
+## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
+secrets: []
+# - name: renovate
+#   lookup:
+#   - key: renovateUsername
+#     env: renovate_USERNAME
+#   - key: renovatePassword
+#     env: renovate_PASSWORD
+
+## @param env [array] Raw helm environment variable settings for static or dynamic values
+env:
+- name: RENOVATE_BASE_DIR
+  value: '/tmp/renovate/'
+- name: RENOVATE_CONFIG_FILE
+  value: '/opt/renovate/config.json'
+
+## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+envFrom:
+- secretRef:
+    name: renovate
+    optional: false
+# - configMapRef:
+#     name: someConfigMap
+#     optional: false
+
+
+serviceAccount:
+  ## @param serviceAccount.create [string] Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  ## @param serviceAccount.annotations [object] Annotations to add to the service account
+  annotations: {}
+  ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+## @param podAnnotations [object] Pod annotations
+podAnnotations: {}
+podLabels: {}
+
+## @param podSecurityContext [object] Pod security context
+podSecurityContext: {}
+  # fsGroup: 2000
+
+## @param securityContext [object] Security context
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  ## @param service.type [string] Service type
+  type: ClusterIP
+
+## @param ports [array] Ports to expose, tie to the service, and ingress
+ports:
+- name: http
+  containerPort: 8080
+  servicePort: 80
+  protocol: TCP
+
+## @param resources [object] Resources
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+startupProbe:
+  httpGet:
+    path: /
+    port: http
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+netpol:
+  enabled: true
+
+dnsPolicy: "" # default is ClusterFirst
+dnsConfig: {}
+  # nameservers:
+  # - 1.1.1.1
+  # options:
+  # - name: ndots
+  #   value: "1"

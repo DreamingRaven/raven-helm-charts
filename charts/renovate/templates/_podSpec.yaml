@@ -1,0 +1,4 @@
+{{- define "renovate-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "renovate-container") | indent 2 | trim }}
+{{- end -}}

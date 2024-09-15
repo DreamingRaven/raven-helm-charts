@@ -1,0 +1,3 @@
+{{- define "renovate.cronjob" -}}
+{{- end -}}
+{{- include "corvid.cronjob" (list . "renovate.cronjob") -}}
