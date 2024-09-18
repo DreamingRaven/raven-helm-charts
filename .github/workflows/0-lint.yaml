@@ -1,0 +1,48 @@
+name: Lint Helm Charts
+on:
+  workflow_call:
+
+env:
+  CHARTS_DIR: "charts"
+  K8S_VERSION: "1.31.0"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine/helm:latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set Environment Variables and Paths the GitHub Way
+      run: |
+        export GOPATH=$HOME/.go
+        echo "GOPATH=$HOME/.go" >> $GITHUB_ENV
+        echo "$GOPATH/bin" >> $GITHUB_PATH
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Install Dependencies
+      run: |
+        apk add --no-cache git make musl-dev go
+        go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.7
+
+    - name: Iteratively Lint Charts
+      run: |
+        for dir in ${{ env.CHARTS_DIR }}/*/
+        do
+          echo "*************************************"
+          dir=${dir%*/} # removes trailing "/"
+          echo "linting ${dir} chart"
+          helm dependency update "${dir}"
+          helm lint "${dir}"/
+          # on run if not 'corvid' chart
+          if [ "${dir}" != "${{ env.CHARTS_DIR }}/auth" ] && [ "${dir}" != "${{ env.CHARTS_DIR }}/kyverno" ]; then
+            helm template --namespace tst "${dir}"/ | kubeconform -strict -kubernetes-version ${{ env.K8S_VERSION }} \
+              -schema-location './schemas/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+              -schema-location default \
+              -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+              -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
+          fi
+          echo "*************************************"
+        done

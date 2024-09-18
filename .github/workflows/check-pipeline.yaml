@@ -1,0 +1,18 @@
+name: Check Pipeline
+on:
+  push:
+    branches:
+    - '**' # on push to any branch this pipeline should lint
+    - '!main' # that is not master
+
+env:
+  CHARTS_DIR: "charts"
+  K8S_VERSION: "1.31.0"
+
+jobs:
+  lint:
+    uses: ./.github/workflows/0-lint.yaml
+  build:
+    uses: ./.github/workflows/1-build.yaml
+    needs:
+    - lint

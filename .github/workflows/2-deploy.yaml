@@ -1,0 +1,64 @@
+name: Deploy Helm Charts
+on:
+  workflow_call:
+
+env:
+  CHARTS_DIR: "charts"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine/helm:latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set Environment Variables and Paths the GitHub Way
+      run: |
+        export GOPATH=$HOME/.go
+        echo "GOPATH=$HOME/.go" >> $GITHUB_ENV
+        echo "$GOPATH/bin" >> $GITHUB_PATH
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Install Dependencies
+      run: |
+        apk add --no-cache git tree make musl-dev go
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: charts
+        path: package
+
+    - name: Debug Artifacts
+      run: |
+        tree .
+
+    - name: Login to GHCR OCI Registry
+      run: |
+        helm registry login ghcr.io -u DreamingRaven -p ${{ secrets.GITHUB_TOKEN }}
+      env:
+        HELM_EXPERIMENTAL_OCI: '1'
+
+    - name: Helm Push Artifacts if Version Doesn't Exist
+      run: |
+        cd package
+        for filename in *.tgz; do
+          echo "*************************************"
+          regex='([a-zA-Z0-9_-]+)-([v0-9\.-]+)\.tgz'
+          chart_name=$(echo "$filename" | sed -E "s/$regex/\1/")
+          chart_version=$(echo "$filename" | sed -E "s/$regex/\2/")
+          echo "${chart_name} ${chart_version}"
+          if helm pull oci://ghcr.io/DreamingRaven/"${chart_name}" --version "${chart_version}"; then
+            echo "${chart_name} ${chart_version} exists, skipping ..."
+          else
+            echo "Pushing ${chart_name} ${chart_version} to ghcr.io/DreamingRaven"
+            helm push "${filename}" oci://ghcr.io/DreamingRaven/
+          fi
+          echo "*************************************"
+        done
+      env:
+        HELM_EXPERIMENTAL_OCI: '1'
+      shell: bash
+

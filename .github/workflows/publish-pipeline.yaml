@@ -1,0 +1,21 @@
+name: Publish Pipeline
+on:
+  push:
+    branches:
+    - 'main' # on push to any branch this pipeline should lint
+
+env:
+  CHARTS_DIR: "charts"
+  K8S_VERSION: "1.31.0"
+
+jobs:
+  lint:
+    uses: ./.github/workflows/0-lint.yaml
+  build:
+    uses: ./.github/workflows/1-build.yaml
+    needs:
+    - lint
+  deploy:
+    uses: ./.github/workflows/2-deploy.yaml
+    needs:
+    - build

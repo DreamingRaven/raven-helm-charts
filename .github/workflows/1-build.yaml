@@ -1,0 +1,53 @@
+name: Build Helm Charts
+on:
+  workflow_call:
+
+env:
+  CHARTS_DIR: "charts"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine/helm:latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set Environment Variables and Paths the GitHub Way
+      run: |
+        export GOPATH=$HOME/.go
+        echo "GOPATH=$HOME/.go" >> $GITHUB_ENV
+        echo "$GOPATH/bin" >> $GITHUB_PATH
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Install Dependencies
+      run: |
+        apk add --no-cache git make musl-dev go
+
+    - name: Iteratively Build Charts
+      run: |
+        for dir in ${{ env.CHARTS_DIR }}/*/
+        do
+          echo "*************************************"
+          DIR=${dir%*/} # removes trailing "/"
+          APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"')
+          if [ "${APP_VER}" == "null" ]; then
+            echo "appVersion falling back to ${DIR}/Chart.yaml"
+            APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
+          fi
+          HELM_VER=$(yq ".version" ${DIR}/Chart.yaml | tr -d '"')
+          echo "building ${DIR} chart (app: ${APP_VER}, chart: ${HELM_VER})"
+          echo "helm dependency build ${DIR}"
+          helm dependency build "${DIR}"/
+          echo "helm package '${DIR}/' --destination ./package --app-version ${APP_VER} --version=${HELM_VER}"
+          helm package "${DIR}/" --destination ./package --app-version ${APP_VER} --version=${HELM_VER}
+          echo "*************************************"
+        done
+
+    - name: Upload Charts
+      uses: actions/upload-artifact@v4
+      with:
+        name: charts
+        path: ./package
+        retention-days: 1
