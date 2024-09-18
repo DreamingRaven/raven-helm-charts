@@ -37,7 +37,7 @@ jobs:
 
     - name: Login to GHCR OCI Registry
       run: |
-        helm registry login ghcr.io -u cicd -p ${{ secrets.GITHUB_TOKEN }}
+        helm registry login ghcr.io -u DreamingRaven -p ${{ secrets.GITHUB_TOKEN }}
       env:
         HELM_EXPERIMENTAL_OCI: '1'
 
