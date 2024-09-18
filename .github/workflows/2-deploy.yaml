@@ -37,7 +37,7 @@ jobs:
 
     - name: Login to GHCR OCI Registry
       run: |
-        helm registry login ghcr.io -u DreamingRaven -p ${{ secrets.GITHUB_TOKEN }}
+        helm registry login ghcr.io -u cicd -p ${{ secrets.GITHUB_TOKEN }}
       env:
         HELM_EXPERIMENTAL_OCI: '1'
 
@@ -50,11 +50,12 @@ jobs:
           chart_name=$(echo "$filename" | sed -E "s/$regex/\1/")
           chart_version=$(echo "$filename" | sed -E "s/$regex/\2/")
           echo "${chart_name} ${chart_version}"
-          if helm pull oci://ghcr.io/DreamingRaven/"${chart_name}" --version "${chart_version}"; then
+          echo "Pulling ${chart_name} ${chart_version} to ghcr.io/dreamingraven"
+          if helm pull oci://ghcr.io/dreamingraven/"${chart_name}" --version "${chart_version}"; then
             echo "${chart_name} ${chart_version} exists, skipping ..."
           else
-            echo "Pushing ${chart_name} ${chart_version} to ghcr.io/DreamingRaven"
-            helm push "${filename}" oci://ghcr.io/DreamingRaven/
+            echo "Pushing ${chart_name} ${chart_version} to ghcr.io/dreamingraven"
+            helm push "${filename}" oci://ghcr.io/dreamingraven/
           fi
           echo "*************************************"
         done
