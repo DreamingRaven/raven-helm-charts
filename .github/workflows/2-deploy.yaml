@@ -1,4 +1,4 @@
-name: Deploy Helm Charts
+name: Deploy Helm Charts to OCI Registry
 on:
   workflow_call:
 
