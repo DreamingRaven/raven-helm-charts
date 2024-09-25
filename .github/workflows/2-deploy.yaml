@@ -8,6 +8,8 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     container:
       image: alpine/helm:latest
     steps:
