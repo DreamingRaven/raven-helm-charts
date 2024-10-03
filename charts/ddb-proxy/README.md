@@ -1,8 +1,14 @@
-# corvid
+# ddb-proxy
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.25](https://img.shields.io/badge/AppVersion-0.0.25-informational?style=flat-square)
 
-Common helm component and utility library
+A Helm chart for Kubernetes
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.7.1 |
 
 ## Values
 
@@ -15,46 +21,44 @@ Common helm component and utility library
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
-| envFrom[0].configMapRef.name | string | `"someConfigMap"` |  |
-| envFrom[0].configMapRef.optional | bool | `false` |  |
-| envFrom[1].secretRef.name | string | `"someSecret"` |  |
-| envFrom[1].secretRef.optional | bool | `false` |  |
-| env[0].name | string | `"CORVID_EXAMPLE_VARIABLE"` |  |
-| env[0].value | string | `"false"` |  |
+| envFrom | string | `nil` |  |
+| env[0].name | string | `"VIRTUAL_PORT"` |  |
+| env[0].value | string | `"3000"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.registry | string | `"docker.io"` |  |
-| image.repository | string | `"bitnami/kubectl"` |  |
-| image.tag | string | `"1.31.1"` |  |
+| image.registry | string | `"ghcr.io"` |  |
+| image.repository | string | `"mrprimate/ddb-proxy"` |  |
+| image.tag | string | `"0.0.25"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"corvid.org.example"` |  |
+| ingress.hosts[0].host | string | `"ddb-proxy.org.example"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| initContainers | string | `nil` |  |
-| livenessProbe.httpGet.path | string | `"/"` |  |
+| initContainers | list | `[]` |  |
+| livenessProbe.httpGet.path | string | `"/ping"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| persistence.enabled | bool | `true` |  |
+| persistence.enabled | bool | `false` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| ports[0].containerPort | int | `8080` |  |
+| ports[0].containerPort | int | `3000` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
-| readinessProbe.httpGet.path | string | `"/"` |  |
+| readinessProbe.httpGet.path | string | `"/ping"` |  |
 | readinessProbe.httpGet.port | string | `"http"` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
 | schedule | string | `"@midnight"` |  |
 | secrets | list | `[]` |  |
@@ -64,6 +68,8 @@ Common helm component and utility library
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| startupProbe.httpGet.path | string | `"/ping"` |  |
+| startupProbe.httpGet.port | string | `"http"` |  |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |

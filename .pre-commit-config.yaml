@@ -1,15 +1,17 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.12.0
-    hooks:
-      - id: helm-docs
-        args:
-          # Make the tool search for charts only under the `example-charts` directory
-          - --chart-search-root=charts
-
-          # The `./` makes it relative to the chart-search-root set above
-          - --template-files=./_templates.gotmpl
-
-          # Repeating the flag adds this to the list, now [./_templates.gotmpl, README.md.gotmpl]
-          # A base filename makes it relative to each chart directory found
-          - --template-files=README.md.gotmpl
+- repo: "https://github.com/pre-commit/pre-commit-hooks"
+  rev: v4.6.0
+  hooks:
+  -   id: trailing-whitespace
+  #-   id: end-of-file-fixer
+  -   id: check-yaml
+  -   id: check-added-large-files
+- repo: "https://github.com/norwoodj/helm-docs"
+  rev:  "v1.14.2"
+  hooks:
+  - id: helm-docs
+    args:
+    # Make the tool search for charts only under the `charts` directory
+    - --chart-search-root=charts

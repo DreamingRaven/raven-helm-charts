@@ -1,8 +1,14 @@
-# corvid
+# renovate
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 38](https://img.shields.io/badge/AppVersion-38-informational?style=flat-square)
 
-Common helm component and utility library
+A Helm chart for Kubernetes
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.8.0 |
 
 ## Values
 
@@ -10,38 +16,29 @@ Common helm component and utility library
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | args | string | `nil` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
-| envFrom[0].configMapRef.name | string | `"someConfigMap"` |  |
-| envFrom[0].configMapRef.optional | bool | `false` |  |
-| envFrom[1].secretRef.name | string | `"someSecret"` |  |
-| envFrom[1].secretRef.optional | bool | `false` |  |
-| env[0].name | string | `"CORVID_EXAMPLE_VARIABLE"` |  |
-| env[0].value | string | `"false"` |  |
+| dnsConfig | object | `{}` |  |
+| dnsPolicy | string | `""` |  |
+| envFrom[0].secretRef.name | string | `"renovate"` |  |
+| envFrom[0].secretRef.optional | bool | `false` |  |
+| env[0].name | string | `"RENOVATE_BASE_DIR"` |  |
+| env[0].value | string | `"/tmp/renovate/"` |  |
+| env[1].name | string | `"RENOVATE_CONFIG_FILE"` |  |
+| env[1].value | string | `"/opt/renovate/config.json"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
-| image.repository | string | `"bitnami/kubectl"` |  |
-| image.tag | string | `"1.31.1"` |  |
+| image.repository | string | `"renovate/renovate"` |  |
+| image.tag | string | `"38-full"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"corvid.org.example"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.tls | list | `[]` |  |
-| initContainers | string | `nil` |  |
+| initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| persistence.enabled | bool | `true` |  |
+| persistence.enabled | bool | `false` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
@@ -55,8 +52,9 @@ Common helm component and utility library
 | readinessProbe.httpGet.port | string | `"http"` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
-| schedule | string | `"@midnight"` |  |
+| schedule | string | `"@hourly"` |  |
 | secrets | list | `[]` |  |
 | securityContext | object | `{}` |  |
 | service.type | string | `"ClusterIP"` |  |
@@ -64,6 +62,8 @@ Common helm component and utility library
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| startupProbe.httpGet.path | string | `"/"` |  |
+| startupProbe.httpGet.port | string | `"http"` |  |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
