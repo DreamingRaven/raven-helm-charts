@@ -1,0 +1,20 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Installing the Chart
+
+To install the chart with the release name `{{ template "chart.name" . }}`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install {{ template "chart.name" . }} raven/{{ template "chart.name" . }}
+```
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}
