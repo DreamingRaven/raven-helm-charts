@@ -14,7 +14,7 @@ jobs:
       image: alpine/helm:latest
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
     - name: Set Environment Variables and Paths the GitHub Way
       run: |
@@ -28,7 +28,7 @@ jobs:
         apk add --no-cache git tree make musl-dev go
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4
       with:
         name: charts
         path: package

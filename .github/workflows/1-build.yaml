@@ -12,7 +12,7 @@ jobs:
       image: alpine/helm:latest
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
     - name: Set Environment Variables and Paths the GitHub Way
       run: |
@@ -46,7 +46,7 @@ jobs:
         done
 
     - name: Upload Charts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4
       with:
         name: charts
         path: ./package
