@@ -22,7 +22,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2024.9.3"` |  |
+| image.tag | string | `"2024.10.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

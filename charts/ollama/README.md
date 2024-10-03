@@ -28,7 +28,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"ollama/ollama"` |  |
-| image.tag | string | `"0.3.11"` |  |
+| image.tag | string | `"0.3.12"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

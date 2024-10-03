@@ -20,7 +20,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"filebrowser/filebrowser"` |  |
-| image.tag | string | `"v2.31.1"` |  |
+| image.tag | string | `"v2.31.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
