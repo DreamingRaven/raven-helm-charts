@@ -1,8 +1,18 @@
 # grocy
 
+A Helm chart for Kubernetes
+
 ![Version: 0.2.3](https://img.shields.io/badge/Version-0.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.0.3-ls229](https://img.shields.io/badge/AppVersion-v4.0.3--ls229-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+## Installing the Chart
+
+To install the chart with the release name `grocy`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install grocy raven/grocy
+```
 
 ## Values
 

@@ -14,4 +14,10 @@ repos:
   - id: helm-docs
     args:
     # Make the tool search for charts only under the `charts` directory
-    - --chart-search-root=charts
+    - --template-files=./README.md.gotmpl
+#- repo: local
+#  hooks:
+#  - id: helm-docs-local
+#    name: helm-docs
+#    language: script
+#    entry: utils/helm-docs.sh

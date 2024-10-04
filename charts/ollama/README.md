@@ -1,8 +1,18 @@
 # ollama
 
+A Helm chart for Kubernetes
+
 ![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.7](https://img.shields.io/badge/AppVersion-0.2.7-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+## Installing the Chart
+
+To install the chart with the release name `ollama`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install ollama raven/ollama
+```
 
 ## Requirements
 

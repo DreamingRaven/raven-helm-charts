@@ -1,8 +1,18 @@
 # corvid
 
+Common helm component and utility library
+
 ![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
-Common helm component and utility library
+## Installing the Chart
+
+To install the chart with the release name `corvid`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install corvid raven/corvid
+```
 
 ## Values
 

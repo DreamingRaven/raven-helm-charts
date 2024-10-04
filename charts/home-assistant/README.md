@@ -1,8 +1,18 @@
 # ha
 
+A Helm chart for Kubernetes
+
 ![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.2.2](https://img.shields.io/badge/AppVersion-2024.2.2-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+## Installing the Chart
+
+To install the chart with the release name `ha`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install ha raven/ha
+```
 
 ## Values
 

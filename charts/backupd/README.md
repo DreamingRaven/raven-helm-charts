@@ -1,8 +1,18 @@
 # backupd
 
+Corvid approved backupd manifests
+
 ![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
-Corvid approved backupd manifests
+## Installing the Chart
+
+To install the chart with the release name `backupd`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install backupd raven/backupd
+```
 
 ## Values
 
