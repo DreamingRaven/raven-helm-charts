@@ -3,6 +3,8 @@
 
 {{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
 
+{{ .Files.Get "DESCRIPTION.md" }}
+
 ## Installing the Chart
 
 To install the chart with the release name `{{ template "chart.name" . }}`, run the following commands:
@@ -18,3 +20,5 @@ $ helm install {{ template "chart.name" . }} raven/{{ template "chart.name" . }}
 {{ template "chart.valuesSection" . }}
 
 {{ template "helm-docs.versionFooter" . }}
+
+{{ .Files.Get "CHANGELOG.md" }}

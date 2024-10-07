@@ -4,6 +4,11 @@ A Helm chart for Kubernetes
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
+This chart is a chart which contains multiple other more atomic charts as dependencies.
+This allows you to control a broader deployment of interconnected resources.
+
+In this instance this is a meta chart for jellyfin, with components like metube and filebrowser to help automate and remotely administer the jellyfin data files. This is because jellyfin currently has no in-built video downloader, and thus we need tools like metube and filebrowser to help.
+
 ## Installing the Chart
 
 To install the chart with the release name `jellymeta`, run the following commands:

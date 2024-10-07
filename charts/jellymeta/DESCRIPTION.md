@@ -1,5 +1,3 @@
-# Jellyfin Meta Chart
-
 This chart is a chart which contains multiple other more atomic charts as dependencies.
 This allows you to control a broader deployment of interconnected resources.
 
