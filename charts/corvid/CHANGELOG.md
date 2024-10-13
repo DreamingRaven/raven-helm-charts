@@ -1,6 +1,6 @@
-## Changelog
+# Changelog
 
-### 0.9.0
+## 0.9.0
 
 This release adds default probe functionality. To enable me to create default probes without restricting the end user from either disabling them or overriding them as they see fit.
 This is not backwards compatible because startupProbeEnabled is required to enable or disable probe functionality in all cases.
@@ -81,7 +81,7 @@ readinessProbe:
 
 ```
 
-### 0.8.0
+## 0.8.0
 
 This release adds dnsPolicy and dnsConfig to the podSpec template.
 This is backwards compatible since this will be ignored if the values do not exist.
@@ -108,7 +108,7 @@ dnsConfig: {}
 
 see: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
 
-### 0.7.1
+## 0.7.1
 
 This release adds previously missing inbuilt startup probe configuration.
 This is backwards compatible since no changes to values.yaml and it does not change the default behaviour.
@@ -122,7 +122,7 @@ startupProbe:
 		port: http # the port name if it is not call http
 ```
 
-### 0.7.0
+## 0.7.0
 
 This release introduces a daemonset template. This is backwards compatible since no changes to values.yaml. If you would like to use this new template you can do something akin to the following. Replace ``corvid-test`` with your charts name:
 
@@ -133,7 +133,7 @@ This release introduces a daemonset template. This is backwards compatible since
 {{- include "corvid.daemonset" (list . "corvid-test.daemonset") }}
 ```
 
-### 0.6.5
+## 0.6.5
 
 This release introduces existingClaim persistence for the podSpec template. Thus this effects almost all usages, but only if ``.persistence.existingClaim`` is set.
 
@@ -146,7 +146,7 @@ persistence:
 
 No changes are required in the templating itself, this is backwards compatible.
 
-### 0.6.4
+## 0.6.4
 
 This release of corvid introduces CronJob templates. This is backwards compatible since the only new variables are part of a new template altogether to define a CronJob.
 Any users seeking to invoke this new CronJob will need to add the following to their values.yaml:
