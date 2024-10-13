@@ -37,21 +37,65 @@ env:
 {{- end }}
 {{- end }}
 {{- end }}
+# Startup Probe
+{{- if .Values.startupProbeEnabled }}
 {{- with .Values.startupProbe }}
+# overriden startupProbe
 startupProbe:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- if not .Values.startupProbe }}
+{{- with .Values.startupProbeDefault }}
+# default startupProbe
+startupProbe:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+{{- end }}
+# Liveness Probe
+{{- if .Values.livenessProbeEnabled }}
 {{- with .Values.livenessProbe }}
+# overriden livenessProbe
 livenessProbe:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- if not .Values.livenessProbe }}
+{{- with .Values.livenessProbeDefault }}
+# default livenessProbe
+livenessProbe:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+{{- end }}
+# Readiness Probe
+{{- if .Values.readinessProbeEnabled }}
 {{- with .Values.readinessProbe }}
+# overriden readinessProbe
 readinessProbe:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- if not .Values.readinessProbe }}
+{{- with .Values.readinessProbeDefault }}
+# default readinessProbe
+readinessProbe:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+{{- end }}
+# Resources
+{{- if .Values.resourcesEnabled }}
 {{- with .Values.resources }}
+# overriden resources
 resources:
   {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- if not .Values.resources }}
+{{- with .Values.resourcesDefault }}
+# default resources
+resources:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- with .Values.volumeMounts }}
 volumeMounts:

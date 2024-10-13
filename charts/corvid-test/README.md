@@ -18,7 +18,7 @@ $ helm install corvid-test raven/corvid-test
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.8.0 |
+| file://../corvid | corvid | 0.9.0 |
 
 ## Values
 
@@ -50,8 +50,9 @@ $ helm install corvid-test raven/corvid-test
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| livenessProbe.httpGet.path | string | `"/"` |  |
-| livenessProbe.httpGet.port | string | `"http"` |  |
+| livenessProbe | string | `nil` | raw liveness probe overrides for user |
+| livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
+| livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
@@ -66,10 +67,13 @@ $ helm install corvid-test raven/corvid-test
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
-| readinessProbe.httpGet.path | string | `"/"` |  |
-| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe | string | `nil` | raw readiness probe overrides for user |
+| readinessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default readiness probe if not specified by user |
+| readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| resources | string | `nil` | raw resources block overrides for user |
+| resourcesDefault | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m"}}` | default resources if not specified by user |
+| resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
 | schedule | string | `"@midnight"` |  |
@@ -80,8 +84,9 @@ $ helm install corvid-test raven/corvid-test
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| startupProbe.httpGet.path | string | `"/"` |  |
-| startupProbe.httpGet.port | string | `"http"` |  |
+| startupProbe | string | `nil` | raw startup probe overrides for user |
+| startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
+| startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |

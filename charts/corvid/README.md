@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -47,8 +47,9 @@ $ helm install corvid raven/corvid
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | string | `nil` |  |
-| livenessProbe.httpGet.path | string | `"/"` |  |
-| livenessProbe.httpGet.port | string | `"http"` |  |
+| livenessProbe | string | `nil` | raw liveness probe overrides for user |
+| livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
+| livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
@@ -63,10 +64,13 @@ $ helm install corvid raven/corvid
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
-| readinessProbe.httpGet.path | string | `"/"` |  |
-| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe | string | `nil` | raw readiness probe overrides for user |
+| readinessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default readiness probe if not specified by user |
+| readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| resources | string | `nil` | raw resources block overrides for user |
+| resourcesDefault | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m"}}` | default resources if not specified by user |
+| resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | runtimeClassName | string | `nil` |  |
 | schedule | string | `"@midnight"` |  |
 | secrets | list | `[]` |  |
@@ -76,11 +80,95 @@ $ helm install corvid raven/corvid
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| startupProbe | string | `nil` | raw startup probe overrides for user |
+| startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
+| startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
 
 ## Changelog
+
+### 0.9.0
+
+This release adds default probe functionality. To enable me to create default probes without restricting the end user from either disabling them or overriding them as they see fit.
+This is not backwards compatible because startupProbeEnabled is required to enable or disable probe functionality in all cases.
+
+The idea for this feature comes from similar charts, like those bitnami create.
+
+These new keys in the values.yaml are:
+
+- startupProbeEnabled (bool)
+- startupProbeDefault (map)
+- livenessProbeEnabled (bool)
+- livenessProbeDefault (map)
+- readinessProbeEnabled (bool)
+- readinessProbeDefault (map)
+- resourcesEnabled (bool)
+- resourcesDefault (map)
+
+The recommended configuration is to enable all probes by default with reasonable values, and to enable resources.
+This will use whatever you set as the default resources unless the user specifically overrides them.
+When the user sets any key, all default values will be ignored using only the user provided keys.
+This might look something akin to the following:
+
+```yaml
+
+# -- enable or disable resources entirely
+resourcesEnabled: true
+# -- default resources if not specified by user
+resourcesDefault:
+  limits:
+    memory: 128Mi
+  requests:
+    cpu: 100m
+# -- raw resources block overrides for user
+resources:
+  # limits:
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+
+# -- enable or disable startup probe entirely
+startupProbeEnabled: true
+# -- default startup probe if not specified by user
+startupProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw startup probe overrides for user
+startupProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable liveness probe entirely
+livenessProbeEnabled: true
+# -- default liveness probe if not specified by user
+livenessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw liveness probe overrides for user
+livenessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable readiness probe entirely
+readinessProbeEnabled: true
+# -- default readiness probe if not specified by user
+readinessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw readiness probe overrides for user
+readinessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+```
 
 ### 0.8.0
 

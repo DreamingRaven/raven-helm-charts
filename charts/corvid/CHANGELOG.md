@@ -1,5 +1,86 @@
 ## Changelog
 
+### 0.9.0
+
+This release adds default probe functionality. To enable me to create default probes without restricting the end user from either disabling them or overriding them as they see fit.
+This is not backwards compatible because startupProbeEnabled is required to enable or disable probe functionality in all cases.
+
+The idea for this feature comes from similar charts, like those bitnami create.
+
+These new keys in the values.yaml are:
+
+- startupProbeEnabled (bool)
+- startupProbeDefault (map)
+- livenessProbeEnabled (bool)
+- livenessProbeDefault (map)
+- readinessProbeEnabled (bool)
+- readinessProbeDefault (map)
+- resourcesEnabled (bool)
+- resourcesDefault (map)
+
+The recommended configuration is to enable all probes by default with reasonable values, and to enable resources.
+This will use whatever you set as the default resources unless the user specifically overrides them.
+When the user sets any key, all default values will be ignored using only the user provided keys.
+This might look something akin to the following:
+
+```yaml
+
+# -- enable or disable resources entirely
+resourcesEnabled: true
+# -- default resources if not specified by user
+resourcesDefault:
+  limits:
+    memory: 128Mi
+  requests:
+    cpu: 100m
+# -- raw resources block overrides for user
+resources:
+  # limits:
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+
+# -- enable or disable startup probe entirely
+startupProbeEnabled: true
+# -- default startup probe if not specified by user
+startupProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw startup probe overrides for user
+startupProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable liveness probe entirely
+livenessProbeEnabled: true
+# -- default liveness probe if not specified by user
+livenessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw liveness probe overrides for user
+livenessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable readiness probe entirely
+readinessProbeEnabled: true
+# -- default readiness probe if not specified by user
+readinessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw readiness probe overrides for user
+readinessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+```
+
 ### 0.8.0
 
 This release adds dnsPolicy and dnsConfig to the podSpec template.
