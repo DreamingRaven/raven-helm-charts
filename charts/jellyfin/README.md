@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.8.13](https://img.shields.io/badge/AppVersion-10.8.13-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.9.11](https://img.shields.io/badge/AppVersion-10.9.11-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -13,6 +13,12 @@ $ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/
 $ helm repo update raven
 $ helm install jellyfin raven/jellyfin
 ```
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.9.0 |
 
 ## Values
 
@@ -25,6 +31,9 @@ $ helm install jellyfin raven/jellyfin
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| dnsConfig | object | `{}` |  |
+| dnsPolicy | string | `""` |  |
+| envFrom | string | `nil` |  |
 | env[0].name | string | `"PUID"` |  |
 | env[0].value | string | `"1001"` |  |
 | env[1].name | string | `"PGID"` |  |
@@ -44,12 +53,16 @@ $ helm install jellyfin raven/jellyfin
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| livenessProbe.httpGet.path | string | `"/"` |  |
-| livenessProbe.httpGet.port | string | `"http"` |  |
+| initContainers | list | `[]` |  |
+| livenessProbe | string | `nil` | raw liveness probe overrides for user |
+| livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
+| livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
+| netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
@@ -58,10 +71,15 @@ $ helm install jellyfin raven/jellyfin
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
-| readinessProbe.httpGet.path | string | `"/"` |  |
-| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe | string | `nil` | raw readiness probe overrides for user |
+| readinessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default readiness probe if not specified by user |
+| readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| resources | string | `nil` | raw resources block overrides for user |
+| resourcesDefault | object | `{"limits":{"memory":"5G"},"requests":{"cpu":"500m"}}` | default resources if not specified by user |
+| resourcesEnabled | bool | `true` | enable or disable resources entirely |
+| restartPolicy | string | `"Always"` |  |
+| runtimeClassName | string | `nil` |  |
 | secrets | list | `[]` |  |
 | securityContext | object | `{}` |  |
 | service.type | string | `"ClusterIP"` |  |
@@ -69,15 +87,21 @@ $ helm install jellyfin raven/jellyfin
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| startupProbe | string | `nil` | raw startup probe overrides for user |
+| startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
+| startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
-| volumeMounts[0].mountPath | string | `"/data"` |  |
-| volumeMounts[0].name | string | `"data"` |  |
-| volumeMounts[0].readOnly | bool | `true` |  |
-| volumeMounts[0].subPath | string | `"media"` |  |
-| volumeMounts[1].mountPath | string | `"/config"` |  |
-| volumeMounts[1].name | string | `"data"` |  |
-| volumeMounts[1].readOnly | bool | `false` |  |
-| volumeMounts[1].subPath | string | `"config"` |  |
-| volumes[0].name | string | `"data"` |  |
-| volumes[0].persistentVolumeClaim.claimName | string | `"jellyfin"` |  |
+| volumeMounts | list | `[]` |  |
+| volumes | list | `[]` |  |
+
+# Changelog
+
+## 0.7.0
+
+BREAKING CHANGES!
+
+The chart has been overhauled to use corvid.
+Please TAKE A BACKUP of your data before upgrading.
+In particular the name of the default generated PVC has changed so if you used `persistence.enabled` you will need to either manually ensure the PVC exists and set the existing persistence claim flag, or change the full name override to `jellyfin` to match previous behaviour.
+The default `persistence.enabled` is now set to `false`.
 

@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "jellyfin.svc") -}}
+{{- define "jellyfin.svc" -}}
+{{- end -}}

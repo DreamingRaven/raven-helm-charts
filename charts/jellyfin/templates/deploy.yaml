@@ -1,0 +1,7 @@
+{{- define "jellyfin.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "jellyfin-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "jellyfin.deploy") }}
