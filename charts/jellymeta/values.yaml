@@ -7,23 +7,6 @@ jellyfin:
     accessModes:
     - ReadWriteMany # Note this is to allow filebrowser access
 
-  volumes:
-  - name: data
-    persistentVolumeClaim:
-      claimName: jellymeta-jellyfin # changed to meta charts pvc name
-
-  volumeMounts:
-  # media dirs
-  - name: data
-    mountPath: /data
-    subPath: media
-    readOnly: true
-  # config dir
-  - name: data
-    mountPath: /config
-    subPath: config
-    readOnly: false
-
 metube:
   enabled: true
 

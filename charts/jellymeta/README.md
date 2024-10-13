@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart is a chart which contains multiple other more atomic charts as dependencies.
 This allows you to control a broader deployment of interconnected resources.
@@ -24,7 +24,7 @@ $ helm install jellymeta raven/jellymeta
 | Repository | Name | Version |
 |------------|------|---------|
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | filebrowser | 0.1.0 |
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.1.1 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.7.0 |
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | metube | 0.1.0 |
 
 ## Values
@@ -69,16 +69,6 @@ $ helm install jellymeta raven/jellymeta
 | jellyfin.persistence.accessModes[0] | string | `"ReadWriteMany"` |  |
 | jellyfin.persistence.enabled | bool | `true` |  |
 | jellyfin.persistence.size | string | `"8Gi"` |  |
-| jellyfin.volumeMounts[0].mountPath | string | `"/data"` |  |
-| jellyfin.volumeMounts[0].name | string | `"data"` |  |
-| jellyfin.volumeMounts[0].readOnly | bool | `true` |  |
-| jellyfin.volumeMounts[0].subPath | string | `"media"` |  |
-| jellyfin.volumeMounts[1].mountPath | string | `"/config"` |  |
-| jellyfin.volumeMounts[1].name | string | `"data"` |  |
-| jellyfin.volumeMounts[1].readOnly | bool | `false` |  |
-| jellyfin.volumeMounts[1].subPath | string | `"config"` |  |
-| jellyfin.volumes[0].name | string | `"data"` |  |
-| jellyfin.volumes[0].persistentVolumeClaim.claimName | string | `"jellymeta-jellyfin"` |  |
 | metube.enabled | bool | `true` |  |
 | metube.persistence.accessModes[0] | string | `"ReadWriteMany"` |  |
 | metube.persistence.enabled | bool | `true` |  |
@@ -89,4 +79,14 @@ $ helm install jellymeta raven/jellymeta
 | metube.volumeMounts[0].subPath | string | `"downloads"` |  |
 | metube.volumes[0].name | string | `"data"` |  |
 | metube.volumes[0].persistentVolumeClaim.claimName | string | `"jellymeta-metube"` |  |
+
+# Changelog
+
+## 0.2.0
+
+This version upgrades jellyfin helm chart.
+This is potentially breaking if you overrode any of the variables related to volumes, or if you codified any of them.
+If you let the chart handle volumes no changes are necessary. The only thing this would effect is duplication of volume and volumeMounts when attempting to set your own with persistence enabled.
+
+I would suggest you backup your data before upgrading, and checking the manifests still generate the PVC you desire properly. Or better yet ensure you retain this PVC yourself.
 
