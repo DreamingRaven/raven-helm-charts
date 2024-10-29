@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -27,6 +27,9 @@ $ helm install corvid raven/corvid
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| cron.enabled | bool | `false` | enable or disable cronjob |
+| cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
 | envFrom[0].configMapRef.name | string | `"someConfigMap"` |  |
 | envFrom[0].configMapRef.optional | bool | `false` |  |
 | envFrom[1].secretRef.name | string | `"someSecret"` |  |
@@ -37,7 +40,7 @@ $ helm install corvid raven/corvid
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"bitnami/kubectl"` |  |
-| image.tag | string | `"1.31.1"` |  |
+| image.tag | string | `"1.31.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -72,7 +75,6 @@ $ helm install corvid raven/corvid
 | resourcesDefault | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m"}}` | default resources if not specified by user |
 | resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | runtimeClassName | string | `nil` |  |
-| schedule | string | `"@midnight"` |  |
 | secrets | list | `[]` |  |
 | securityContext | object | `{}` |  |
 | service.type | string | `"ClusterIP"` |  |
@@ -88,6 +90,25 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.10.0
+
+Backward incompatible change to cronjobs.
+A new subkey `cron` now exists, which now contains the `enabled`, `schedule` and `suspend` fields.
+
+To update ensure that `schedule` has been moved under the `cron` map.
+
+```yaml
+
+cron:
+  # -- enable or disable cronjob
+  enabled: false
+  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+  schedule: "@midnight"
+  # -- cronjob will not trigger on schedule but can be manually triggered
+  suspend: false
+
+```
 
 ## 0.9.0
 

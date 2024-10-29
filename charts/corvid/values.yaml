@@ -24,7 +24,14 @@ persistence:
 command:
 args:
 runtimeClassName:
-schedule: "@midnight"
+
+cron:
+  # -- enable or disable cronjob
+  enabled: false
+  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+  schedule: "@midnight"
+  # -- cronjob will not trigger on schedule but can be manually triggered
+  suspend: false
 
 ## @param initContainers add bespoke init containers to the pod spec
 initContainers:

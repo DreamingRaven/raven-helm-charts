@@ -6,7 +6,10 @@ metadata:
   labels:
     {{- include "corvid.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.schedule | quote }}
+  schedule: {{ .Values.cron.schedule | quote }}
+  {{- with .Values.cron.suspend }}
+  suspend: {{ . }}
+  {{- end }}
   jobTemplate:
     spec:
       template:

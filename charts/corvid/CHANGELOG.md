@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.10.0
+
+Backward incompatible change to cronjobs.
+A new subkey `cron` now exists, which now contains the `enabled`, `schedule` and `suspend` fields.
+
+To update ensure that `schedule` has been moved under the `cron` map.
+
+```yaml
+
+cron:
+  # -- enable or disable cronjob
+  enabled: false
+  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+  schedule: "@midnight"
+  # -- cronjob will not trigger on schedule but can be manually triggered
+  suspend: false
+
+```
+
 ## 0.9.0
 
 This release adds default probe functionality. To enable me to create default probes without restricting the end user from either disabling them or overriding them as they see fit.
