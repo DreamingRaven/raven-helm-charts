@@ -18,7 +18,7 @@ $ helm install corvid-test raven/corvid-test
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.10.0 |
+| file://../corvid | corvid | 0.11.0 |
 
 ## Values
 
@@ -65,7 +65,9 @@ $ helm install corvid-test raven/corvid-test
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
+| podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
+| podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
 | ports[0].containerPort | int | `8080` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
@@ -80,7 +82,9 @@ $ helm install corvid-test raven/corvid-test
 | restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
 | secrets | list | `[]` |  |
-| securityContext | object | `{}` |  |
+| securityContext | object | `{}` | securityContext for consumer overrides |
+| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
+| securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |

@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -62,7 +62,9 @@ $ helm install corvid raven/corvid
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
+| podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
+| podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
 | ports[0].containerPort | int | `8080` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
@@ -76,7 +78,9 @@ $ helm install corvid raven/corvid
 | resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | runtimeClassName | string | `nil` |  |
 | secrets | list | `[]` |  |
-| securityContext | object | `{}` |  |
+| securityContext | object | `{}` | securityContext for consumer overrides |
+| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
+| securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
@@ -90,6 +94,52 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.11.0
+
+This is backwards incompatible.
+Security context defaults. Both `pod` and `container` level defaults are now available.
+You will need to add the following to your downstream values.yaml changing the defaults to your needs:
+
+```yaml
+
+# -- enable or disable podSecurityContext entirely
+podSecurityContextEnabled: true
+# -- default podSecurityContext if none specified
+podSecurityContextDefault:
+  fsGroup: 1000
+# -- podSecurityContext for consumer overrides
+podSecurityContext: {}
+  # fsGroup: 1000
+
+# -- enable or disable securityContext entirely
+securityContextEnabled: true
+# -- default securityContext if none specified
+securityContextDefault:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+# -- securityContext for consumer overrides
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+```
+
+PLEASE NOTE: The above default security context is very restrictive. Depending on your needs you may need to tone this down based on the application you are packaging.
+Combined with the existing network policies this can be a very restrictive setup, where the container can do little, and it can communicate with very little.
+
+This change enables consumers of your own charts to override the defaults, but also for you to prescribe defaults in the instance the user has not done so.
+This also enables the user to completely disable them for debugging etc. This should ensure unaware consumers get some security defaults, so its important you pick reasonable defaults.
 
 ## 0.10.0
 

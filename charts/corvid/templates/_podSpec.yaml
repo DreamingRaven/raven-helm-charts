@@ -7,8 +7,23 @@ imagePullSecrets:
   {{- toYaml . | nindent 2 }}
 {{- end }}
 serviceAccountName: {{ include "corvid.serviceAccountName" . }}
+# Pod Security Context
+{{- if .Values.podSecurityContextEnabled }}
+# Default Pod Security Context
+{{- if not .Values.podSecurityContext }}
+{{- with .Values.podSecurityContextDefault }}
 securityContext:
-  {{- toYaml .Values.podSecurityContext | nindent 2 }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+# Overriden Pod Security Context
+{{- if .Values.podSecurityContext }}
+{{- with .Values.podSecurityContext }}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+{{- end }}
 {{- with .Values.initContainers }}
 initContainers:
   {{- toYaml . | nindent 2 }}

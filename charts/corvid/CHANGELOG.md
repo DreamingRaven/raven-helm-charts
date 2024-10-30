@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.11.0
+
+This is backwards incompatible.
+Security context defaults. Both `pod` and `container` level defaults are now available.
+You will need to add the following to your downstream values.yaml changing the defaults to your needs:
+
+```yaml
+
+# -- enable or disable podSecurityContext entirely
+podSecurityContextEnabled: true
+# -- default podSecurityContext if none specified
+podSecurityContextDefault:
+  fsGroup: 1000
+# -- podSecurityContext for consumer overrides
+podSecurityContext: {}
+  # fsGroup: 1000
+
+# -- enable or disable securityContext entirely
+securityContextEnabled: true
+# -- default securityContext if none specified
+securityContextDefault:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+# -- securityContext for consumer overrides
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+```
+
+PLEASE NOTE: The above default security context is very restrictive. Depending on your needs you may need to tone this down based on the application you are packaging.
+Combined with the existing network policies this can be a very restrictive setup, where the container can do little, and it can communicate with very little.
+
+This change enables consumers of your own charts to override the defaults, but also for you to prescribe defaults in the instance the user has not done so.
+This also enables the user to completely disable them for debugging etc. This should ensure unaware consumers get some security defaults, so its important you pick reasonable defaults.
+
 ## 0.10.0
 
 Backward incompatible change to cronjobs.

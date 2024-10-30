@@ -84,9 +84,28 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
+# -- enable or disable podSecurityContext entirely
+podSecurityContextEnabled: true
+# -- default podSecurityContext if none specified
+podSecurityContextDefault:
+  fsGroup: 1000
+# -- podSecurityContext for consumer overrides
 podSecurityContext: {}
-  # fsGroup: 2000
+  # fsGroup: 1000
 
+# -- enable or disable securityContext entirely
+securityContextEnabled: true
+# -- default securityContext if none specified
+securityContextDefault:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+# -- securityContext for consumer overrides
 securityContext: {}
   # capabilities:
   #   drop:
