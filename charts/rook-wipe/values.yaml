@@ -1,4 +1,4 @@
-# Default values for rook-cleanup.
+# Default values for rook-wipe.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -72,12 +72,12 @@ fullnameOverride: ""
 
 ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
 secrets: []
-# - name: rook-cleanup
+# - name: rook-wipe
 #   lookup:
-#   - key: rook-cleanupUsername
-#     env: rook-cleanup_USERNAME
-#   - key: rook-cleanupPassword
-#     env: rook-cleanup_PASSWORD
+#   - key: rook-wipeUsername
+#     env: rook-wipe_USERNAME
+#   - key: rook-wipePassword
+#     env: rook-wipe_PASSWORD
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
 env:
@@ -160,15 +160,15 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   ## @param ingress.hosts [array] Ingress hosts
   hosts:
-    - host: rook-cleanup.org.example
+    - host: rook-wipe.org.example
       paths:
         - path: /
           pathType: ImplementationSpecific
   ## @param ingress.tls [array] Ingress TLS
   tls: []
-  #  - secretName: rook-cleanup.org.example-tls
+  #  - secretName: rook-wipe.org.example-tls
   #    hosts:
-  #      - rook-cleanup.org.example
+  #      - rook-wipe.org.example
 
 # -- enable or disable resources entirely
 resourcesEnabled: true

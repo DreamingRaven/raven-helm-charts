@@ -1,9 +1,0 @@
-{{- define "rook-cleanup.cronjob" -}}
-spec:
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          {{- include "corvid.podSpec" (list . "rook-cleanup.podSpec") | nindent 10 }}
-{{- end -}}
-{{- include "corvid.cronjob" (list . "rook-cleanup.cronjob") -}}

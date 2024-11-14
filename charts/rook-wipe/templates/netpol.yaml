@@ -1,0 +1,5 @@
+{{- if .Values.netpol.enabled }}
+{{- include "corvid.netpol" (list . "rook-wipe.netpol") -}}
+{{- end }}
+{{- define "rook-wipe.netpol" -}}
+{{- end -}}

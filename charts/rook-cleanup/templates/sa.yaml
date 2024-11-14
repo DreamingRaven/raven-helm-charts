@@ -1,5 +1,0 @@
-{{- if .Values.serviceAccount.create }}
-{{- include "corvid.sa" (list . "rook-cleanup.sa") -}}
-{{- end }}
-{{- define "rook-cleanup.sa" -}}
-{{- end -}}

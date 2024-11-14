@@ -1,4 +1,4 @@
-{{- define "rook-cleanup.container" -}}
+{{- define "rook-wipe.container" -}}
 {{- if .Values.volumeMounts }}
 volumeMounts:
 {{- with .Values.volumeMounts }}

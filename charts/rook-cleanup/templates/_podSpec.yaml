@@ -1,5 +1,0 @@
-{{- define "rook-cleanup.podSpec" -}}
-nodeName: {{ .Values.nodeName }} # schedule pod to specific node
-containers:
-- {{ include "corvid.container" (list . "rook-cleanup.container") | indent 2 | trim }}
-{{- end -}}
