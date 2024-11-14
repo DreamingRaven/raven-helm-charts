@@ -39,7 +39,7 @@ $ helm install renovate raven/renovate
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"renovate/renovate"` |  |
-| image.tag | string | `"38-full"` |  |
+| image.tag | string | `"39-full"` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/"` |  |
