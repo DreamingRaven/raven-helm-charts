@@ -1,0 +1,5 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+{{- include "corvid.pvc" (list . "rook-cleanup.pvc") -}}
+{{- end }}
+{{- define "rook-cleanup.pvc" -}}
+{{- end -}}

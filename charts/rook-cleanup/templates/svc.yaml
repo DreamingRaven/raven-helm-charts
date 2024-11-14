@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "rook-cleanup.svc") -}}
+{{- define "rook-cleanup.svc" -}}
+{{- end -}}
