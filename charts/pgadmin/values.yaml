@@ -27,14 +27,23 @@ args:
 runtimeClassName:
 schedule: "@midnight"
 
-## @param initContainers Add bespoke init containers to the pods
-initContainers: []
-# - name: some-pod-name
-#   image: some-image
-#   imagePullPolicy: Always
-#   ports:
-#     - name: some-port
-#       containerPort: 1234
+initContainers:
+- name: chown
+  image: docker.io/dpage/pgadmin4:8.13
+  command:
+  - bash
+  - -c
+  - |
+    echo "Chowning the following by changing dir:"
+    cp -r /usr/bin/python3.12 /chowned/.
+    ls -l /chowned
+    echo "fin"
+  securityContext:
+    runAsUser: 0
+    allowPrivilegeEscalation: true
+  volumeMounts:
+  - mountPath: /chowned
+    name: bin
 
 restartPolicy: Always
 
@@ -67,7 +76,6 @@ envFrom:
 #     name: someConfigMap
 #     optional: false
 
-
 serviceAccount:
   ## @param serviceAccount.create [string] Specifies whether a service account should be created
   create: true
@@ -86,10 +94,10 @@ podLabels: {}
 podSecurityContextEnabled: true
 # -- default podSecurityContext if none specified
 podSecurityContextDefault:
-  fsGroup: 1000
+  fsGroup: 5050
 # -- podSecurityContext for consumer overrides
 podSecurityContext: {}
-  # fsGroup: 1000
+  # fsGroup: 5050
 
 # -- enable or disable securityContext entirely
 securityContextEnabled: true
@@ -98,10 +106,9 @@ securityContextDefault:
   capabilities:
     drop:
     - ALL
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
+  runAsUser: 5050 # Pgadmin user is 5050 by default
   allowPrivilegeEscalation: false
 # -- securityContext for consumer overrides
 securityContext: {}
@@ -110,7 +117,7 @@ securityContext: {}
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+  # runAsUser: 5050
 
 service:
   ## @param service.type [string] Service type
@@ -149,9 +156,9 @@ resourcesEnabled: true
 # -- default resources if not specified by user
 resourcesDefault:
   limits:
-    memory: 128Mi
+    memory: 1Gi
   requests:
-    cpu: 100m
+    cpu: 200m
 # -- raw resources block overrides for user
 resources:
   # limits:
@@ -209,17 +216,15 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: bin
+  emptyDir: {}
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- name: bin
+  mountPath: /usr/bin/python3.12
+  subPath: python3.12
 
 nodeSelector: {}
 
