@@ -3,7 +3,7 @@ appVersion: 0.4.4
 description: A Helm chart for Kubernetes
 name: open-webui
 type: application
-version: 0.1.2
+version: 0.1.3
 dependencies:
 - name: corvid
   version: 0.6.5
