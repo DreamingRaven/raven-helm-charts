@@ -40,7 +40,7 @@ $ helm install corvid raven/corvid
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"bitnami/kubectl"` |  |
-| image.tag | string | `"1.31.2"` |  |
+| image.tag | string | `"1.31.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
