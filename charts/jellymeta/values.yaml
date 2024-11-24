@@ -8,7 +8,7 @@ jellyfin:
     - ReadWriteMany # Note this is to allow filebrowser access
 
 metube:
-  enabled: true
+  enabled: false
 
   persistence:
     enabled: true
@@ -49,9 +49,9 @@ filebrowser:
   - name: jellyfin
     persistentVolumeClaim:
       claimName: jellymeta-jellyfin # changed to meta charts pvc name
-  - name: metube
-    persistentVolumeClaim:
-      claimName: jellymeta-metube # changed to meta charts pvc name
+  #- name: metube
+  #  persistentVolumeClaim:
+  #    claimName: jellymeta-metube # changed to meta charts pvc name
 
   volumeMounts:
   - name: data
@@ -70,7 +70,7 @@ filebrowser:
     mountPath: /srv/jellyfin
     subPath: media
     readOnly: false
-  - name: metube
-    mountPath: /srv/metube
-    subPath: downloads
-    readOnly: false
+  #- name: metube
+  #  mountPath: /srv/metube
+  #  subPath: downloads
+  #  readOnly: false

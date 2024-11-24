@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.9.11](https://img.shields.io/badge/AppVersion-10.9.11-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.9.11](https://img.shields.io/badge/AppVersion-10.9.11-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -18,7 +18,7 @@ $ helm install jellyfin raven/jellyfin
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.9.0 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
 
 ## Values
 
@@ -31,6 +31,10 @@ $ helm install jellyfin raven/jellyfin
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| cron.enabled | bool | `false` | enable or disable cronjob |
+| cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
 | envFrom | string | `nil` |  |
@@ -66,7 +70,9 @@ $ helm install jellyfin raven/jellyfin
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
+| podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
+| podSecurityContextEnabled | bool | `false` | enable or disable podSecurityContext entirely |
 | ports[0].containerPort | int | `8096` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
@@ -81,7 +87,9 @@ $ helm install jellyfin raven/jellyfin
 | restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
 | secrets | list | `[]` |  |
-| securityContext | object | `{}` |  |
+| securityContext | object | `{}` | securityContext for consumer overrides |
+| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
+| securityContextEnabled | bool | `false` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
