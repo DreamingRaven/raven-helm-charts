@@ -26,6 +26,18 @@ command:
 args:
 runtimeClassName:
 
+deployment:
+  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+  strategy: ""
+
+cron:
+  # -- enable or disable cronjob
+  enabled: false
+  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+  schedule: "@midnight"
+  # -- cronjob will not trigger on schedule but can be manually triggered
+  suspend: false
+
 ## @param initContainers Add bespoke init containers to the pods
 initContainers:
 ## optional gluetun VPN client sidecar
@@ -112,16 +124,33 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-## @param podSecurityContext [object] Pod security context
+# -- enable or disable podSecurityContext entirely
+podSecurityContextEnabled: false # TODO: test then enable by default
+# -- default podSecurityContext if none specified
+podSecurityContextDefault:
+  fsGroup: 1000
+# -- podSecurityContext for consumer overrides
 podSecurityContext: {}
-  # fsGroup: 2000
+  # fsGroup: 1000
 
-## @param securityContext [object] Security context
+# -- enable or disable securityContext entirely
+securityContextEnabled: false # TODO: test then enable by default
+# -- default securityContext if none specified
+securityContextDefault:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+# -- securityContext for consumer overrides
 securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
-  # readOnlyRootFilesystem: false
+  # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
 
@@ -157,31 +186,59 @@ ingress:
   #    hosts:
   #      - qbittorrent.org.example
 
-## @param resources [object] Resources
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# -- enable or disable resources entirely
+resourcesEnabled: true
+# -- default resources if not specified by user
+resourcesDefault:
+  limits:
+    memory: 2Gi
+  requests:
+    cpu: 200m
+# -- raw resources block overrides for user
+resources:
   # limits:
-  #   cpu: 100m
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
 
-startupProbe: {}
-  #httpGet:
-  #  path: /
-  #  port: http
-livenessProbe: {}
-  #httpGet:
-  #  path: /
-  #  port: http
-readinessProbe: {}
-  #httpGet:
-  #  path: /
-  #  port: http
+# -- enable or disable startup probe entirely
+startupProbeEnabled: true
+# -- default startup probe if not specified by user
+startupProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw startup probe overrides for user
+startupProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable liveness probe entirely
+livenessProbeEnabled: true
+# -- default liveness probe if not specified by user
+livenessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw liveness probe overrides for user
+livenessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable readiness probe entirely
+readinessProbeEnabled: true
+# -- default readiness probe if not specified by user
+readinessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw readiness probe overrides for user
+readinessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
 
 autoscaling:
   ## @param autoscaling.enabled [string] Enable autoscaling
@@ -194,14 +251,14 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
+volumes: []
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
+volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -214,3 +271,6 @@ affinity: {}
 
 netpol:
   enabled: true
+
+dnsPolicy: ""
+dnsConfig: {}
