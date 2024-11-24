@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.13](https://img.shields.io/badge/AppVersion-8.13-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.13](https://img.shields.io/badge/AppVersion-8.13-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -18,7 +18,7 @@ $ helm install pgadmin raven/pgadmin
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.11.0 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
 
 ## Values
 
@@ -31,6 +31,10 @@ $ helm install pgadmin raven/pgadmin
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| cron.enabled | bool | `false` | enable or disable cronjob |
+| cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
 | envFrom[0].secretRef.name | string | `"pgadmin"` |  |
@@ -86,7 +90,6 @@ $ helm install pgadmin raven/pgadmin
 | resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
-| schedule | string | `"@midnight"` |  |
 | secrets | list | `[]` |  |
 | securityContext | object | `{}` | securityContext for consumer overrides |
 | securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":5050}` | default securityContext if none specified |

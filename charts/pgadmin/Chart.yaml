@@ -3,8 +3,8 @@ appVersion: "8.13"
 description: A Helm chart for Kubernetes
 name: pgadmin
 type: application
-version: 0.3.0
+version: 0.4.0
 dependencies:
 - name: corvid
-  version: 0.11.0
+  version: 0.12.0
   repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
