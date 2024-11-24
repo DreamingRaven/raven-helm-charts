@@ -1,3 +1,0 @@
-{{- include "corvid.testConnectivity" (list . "ddb-proxy.testConnectivity") -}}
-{{- define "ddb-proxy.testConnectivity" -}}
-{{- end -}}

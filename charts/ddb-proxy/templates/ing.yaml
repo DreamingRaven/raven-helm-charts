@@ -1,5 +1,0 @@
-{{- if .Values.ingress.enabled }}
-{{- include "corvid.ing" (list . "ddb-proxy.ing") -}}
-{{- end }}
-{{- define "ddb-proxy.ing" -}}
-{{- end -}}

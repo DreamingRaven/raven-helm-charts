@@ -33,3 +33,30 @@ helm search repo raven/home-assistant
 ```
 
 For any particular chart please see their `README.md` files in the `charts` directory.
+
+## Charts
+
+`Corvid` is the base library chart for all other charts. This abstracts common boilerplate, and enables me to maintain significantly larger repository of charts long term.
+
+There are a handful of charts here, which utilise the base chart:
+
+- filebrowser; a http based file manager for administering files inside volumes\*
+- foundryvtt; a http based virtual tabletop server
+- home-assistant; a home-assistant webserver for home automation\*
+- jellyfin; a http based media server
+- ollama; a Gin / REST based LLM model server
+- OpenWebUI; a web based interface for LLMs
+- pgadmin4; a web based postgres admin interface
+- qbittorrent; a http based torrent client for [Archlinux ISOs](https://archlinux.org/download/#bittorrent-download)
+- renovate; a cronjob service to keep repositories up to date with latest releases
+- rook-wipe; a utility chart for wiping rook-ceph metadata and drive data on systems like talos linux
+
+\* Does not use `Corvid` (yet)
+
+## Deprecated Charts
+
+These charts pre-dated corvid meaning they are a handful to migrate, and I no longer use them so they have been removed since I won't notice if there are issues in my own cluster post migration.
+
+- Grocy
+- MeTube
+- DDB-Proxy

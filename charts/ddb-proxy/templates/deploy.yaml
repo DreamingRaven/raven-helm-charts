@@ -1,7 +1,0 @@
-{{- define "ddb-proxy.deploy" }}
-spec:
-  template:
-    spec:
-      {{ include "corvid.podSpec" (list . "ddb-proxy-podSpec") | indent 6 | trim }}
-{{- end }}
-{{- include "corvid.deploy" (list . "ddb-proxy.deploy") }}

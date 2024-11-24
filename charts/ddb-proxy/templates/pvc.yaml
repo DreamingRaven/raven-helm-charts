@@ -1,5 +1,0 @@
-{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
-{{- include "corvid.pvc" (list . "ddb-proxy.pvc") -}}
-{{- end }}
-{{- define "ddb-proxy.pvc" -}}
-{{- end -}}

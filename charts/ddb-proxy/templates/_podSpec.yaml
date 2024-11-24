@@ -1,4 +1,0 @@
-{{- define "ddb-proxy-podSpec" -}}
-containers:
-- {{ include "corvid.container" (list . "ddb-proxy-container") | indent 2 | trim }}
-{{- end -}}

@@ -1,3 +1,0 @@
-{{- include "corvid.svc" (list . "ddb-proxy.svc") -}}
-{{- define "ddb-proxy.svc" -}}
-{{- end -}}
