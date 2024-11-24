@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -30,6 +30,7 @@ $ helm install corvid raven/corvid
 | cron.enabled | bool | `false` | enable or disable cronjob |
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | envFrom[0].configMapRef.name | string | `"someConfigMap"` |  |
 | envFrom[0].configMapRef.optional | bool | `false` |  |
 | envFrom[1].secretRef.name | string | `"someSecret"` |  |
@@ -94,6 +95,28 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.12.0
+
+Behaviour has changed for single replica deployments with volumes.
+If you have a deployment that:
+
+- has a single replica (any of .Values.replicaCount=1, .Values.autoscaling.enabled=false)
+- has a volume (any of .Values.volumes>0, .Values.persistence.existingClaim!="", .Values.persistence.enabled=true)
+
+We now default the deployment to `Recreate` rollout strategy instead of `RollingUpdate` to enable rollouts to complete without manual intervention.
+
+You can manually define the rollout strategy if you would rather not rely on this automated behaviour, this is left blank by default but feel free to adjust it as you see fit downstream:
+
+```yaml
+
+deployment:
+  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+  strategy: ""
+
+```
+
+We do check for this key, so you will need to add this to your `values.yaml` else you will get thrown a key error.
 
 ## 0.11.0
 

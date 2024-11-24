@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.12.0
+
+Behaviour has changed for single replica deployments with volumes.
+If you have a deployment that:
+
+- has a single replica (any of .Values.replicaCount=1, .Values.autoscaling.enabled=false)
+- has a volume (any of .Values.volumes>0, .Values.persistence.existingClaim!="", .Values.persistence.enabled=true)
+
+We now default the deployment to `Recreate` rollout strategy instead of `RollingUpdate` to enable rollouts to complete without manual intervention.
+
+You can manually define the rollout strategy if you would rather not rely on this automated behaviour, this is left blank by default but feel free to adjust it as you see fit downstream:
+
+```yaml
+
+deployment:
+  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+  strategy: ""
+
+```
+
+We do check for this key, so you will need to add this to your `values.yaml` else you will get thrown a key error.
+
 ## 0.11.0
 
 This is backwards incompatible.

@@ -26,6 +26,10 @@ command:
 args:
 runtimeClassName:
 
+deployment:
+  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+  strategy: ""
+
 cron:
   # -- enable or disable cronjob
   enabled: false

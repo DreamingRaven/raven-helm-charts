@@ -1,4 +1,8 @@
 {{- define "corvid.deploy.tpl" -}}
+{{- $hasVolume := (or (ne (len .Values.volumes) 0) (or (ne .Values.persistence.existingClaim "") (.Values.persistence.enabled))) }}
+{{- $hasOneReplica := (and (eq (int .Values.replicaCount) 1) (not .Values.autoscaling.enabled)) }}
+# has volume: {{ $hasVolume }}
+# has 1 replica: {{ $hasOneReplica }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,6 +12,13 @@ metadata:
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  {{- if .Values.deployment.strategy }}
+  strategy:
+    type: {{ .Values.deployment.strategy }}
+  {{- else if and $hasVolume $hasOneReplica }}
+  strategy:
+    type: "Recreate" # detected a single replica with a volume which would block on rollout if Rollout was used
   {{- end }}
   selector:
     matchLabels:

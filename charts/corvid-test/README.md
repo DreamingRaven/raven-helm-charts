@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -18,7 +18,7 @@ $ helm install corvid-test raven/corvid-test
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.11.0 |
+| file://../corvid | corvid | 0.12.0 |
 
 ## Values
 
@@ -34,6 +34,7 @@ $ helm install corvid-test raven/corvid-test
 | cron.enabled | bool | `false` | enable or disable cronjob |
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
 | envFrom | string | `nil` |  |
