@@ -204,9 +204,9 @@ To add a startup probe you can add the following to your values.yaml for the mos
 
 ```yaml
 startupProbe:
-	httpGet:
-		path: /
-		port: http # the port name if it is not call http
+  httpGet:
+    path: /
+    port: http # the port name if it is not call http
 ```
 
 ## 0.7.0
