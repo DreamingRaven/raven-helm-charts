@@ -24,7 +24,7 @@ $ helm install jellymeta raven/jellymeta
 | Repository | Name | Version |
 |------------|------|---------|
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | filebrowser | 0.1.0 |
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.8.0 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.7.0 |
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | metube | 0.1.0 |
 
 ## Values
