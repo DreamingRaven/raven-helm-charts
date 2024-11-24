@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 0.3.7
-appVersion: "v12.330.0"
+version: 0.4.0
+appVersion: "v12.331.0"
 description: A Helm chart for Kubernetes
 name: foundryvtt
 type: application
@@ -15,6 +15,6 @@ maintainers:
 
 dependencies:
 - name: corvid
-  version: 0.7.1
+  version: 0.12.0
   repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
   #repository: "file://../corvid"

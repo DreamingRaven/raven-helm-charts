@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.3.7](https://img.shields.io/badge/Version-0.3.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v12.330.0](https://img.shields.io/badge/AppVersion-v12.330.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v12.331.0](https://img.shields.io/badge/AppVersion-v12.331.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -18,7 +18,7 @@ $ helm install foundryvtt raven/foundryvtt
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.7.1 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
 
 ## Values
 
@@ -31,6 +31,12 @@ $ helm install foundryvtt raven/foundryvtt
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| cron.enabled | bool | `false` | enable or disable cronjob |
+| cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
+| dnsConfig | object | `{}` |  |
+| dnsPolicy | string | `""` |  |
 | envFrom | string | `nil` |  |
 | env[0].name | string | `"FOUNDRY_IP_DISCOVERY"` |  |
 | env[0].value | string | `"false"` |  |
@@ -56,7 +62,9 @@ $ helm install foundryvtt raven/foundryvtt
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| livenessProbe | object | `{}` |  |
+| livenessProbe | string | `nil` | raw liveness probe overrides for user |
+| livenessProbeDefault | object | `{"failureThreshold":20,"httpGet":{"path":"/","port":"http"},"periodSeconds":30}` | default liveness probe if not specified by user |
+| livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
@@ -66,14 +74,20 @@ $ helm install foundryvtt raven/foundryvtt
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
+| podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
+| podSecurityContextEnabled | bool | `false` | enable or disable podSecurityContext entirely |
 | ports[0].containerPort | int | `30000` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
-| readinessProbe | object | `{}` |  |
+| readinessProbe | string | `nil` | raw readiness probe overrides for user |
+| readinessProbeDefault | object | `{"failureThreshold":20,"httpGet":{"path":"/","port":"http"},"periodSeconds":30}` | default readiness probe if not specified by user |
+| readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| resources | string | `nil` | raw resources block overrides for user |
+| resourcesDefault | object | `{"limits":{"memory":"3Gi"},"requests":{"cpu":"400m"}}` | default resources if not specified by user |
+| resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
 | secrets[0].lookup[0].env | string | `"FOUNDRY_USERNAME"` |  |
@@ -83,12 +97,17 @@ $ helm install foundryvtt raven/foundryvtt
 | secrets[0].lookup[2].env | string | `"FOUNDRY_ADMIN_KEY"` |  |
 | secrets[0].lookup[2].key | string | `"adminPassword"` |  |
 | secrets[0].name | string | `"foundryvtt"` |  |
-| securityContext | object | `{}` |  |
+| securityContext | object | `{}` | securityContext for consumer overrides |
+| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
+| securityContextEnabled | bool | `false` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| startupProbe | string | `nil` | raw startup probe overrides for user |
+| startupProbeDefault | object | `{"failureThreshold":120,"httpGet":{"path":"/","port":"http"},"initialDelaySeconds":5,"periodSeconds":10}` | default startup probe if not specified by user |
+| startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
