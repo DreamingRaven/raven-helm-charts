@@ -40,6 +40,7 @@ For any particular chart please see their `README.md` files in the `charts` dire
 
 There are a handful of charts here, which utilise the base chart:
 
+- backupd; a chart containing CRs for Volsync backups to streamline their provisioning
 - filebrowser; a http based file manager for administering files inside volumes\*
 - foundryvtt; a http based virtual tabletop server
 - home-assistant; a home-assistant webserver for home automation\*
