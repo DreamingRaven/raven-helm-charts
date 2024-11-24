@@ -105,7 +105,7 @@ podSecurityContext: {}
   # fsGroup: 1000
 
 # -- enable or disable securityContext entirely
-securityContextEnabled: true # TODO: test then enable by default
+securityContextEnabled: false # TODO: test then enable by default
 # -- default securityContext if none specified
 securityContextDefault:
   capabilities:
