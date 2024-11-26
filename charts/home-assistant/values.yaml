@@ -1,4 +1,4 @@
-# Default values for ha.
+# Default values for home-assistant.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -15,19 +15,39 @@ image:
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
   tag: "2024.11.3"
 
-## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
-secrets: []
-#- name: ha
-#  lookup:
-#  - key: dbUsername
-#    env: DB_USERNAME
-#  - key: dbPassword
-#    env: DB_PASSWORD
+persistence:
+  enabled: false
+  size: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  existingClaim: ""
 
-## @param env [array] Raw helm environment variable settings for static values
-env:
-- name: SOME_ENV_VAR
-  value: "200"
+command:
+args:
+runtimeClassName:
+
+deployment:
+  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+  strategy: ""
+
+cron:
+  # -- enable or disable cronjob
+  enabled: false
+  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+  schedule: "@midnight"
+  # -- cronjob will not trigger on schedule but can be manually triggered
+  suspend: false
+
+## @param initContainers Add bespoke init containers to the pods
+initContainers: []
+# - name: some-pod-name
+#   image: some-image
+#   imagePullPolicy: Always
+#   ports:
+#     - name: some-port
+#       containerPort: 1234
+
+restartPolicy: Always
 
 ## @param imagePullSecrets [array] Image pull secrets
 imagePullSecrets: []
@@ -36,9 +56,35 @@ nameOverride: ""
 ## @param fullnameOverride [string] Full name override
 fullnameOverride: ""
 
+## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
+secrets: []
+# - name: home-assistant
+#   lookup:
+#   - key: home-assistantUsername
+#     env: home-assistant_USERNAME
+#   - key: home-assistantPassword
+#     env: home-assistant_PASSWORD
+
+## @param env [array] Raw helm environment variable settings for static or dynamic values
+env:
+- name: HOME_ASSISTANT_EXAMPLE_VARIABLE
+  value: "false"
+
+## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+envFrom:
+# - configMapRef:
+#     name: someConfigMap
+#     optional: false
+# - secretRef:
+#     name: someSecret
+#     optional: false
+
+
 serviceAccount:
   ## @param serviceAccount.create [string] Specifies whether a service account should be created
   create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
   ## @param serviceAccount.annotations [object] Annotations to add to the service account
   annotations: {}
   ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
@@ -46,12 +92,30 @@ serviceAccount:
 
 ## @param podAnnotations [object] Pod annotations
 podAnnotations: {}
+podLabels: {}
 
-## @param podSecurityContext [object] Pod security context
+# -- enable or disable podSecurityContext entirely
+podSecurityContextEnabled: true
+# -- default podSecurityContext if none specified
+podSecurityContextDefault:
+  fsGroup: 1000
+# -- podSecurityContext for consumer overrides
 podSecurityContext: {}
-  # fsGroup: 2000
-  #
-## @param securityContext [object] Security context
+  # fsGroup: 1000
+
+# -- enable or disable securityContext entirely
+securityContextEnabled: true
+# -- default securityContext if none specified
+securityContextDefault:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+# -- securityContext for consumer overrides
 securityContext: {}
   # capabilities:
   #   drop:
@@ -59,51 +123,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
-## @param configMap [object] home assistant configuration
-configMap:
-  ## @param configMap.key [string] Configmap key whos contents to use as the mounted configuration
-  key: configuration.yaml
-  ## @param configMap.existingConfigmap [string] Manually managed configmap name to use
-  existingConfigMap: ""
-  configuration: |
-    # Loads default set of integrations. Do not remove.
-    default_config:
-
-    # Load frontend themes from the themes folder
-    frontend:
-      themes: !include_dir_merge_named themes
-
-    # automation: !include automations.yaml
-    # script: !include scripts.yaml
-    # scene: !include scenes.yaml
-
-    http:
-      # setting any local proxy as valid
-      # since this will be in k8s cluster
-      use_x_forwarded_for: true
-      trusted_proxies:
-      - 10.0.0.0/8
-      - 192.168.0.0/16
-      - 172.16.0.0/20
-
-persistence:
-  ## @param persistence.enabled [string] If true use persistent volume else use emptyDir
-  enabled: false
-  ## @param persistence.generatePVC [string] Generate PVC or use existing one does nothing if persistence.enabled is false
-  generatePVC: true
-  ## @param persistence.storageClass [string] Storage class
-  storageClass: ""
-  ## @param persistence.annotations [object] Annotations
-  annotations: {}
-  ## @param persistence.labels [object] Labels
-  labels: {}
-  ## @param persistence.accessModes [array] Access modes
-  accessModes: [ReadWriteOnce]
-  ## @param persistence.existingClaim [string] Manually managed PVC name to use
-  existingClaim: ""
-  ## @param persistence.size [string] Size of the storage for the DB and assets
-  size: 8Gi
 
 service:
   ## @param service.type [string] Service type
@@ -137,21 +156,59 @@ ingress:
   #    hosts:
   #      - ha.org.example
 
-## @param resources [object] Resources
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# -- enable or disable resources entirely
+resourcesEnabled: true
+# -- default resources if not specified by user
+resourcesDefault:
+  limits:
+    memory: 500Mi
+  requests:
+    cpu: 100m
+# -- raw resources block overrides for user
+resources:
   # limits:
-  #   cpu: 100m
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
 
-netpol:
-  enabled: true
+# -- enable or disable startup probe entirely
+startupProbeEnabled: true
+# -- default startup probe if not specified by user
+startupProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw startup probe overrides for user
+startupProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable liveness probe entirely
+livenessProbeEnabled: true
+# -- default liveness probe if not specified by user
+livenessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw liveness probe overrides for user
+livenessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable readiness probe entirely
+readinessProbeEnabled: true
+# -- default readiness probe if not specified by user
+readinessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw readiness probe overrides for user
+readinessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
 
 autoscaling:
   ## @param autoscaling.enabled [string] Enable autoscaling
@@ -159,34 +216,36 @@ autoscaling:
   ## @param autoscaling.minReplicas [string] Minimum number of replicas
   minReplicas: 1
   ## @param autoscaling.maxReplicas [string] Maximum number of replicas
-  maxReplicas: 3
+  maxReplicas: 100
   ## @param autoscaling.targetCPUUtilizationPercentage [string] Target CPU utilization percentage
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
-## @param nodeSelector [object] Node selector
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
 nodeSelector: {}
 
-## @param tolerations [array] Tolerations
 tolerations: []
 
-## @param affinity [object] Node affinity
 affinity: {}
 
+netpol:
+  enabled: true
 
-## @param controller.initContainers Add additional init containers to the ha deployment
-initContainers:
-# this init container is responsible for copying the configmap to the deployment volume
-# - name: init-config
-#   image: alpine:latest
-#   command:
-#   - sh
-#   - -c
-#   - |
-#     cp /configuration.yaml /config/configuration.yaml
-#   volumeMounts:
-#   - name: config-dir
-#     mountPath: /config
-#   - name: config
-#     mountPath: /configuration.yaml
-#     subPath: configuration.yaml
+dnsPolicy: "" # default is ClusterFirst
+dnsConfig: {}
+  # nameservers:
+  # - 1.1.1.1
+  # options:
+  # - name: ndots
+  #   value: "1"

@@ -1,0 +1,7 @@
+{{- define "home-assistant.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "home-assistant-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "home-assistant.deploy") }}

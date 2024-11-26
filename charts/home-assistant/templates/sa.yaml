@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "home-assistant.sa") -}}
+{{- end }}
+{{- define "home-assistant.sa" -}}
+{{- end -}}

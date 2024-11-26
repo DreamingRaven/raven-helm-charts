@@ -1,0 +1,4 @@
+{{- define "home-assistant-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "home-assistant-container") | indent 2 | trim }}
+{{- end -}}
