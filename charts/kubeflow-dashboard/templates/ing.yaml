@@ -1,0 +1,5 @@
+{{- if .Values.ingress.enabled }}
+{{- include "corvid.ing" (list . "kubeflow-dashboard.ing") -}}
+{{- end }}
+{{- define "kubeflow-dashboard.ing" -}}
+{{- end -}}

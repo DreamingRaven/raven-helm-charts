@@ -2,7 +2,7 @@
 helm-chart-push:
   stage: deploy
   only:
-  - tags
+  - main
   image:
     name: curlimages/curl:latest
     entrypoint: ["/bin/sh", "-c"]

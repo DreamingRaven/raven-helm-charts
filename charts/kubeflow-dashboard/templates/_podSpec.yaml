@@ -1,0 +1,4 @@
+{{- define "kubeflow-dashboard-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "kubeflow-dashboard-container") | indent 2 | trim }}
+{{- end -}}

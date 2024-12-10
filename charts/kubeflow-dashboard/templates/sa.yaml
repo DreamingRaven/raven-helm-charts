@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "kubeflow-dashboard.sa") -}}
+{{- end }}
+{{- define "kubeflow-dashboard.sa" -}}
+{{- end -}}

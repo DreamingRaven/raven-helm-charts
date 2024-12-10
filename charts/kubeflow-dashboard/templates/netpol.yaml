@@ -1,0 +1,5 @@
+{{- if .Values.netpol.enabled }}
+{{- include "corvid.netpol" (list . "kubeflow-dashboard.netpol") -}}
+{{- end }}
+{{- define "kubeflow-dashboard.netpol" -}}
+{{- end -}}

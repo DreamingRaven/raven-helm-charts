@@ -1,0 +1,7 @@
+{{- define "kubeflow-dashboard.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "kubeflow-dashboard-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "kubeflow-dashboard.deploy") }}

@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "kubeflow-dashboard.testConnectivity") -}}
+{{- define "kubeflow-dashboard.testConnectivity" -}}
+{{- end -}}
