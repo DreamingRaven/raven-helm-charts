@@ -1,0 +1,4 @@
+{{- define "cloudflared-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "cloudflared-container") | indent 2 | trim }}
+{{- end -}}

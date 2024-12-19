@@ -1,0 +1,5 @@
+{{- define "cloudflared.hpa" -}}
+{{- end -}}
+{{- if .Values.autoscaling.enabled }}
+{{- include "corvid.hpa" (list . "cloudflared.hpa") -}}
+{{- end }}

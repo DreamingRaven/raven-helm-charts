@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "cloudflared.sa") -}}
+{{- end }}
+{{- define "cloudflared.sa" -}}
+{{- end -}}

@@ -1,0 +1,7 @@
+{{- define "cloudflared.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "cloudflared-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- include "corvid.deploy" (list . "cloudflared.deploy") }}

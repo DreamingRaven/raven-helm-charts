@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "cloudflared.testConnectivity") -}}
+{{- define "cloudflared.testConnectivity" -}}
+{{- end -}}
