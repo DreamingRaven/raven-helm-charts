@@ -25,6 +25,7 @@ persistence:
 command:
 args:
 - tunnel
+- run
 # - --config
 # - /etc/cloudflared/config.yaml
 runtimeClassName:
@@ -143,7 +144,7 @@ service:
 ## @param ports [array] Ports to expose, tie to the service, and ingress
 ports:
 - name: http
-  containerPort: 8080
+  containerPort: 2000
   servicePort: 80
   protocol: TCP
 
@@ -188,8 +189,11 @@ startupProbeEnabled: true
 # -- default startup probe if not specified by user
 startupProbeDefault:
   httpGet:
-    path: /
+    path: /ready
     port: http
+  failureThreshold: 6
+  initialDelaySeconds: 10
+  periodSeconds: 10
 # -- raw startup probe overrides for user
 startupProbe:
   # httpGet:
@@ -201,8 +205,11 @@ livenessProbeEnabled: true
 # -- default liveness probe if not specified by user
 livenessProbeDefault:
   httpGet:
-    path: /
+    path: /ready
     port: http
+  failureThreshold: 6
+  initialDelaySeconds: 10
+  periodSeconds: 10
 # -- raw liveness probe overrides for user
 livenessProbe:
   # httpGet:
@@ -214,8 +221,11 @@ readinessProbeEnabled: true
 # -- default readiness probe if not specified by user
 readinessProbeDefault:
   httpGet:
-    path: /
+    path: /ready
     port: http
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
 # -- raw readiness probe overrides for user
 readinessProbe:
   # httpGet:

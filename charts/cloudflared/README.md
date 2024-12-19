@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.12.1](https://img.shields.io/badge/AppVersion-2024.12.1-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.12.1](https://img.shields.io/badge/AppVersion-2024.12.1-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -26,6 +26,7 @@ $ helm install cloudflared raven/cloudflared
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | args[0] | string | `"tunnel"` |  |
+| args[1] | string | `"run"` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -60,7 +61,7 @@ $ helm install cloudflared raven/cloudflared
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
-| livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
+| livenessProbeDefault | object | `{"failureThreshold":6,"httpGet":{"path":"/ready","port":"http"},"initialDelaySeconds":10,"periodSeconds":10}` | default liveness probe if not specified by user |
 | livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
@@ -74,12 +75,12 @@ $ helm install cloudflared raven/cloudflared
 | podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
 | podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
 | podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
-| ports[0].containerPort | int | `8080` |  |
+| ports[0].containerPort | int | `2000` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
 | readinessProbe | string | `nil` | raw readiness probe overrides for user |
-| readinessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default readiness probe if not specified by user |
+| readinessProbeDefault | object | `{"failureThreshold":3,"httpGet":{"path":"/ready","port":"http"},"initialDelaySeconds":10,"periodSeconds":10}` | default readiness probe if not specified by user |
 | readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | replicaCount | int | `1` |  |
 | resources | string | `nil` | raw resources block overrides for user |
@@ -97,7 +98,7 @@ $ helm install cloudflared raven/cloudflared
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | startupProbe | string | `nil` | raw startup probe overrides for user |
-| startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
+| startupProbeDefault | object | `{"failureThreshold":6,"httpGet":{"path":"/ready","port":"http"},"initialDelaySeconds":10,"periodSeconds":10}` | default startup probe if not specified by user |
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
