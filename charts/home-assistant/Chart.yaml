@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: "2024.11.3"
+appVersion: "2024.12.5"
 description: A Helm chart for Kubernetes
 name: home-assistant
 type: application
-version: 0.6.0
+version: 0.6.1
 dependencies:
 - name: corvid
   version: 0.12.0

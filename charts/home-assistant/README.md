@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.11.3](https://img.shields.io/badge/AppVersion-2024.11.3-informational?style=flat-square)
+![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.12.5](https://img.shields.io/badge/AppVersion-2024.12.5-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -44,7 +44,7 @@ $ helm install home-assistant raven/home-assistant
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2024.11.3"` |  |
+| image.tag | string | `"2024.12.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
