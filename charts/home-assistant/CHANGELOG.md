@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+
+Added default volume and volumemount for a secret which should contain the home assistant configuration.
+
+This will be made optional in a further patch, however if you override volumes and mounts this wont affect you currently.
+
 ## 0.6.0
 
 DO NOT UPGRADE TO THIS UNLESS YOU HAVE A BACKUP OF YOUR DATA.

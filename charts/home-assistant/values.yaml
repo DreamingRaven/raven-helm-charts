@@ -221,17 +221,20 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: config
+  secret:
+    secretName: ha
+    defaultMode: 420
+    items:
+      - key: configuration.yaml
+        path: configuration.yaml
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- mountPath: /config/configuration.yaml
+  name: config
+  subPath: configuration.yaml
 
 nodeSelector: {}
 
