@@ -1,3 +1,5 @@
 {{- define "corvid-test.job" -}}
 {{- end -}}
+{{- if .Values.job.enabled }}
 {{- include "corvid.job" (list . "corvid-test.job") -}}
+{{- end }}

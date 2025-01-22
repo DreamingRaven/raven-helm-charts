@@ -26,17 +26,24 @@ command:
 args:
 runtimeClassName:
 
+daemonset:
+  enabled: true
+
 deployment:
+  enabled: true
   # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
   strategy: ""
 
 cron:
   # -- enable or disable cronjob
-  enabled: false
+  enabled: true
   # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
   schedule: "@midnight"
   # -- cronjob will not trigger on schedule but can be manually triggered
   suspend: false
+
+job:
+  enabled: true
 
 ## @param initContainers Add bespoke init containers to the pods
 initContainers: []

@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -31,9 +31,11 @@ $ helm install corvid-test raven/corvid-test
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
-| cron.enabled | bool | `false` | enable or disable cronjob |
+| cron.enabled | bool | `true` | enable or disable cronjob |
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| daemonset.enabled | bool | `true` |  |
+| deployment.enabled | bool | `true` |  |
 | deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
@@ -54,6 +56,7 @@ $ helm install corvid-test raven/corvid-test
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
+| job.enabled | bool | `true` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
 | livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
 | livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
