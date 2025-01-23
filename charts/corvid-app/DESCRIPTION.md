@@ -9,12 +9,12 @@ dependencies:
 - alias: api
   condition: api.enabled
   name: corvid-app
-  version: 0.2.7 # change to be latest corvid-app version
+  version: 0.9.0 # change to be latest corvid-app version
   repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
 - alias: web
   condition: web.enabled
   name: corvid-app
-  version: 0.2.7 # change to be latest corvid-app version
+  version: 0.9.0 # change to be latest corvid-app version
   repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
 ```
 
