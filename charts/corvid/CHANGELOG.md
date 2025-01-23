@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.13.0
+
+Adds backwards compatible topologySpreadConstraints.
+
+Simply add the following to make use of them:
+
+```yaml
+topologySpreadConstraints: []
+```
+
 ## 0.12.0
 
 Behaviour has changed for single replica deployments with volumes.

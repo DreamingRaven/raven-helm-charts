@@ -223,6 +223,20 @@ nodeSelector: {}
 
 tolerations: []
 
+topologySpreadConstraints: []
+# - maxSkew: 1
+#   topologyKey: kubernetes.io/hostname
+#   whenUnsatisfiable: DoNotSchedule # cant benefit from HA on same node
+#   labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: corvid-app
+# - maxSkew: 1
+#   topologyKey: zone
+#   whenUnsatisfiable: ScheduleAnyway # can still benefit from HA in zone
+#   labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: corvid-app
+
 affinity: {}
 
 netpol:
