@@ -18,7 +18,7 @@ $ helm install home-assistant raven/home-assistant
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.12.0 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
 
 ## Values
 

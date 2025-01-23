@@ -7,4 +7,4 @@ version: 0.7.0
 dependencies:
 - name: corvid
   version: 0.12.0
-  repository: "file://../corvid"
+  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
