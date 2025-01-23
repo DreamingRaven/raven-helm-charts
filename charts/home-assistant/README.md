@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.12.5](https://img.shields.io/badge/AppVersion-2024.12.5-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024.12.5](https://img.shields.io/badge/AppVersion-2024.12.5-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -44,7 +44,7 @@ $ helm install home-assistant raven/home-assistant
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2024.12.5"` |  |
+| image.tag | string | `"2025.1.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -95,10 +95,22 @@ $ helm install home-assistant raven/home-assistant
 | startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
-| volumeMounts | list | `[]` |  |
-| volumes | list | `[]` |  |
+| volumeMounts[0].mountPath | string | `"/config/configuration.yaml"` |  |
+| volumeMounts[0].name | string | `"config"` |  |
+| volumeMounts[0].subPath | string | `"configuration.yaml"` |  |
+| volumes[0].name | string | `"config"` |  |
+| volumes[0].secret.defaultMode | int | `420` |  |
+| volumes[0].secret.items[0].key | string | `"configuration.yaml"` |  |
+| volumes[0].secret.items[0].path | string | `"configuration.yaml"` |  |
+| volumes[0].secret.secretName | string | `"ha"` |  |
 
 # Changelog
+
+## 0.7.0
+
+Added default volume and volumemount for a secret which should contain the home assistant configuration.
+
+This will be made optional in a further patch, however if you override volumes and mounts this wont affect you currently.
 
 ## 0.6.0
 
