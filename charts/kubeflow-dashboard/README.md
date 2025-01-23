@@ -18,7 +18,7 @@ $ helm install kubeflow-dashboard raven/kubeflow-dashboard
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.12.0 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
 
 ## Values
 
