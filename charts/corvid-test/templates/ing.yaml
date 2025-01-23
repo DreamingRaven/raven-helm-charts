@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled }}
-{{- include "corvid.ing" (list . "corvid-test.ing") -}}
+{{- include "corvid.ing" (list . "corvid-app.ing") -}}
 {{- end }}
-{{- define "corvid-test.ing" -}}
+{{- define "corvid-app.ing" -}}
 {{- end -}}

@@ -1,5 +1,5 @@
-{{- define "corvid-test.cronjob" -}}
+{{- define "corvid-app.cronjob" -}}
 {{- end -}}
 {{- if .Values.cron.enabled }}
-{{- include "corvid.cronjob" (list . "corvid-test.cronjob") -}}
+{{- include "corvid.cronjob" (list . "corvid-app.cronjob") -}}
 {{- end }}

@@ -1,5 +1,5 @@
-{{- define "corvid-test.hpa" -}}
+{{- define "corvid-app.hpa" -}}
 {{- end -}}
 {{- if .Values.autoscaling.enabled }}
-{{- include "corvid.hpa" (list . "corvid-test.hpa") -}}
+{{- include "corvid.hpa" (list . "corvid-app.hpa") -}}
 {{- end }}

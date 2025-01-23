@@ -1,4 +1,4 @@
-# corvid-test
+# corvid-app
 
 A Helm chart for Kubernetes
 
@@ -6,12 +6,12 @@ A Helm chart for Kubernetes
 
 ## Installing the Chart
 
-To install the chart with the release name `corvid-test`, run the following commands:
+To install the chart with the release name `corvid-app`, run the following commands:
 
 ```console
 $ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
 $ helm repo update raven
-$ helm install corvid-test raven/corvid-test
+$ helm install corvid-app raven/corvid-app
 ```
 
 ## Requirements
@@ -40,18 +40,18 @@ $ helm install corvid-test raven/corvid-test
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
 | envFrom | string | `nil` |  |
-| env[0].name | string | `"corvid-test_EXAMPLE_VARIABLE"` |  |
+| env[0].name | string | `"corvid-app_EXAMPLE_VARIABLE"` |  |
 | env[0].value | string | `"false"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
-| image.repository | string | `"corvid-test/corvid-test"` |  |
+| image.repository | string | `"corvid-app/corvid-app"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"corvid-test.org.example"` |  |
+| ingress.hosts[0].host | string | `"corvid-app.org.example"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |

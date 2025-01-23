@@ -1,5 +1,5 @@
-{{- define "corvid-test.job" -}}
+{{- define "corvid-app.job" -}}
 {{- end -}}
 {{- if .Values.job.enabled }}
-{{- include "corvid.job" (list . "corvid-test.job") -}}
+{{- include "corvid.job" (list . "corvid-app.job") -}}
 {{- end }}

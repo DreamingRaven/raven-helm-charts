@@ -1,4 +1,4 @@
-# Default values for corvid-test.
+# Default values for corvid-app.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -9,7 +9,7 @@ image:
   ## @param image.registry [string] Image container registry
   registry: docker.io
   ## @param image.repository [string] Image repository
-  repository: corvid-test/corvid-test
+  repository: corvid-app/corvid-app
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
@@ -65,16 +65,16 @@ fullnameOverride: ""
 
 ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
 secrets: []
-# - name: corvid-test
+# - name: corvid-app
 #   lookup:
-#   - key: corvid-testUsername
-#     env: corvid-test_USERNAME
-#   - key: corvid-testPassword
-#     env: corvid-test_PASSWORD
+#   - key: corvid-appUsername
+#     env: corvid-app_USERNAME
+#   - key: corvid-appPassword
+#     env: corvid-app_PASSWORD
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
 env:
-- name: corvid-test_EXAMPLE_VARIABLE
+- name: corvid-app_EXAMPLE_VARIABLE
   value: "false"
 
 ## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
@@ -153,15 +153,15 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   ## @param ingress.hosts [array] Ingress hosts
   hosts:
-    - host: corvid-test.org.example
+    - host: corvid-app.org.example
       paths:
         - path: /
           pathType: ImplementationSpecific
   ## @param ingress.tls [array] Ingress TLS
   tls: []
-  #  - secretName: corvid-test.org.example-tls
+  #  - secretName: corvid-app.org.example-tls
   #    hosts:
-  #      - corvid-test.org.example
+  #      - corvid-app.org.example
 
 # -- enable or disable resources entirely
 resourcesEnabled: true

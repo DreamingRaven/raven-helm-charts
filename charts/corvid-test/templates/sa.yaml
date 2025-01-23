@@ -1,5 +1,5 @@
 {{- if .Values.serviceAccount.create }}
-{{- include "corvid.sa" (list . "corvid-test.sa") -}}
+{{- include "corvid.sa" (list . "corvid-app.sa") -}}
 {{- end }}
-{{- define "corvid-test.sa" -}}
+{{- define "corvid-app.sa" -}}
 {{- end -}}

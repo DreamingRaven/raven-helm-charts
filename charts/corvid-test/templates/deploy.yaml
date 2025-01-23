@@ -1,9 +1,9 @@
-{{- define "corvid-test.deploy" }}
+{{- define "corvid-app.deploy" }}
 spec:
   template:
     spec:
-      {{ include "corvid.podSpec" (list . "corvid-test-podSpec") | indent 6 | trim }}
+      {{ include "corvid.podSpec" (list . "corvid-app-podSpec") | indent 6 | trim }}
 {{- end }}
 {{- if .Values.deployment.enabled }}
-{{- include "corvid.deploy" (list . "corvid-test.deploy") }}
+{{- include "corvid.deploy" (list . "corvid-app.deploy") }}
 {{- end }}
