@@ -1,0 +1,5 @@
+{{- define "kubeflow-dashboard.cronjob" -}}
+{{- end -}}
+{{- if .Values.cron.enabled }}
+{{- include "corvid.cronjob" (list . "kubeflow-dashboard.cronjob") -}}
+{{- end }}

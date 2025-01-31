@@ -2,18 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-## @param replicaCount [string] Server deployment replica count
+# -- deployment replica count
 replicaCount: 1
 
 image:
-  ## @param image.registry [string] Image container registry
   registry: docker.io
-  ## @param image.repository [string] Image repository
-  repository: kubeflow-dashboard/kubeflow-dashboard
-  ## @param image.pullPolicy [string] Image pull policy
+  repository: kubeflownotebookswg/centraldashboard
   pullPolicy: IfNotPresent
-  ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v1.9.2" # renovate: datasource=github-releases depName=kubeflow/kubeflow
 
 persistence:
   enabled: false
@@ -26,7 +22,11 @@ command:
 args:
 runtimeClassName:
 
+daemonset:
+  enabled: false
+
 deployment:
+  enabled: true
   # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
   strategy: ""
 
@@ -38,7 +38,10 @@ cron:
   # -- cronjob will not trigger on schedule but can be manually triggered
   suspend: false
 
-## @param initContainers Add bespoke init containers to the pods
+job:
+  enabled: false
+
+# -- Add bespoke init containers to the pods
 initContainers: []
 # - name: some-pod-name
 #   image: some-image
@@ -49,14 +52,11 @@ initContainers: []
 
 restartPolicy: Always
 
-## @param imagePullSecrets [array] Image pull secrets
 imagePullSecrets: []
-## @param nameOverride [string] Partial name override
 nameOverride: ""
-## @param fullnameOverride [string] Full name override
 fullnameOverride: ""
 
-## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
+# -- A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
 secrets: []
 # - name: kubeflow-dashboard
 #   lookup:
@@ -65,32 +65,48 @@ secrets: []
 #   - key: kubeflow-dashboardPassword
 #     env: kubeflow-dashboard_PASSWORD
 
-## @param env [array] Raw helm environment variable settings for static or dynamic values
+# -- Raw helm environment variable settings for static or dynamic values
 env:
-- name: kubeflow-dashboard_EXAMPLE_VARIABLE
-  value: "false"
+- name: POD_NAMESPACE
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.namespace
+- name: LOGOUT_URL
+  value: /oauth2/sign_out
 
-## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
-envFrom:
-# - configMapRef:
-#     name: someConfigMap
-#     optional: false
+- name: USERID_HEADER
+  value: cluster.local # CD_USERID_HEADER_PLACEHOLDER
+- name: USERID_PREFIX
+  value: "" # CD_USERID_PREFIX_PLACEHOLDER
+- name: PROFILES_KFAM_SERVICE_HOST
+  value: profiles-kfam.kubeflow
+- name: REGISTRATION_FLOW
+  value: "false" # CD_REGISTRATION_FLOW_PLACEHOLDER
+- name: DASHBOARD_CONFIGMAP
+  # value: CD_CONFIGMAP_NAME_PLACEHOLDER
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.name # has same name as configmap
+
+# -- Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+envFrom: []
 # - secretRef:
-#     name: someSecret
+#     name: kubeflow-dashboard-env
 #     optional: false
-
+# - configMapRef:
+#     name: kubeflow-dashboard-env
+#     optional: false
 
 serviceAccount:
-  ## @param serviceAccount.create [string] Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Automatically mount a ServiceAccount's API credentials?
+  # -- Automatically mount a ServiceAccount's API credentials?
   automount: true
-  ## @param serviceAccount.annotations [object] Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name: ""
 
-## @param podAnnotations [object] Pod annotations
 podAnnotations: {}
 podLabels: {}
 
@@ -110,7 +126,7 @@ securityContextDefault:
   capabilities:
     drop:
     - ALL
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false # else npm ERR! code EROFS
   runAsNonRoot: true
   runAsUser: 1000
   runAsGroup: 1000
@@ -125,10 +141,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  ## @param service.type [string] Service type
   type: ClusterIP
 
-## @param ports [array] Ports to expose, tie to the service, and ingress
 ports:
 - name: http
   containerPort: 8082
@@ -136,21 +150,16 @@ ports:
   protocol: TCP
 
 ingress:
-  ## @param ingress.enabled [string] Enable ingress
-  enabled: false
-  ## @param ingress.className [string] Ingress class
+  enabled: true
   className: ""
-  ## @param ingress.annotations [object] Ingress annotations
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  ## @param ingress.hosts [array] Ingress hosts
   hosts:
     - host: kubeflow-dashboard.org.example
       paths:
         - path: /
           pathType: ImplementationSpecific
-  ## @param ingress.tls [array] Ingress TLS
   tls: []
   #  - secretName: kubeflow-dashboard.org.example-tls
   #    hosts:
@@ -161,9 +170,9 @@ resourcesEnabled: true
 # -- default resources if not specified by user
 resourcesDefault:
   limits:
-    memory: 128Mi
+    memory: 500Mi
   requests:
-    cpu: 100m
+    cpu: 200m
 # -- raw resources block overrides for user
 resources:
   # limits:
@@ -176,7 +185,7 @@ startupProbeEnabled: true
 # -- default startup probe if not specified by user
 startupProbeDefault:
   httpGet:
-    path: /
+    path: /healthz
     port: http
 # -- raw startup probe overrides for user
 startupProbe:
@@ -189,7 +198,7 @@ livenessProbeEnabled: true
 # -- default liveness probe if not specified by user
 livenessProbeDefault:
   httpGet:
-    path: /
+    path: /healthz
     port: http
 # -- raw liveness probe overrides for user
 livenessProbe:
@@ -202,7 +211,7 @@ readinessProbeEnabled: true
 # -- default readiness probe if not specified by user
 readinessProbeDefault:
   httpGet:
-    path: /
+    path: /healthz
     port: http
 # -- raw readiness probe overrides for user
 readinessProbe:
@@ -211,13 +220,9 @@ readinessProbe:
   #   port: http
 
 autoscaling:
-  ## @param autoscaling.enabled [string] Enable autoscaling
   enabled: false
-  ## @param autoscaling.minReplicas [string] Minimum number of replicas
   minReplicas: 1
-  ## @param autoscaling.maxReplicas [string] Maximum number of replicas
   maxReplicas: 100
-  ## @param autoscaling.targetCPUUtilizationPercentage [string] Target CPU utilization percentage
   targetCPUUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
@@ -236,6 +241,20 @@ volumeMounts: []
 nodeSelector: {}
 
 tolerations: []
+
+topologySpreadConstraints: []
+# - maxSkew: 1
+#   topologyKey: kubernetes.io/hostname
+#   whenUnsatisfiable: DoNotSchedule # cant benefit from HA on same node
+#   labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: kubeflow-dashboard
+# - maxSkew: 1
+#   topologyKey: zone
+#   whenUnsatisfiable: ScheduleAnyway # can still benefit from HA in zone
+#   labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: kubeflow-dashboard
 
 affinity: {}
 

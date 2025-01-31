@@ -1,5 +1,5 @@
 {{- define "kubeflow-dashboard-container" -}}
-name: {{ .Chart.Name }}-override
+name: {{ .Chart.Name }}
 {{- if or .Values.volumeMounts .Values.persistence.enabled }}
 volumeMounts:
 {{- if .Values.persistence.enabled }}

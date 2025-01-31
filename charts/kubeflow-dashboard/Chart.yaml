@@ -1,10 +1,10 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: 0.1.0 # renovate: datasource=github-releases depName=kubeflow/kubeflow
 description: A Helm chart for Kubernetes
 name: kubeflow-dashboard
 type: application
 version: 0.1.0
 dependencies:
 - name: corvid
-  version: 0.12.0
+  version: 0.13.0
   repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"

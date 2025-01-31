@@ -1,0 +1,5 @@
+{{- define "kubeflow-dashboard.job" -}}
+{{- end -}}
+{{- if .Values.job.enabled }}
+{{- include "corvid.job" (list . "kubeflow-dashboard.job") -}}
+{{- end }}

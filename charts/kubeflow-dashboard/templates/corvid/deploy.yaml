@@ -4,4 +4,6 @@ spec:
     spec:
       {{ include "corvid.podSpec" (list . "kubeflow-dashboard-podSpec") | indent 6 | trim }}
 {{- end }}
+{{- if .Values.deployment.enabled }}
 {{- include "corvid.deploy" (list . "kubeflow-dashboard.deploy") }}
+{{- end }}

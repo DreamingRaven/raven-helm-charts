@@ -1,0 +1,9 @@
+{{- define "kubeflow-dashboard.daemonset" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "kubeflow-dashboard-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.daemonset.enabled }}
+{{- include "corvid.daemonset" (list . "kubeflow-dashboard.daemonset") }}
+{{- end }}
