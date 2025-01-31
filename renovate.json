@@ -20,10 +20,14 @@
 	"regexManagers": [
 		{
 			"fileMatch": [
-				"(^|/)Makefile$"
+				"(^|\/)Makefile$",
+				"(^|\/)values.yaml$",
+				"(^|\/)Chart.yaml$",
+				"(^|\/)charts\/(.+)\/templates\/.*"
 			],
 			"matchStrings": [
-				"MINIKUBE_KUBE_VERSION=(?<currentValue>.*) # renovate: datasource=(?<datasource>.*) depName=(?<depName>.*)"
+				"MINIKUBE_KUBE_VERSION=(?<currentValue>.*) # renovate: datasource=(?<datasource>.*) depName=(?<depName>.*)",
+				"(tag|appVersion):\s+\"?(?<currentValue>.*)\"?\s+# renovate: datasource=(?<datasource>.*) depName=(?<depName>.*)"
 			],
 			"extractVersionTemplate": "^v?(?<version>.*)$"
 		}
