@@ -7,13 +7,13 @@ replicaCount: 1
 
 image:
   ## @param image.registry [string] Image container registry
-  registry: lscr.io
+  registry: ghcr.io
   ## @param image.repository [string] Image repository
   repository: linuxserver/qbittorrent
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-  tag: "4.6.5-r0-ls336"
+  tag: "5.0.3"
 
 persistence:
   enabled: true
