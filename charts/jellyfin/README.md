@@ -48,7 +48,7 @@ $ helm install jellyfin raven/jellyfin
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"lscr.io"` |  |
 | image.repository | string | `"linuxserver/jellyfin"` |  |
-| image.tag | string | `"10.10.3"` |  |
+| image.tag | string | `"10.10.6"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

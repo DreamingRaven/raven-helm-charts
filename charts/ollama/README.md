@@ -44,7 +44,7 @@ $ helm install ollama raven/ollama
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"ollama/ollama"` |  |
-| image.tag | string | `"0.5.4"` |  |
+| image.tag | string | `"0.5.11"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
