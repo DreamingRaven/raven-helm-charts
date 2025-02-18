@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.13.1
+
+Added backwards compatible optional AppProtocol.
+For richer interaction / information.
+
+https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/1507-app-protocol/README.md
+
+https://github.com/kubernetes/kubernetes/issues/40244
+
+```yaml
+ports:
+- name: http
+  containerPort: 8080
+  servicePort: 80
+  protocol: TCP
+  appProtocol: http # NEW
+```
+
 ## 0.13.0
 
 Adds backwards compatible topologySpreadConstraints.

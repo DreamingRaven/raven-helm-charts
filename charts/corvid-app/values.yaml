@@ -141,6 +141,7 @@ ports:
   containerPort: 8080
   servicePort: 80
   protocol: TCP
+  appProtocol: http
 
 ingress:
   ## @param ingress.enabled [string] Enable ingress

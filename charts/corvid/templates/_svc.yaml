@@ -13,6 +13,9 @@ spec:
     port: {{ .servicePort }} # services in-cluster port
     targetPort: {{ .name }} # port of container/ pod
     name: {{ .name }}
+    {{- with .appProtocol }}
+    appProtocol: {{ . }}
+    {{- end }}
   {{- end }}
   selector:
     {{- include "corvid.selectorLabels" . | nindent 4 }}

@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.13.1](https://img.shields.io/badge/Version-0.13.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -96,6 +96,24 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.13.1
+
+Added backwards compatible optional AppProtocol.
+For richer interaction / information.
+
+https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/1507-app-protocol/README.md
+
+https://github.com/kubernetes/kubernetes/issues/40244
+
+```yaml
+ports:
+- name: http
+  containerPort: 8080
+  servicePort: 80
+  protocol: TCP
+  appProtocol: http # NEW
+```
 
 ## 0.13.0
 
