@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "bytestash.testConnectivity") -}}
+{{- define "bytestash.testConnectivity" -}}
+{{- end -}}

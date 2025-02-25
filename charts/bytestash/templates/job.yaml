@@ -1,0 +1,5 @@
+{{- define "bytestash.job" -}}
+{{- end -}}
+{{- if .Values.job.enabled }}
+{{- include "corvid.job" (list . "bytestash.job") -}}
+{{- end }}

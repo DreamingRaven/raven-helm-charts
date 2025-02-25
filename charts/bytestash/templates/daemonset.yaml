@@ -1,0 +1,9 @@
+{{- define "bytestash.daemonset" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "bytestash-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.daemonset.enabled }}
+{{- include "corvid.daemonset" (list . "bytestash.daemonset") }}
+{{- end }}

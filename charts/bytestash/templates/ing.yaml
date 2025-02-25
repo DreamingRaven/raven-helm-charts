@@ -1,0 +1,5 @@
+{{- if .Values.ingress.enabled }}
+{{- include "corvid.ing" (list . "bytestash.ing") -}}
+{{- end }}
+{{- define "bytestash.ing" -}}
+{{- end -}}

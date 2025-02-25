@@ -1,0 +1,5 @@
+{{- if .Values.serviceAccount.create }}
+{{- include "corvid.sa" (list . "bytestash.sa") -}}
+{{- end }}
+{{- define "bytestash.sa" -}}
+{{- end -}}

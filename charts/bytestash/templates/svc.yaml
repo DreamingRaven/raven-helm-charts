@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "bytestash.svc") -}}
+{{- define "bytestash.svc" -}}
+{{- end -}}

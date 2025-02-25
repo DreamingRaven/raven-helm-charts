@@ -1,0 +1,5 @@
+{{- if .Values.netpol.enabled }}
+{{- include "corvid.netpol" (list . "bytestash.netpol") -}}
+{{- end }}
+{{- define "bytestash.netpol" -}}
+{{- end -}}

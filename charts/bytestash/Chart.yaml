@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: A Helm chart for Kubernetes
+name: bytestash
+type: application
+version: 0.1.0
+dependencies:
+- name: corvid
+  version: 0.13.1
+  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"

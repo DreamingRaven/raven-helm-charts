@@ -1,0 +1,5 @@
+{{- define "bytestash.cronjob" -}}
+{{- end -}}
+{{- if .Values.cron.enabled }}
+{{- include "corvid.cronjob" (list . "bytestash.cronjob") -}}
+{{- end }}
