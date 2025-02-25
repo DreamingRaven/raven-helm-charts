@@ -44,7 +44,7 @@ $ helm install home-assistant raven/home-assistant
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2025.2.4"` |  |
+| image.tag | string | `"2025.2.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

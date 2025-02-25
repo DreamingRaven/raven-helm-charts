@@ -140,7 +140,7 @@ $ helm install qbittorrent raven/qbittorrent
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"linuxserver/qbittorrent"` |  |
-| image.tag | string | `"5.0.3"` |  |
+| image.tag | string | `"5.0.4"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
