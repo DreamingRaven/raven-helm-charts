@@ -1,0 +1,27 @@
+oci-chart-push:
+  extends: [.helm]
+  stage: deploy
+  only:
+  - main
+  script:
+  # login to registry to pull and push charts
+  - echo "${CI_JOB_TOKEN}" | helm registry login ${CI_REGISTRY} -u ${CI_REGISTRY_USER} --password-stdin
+  - cd package
+  - regex='([a-zA-Z0-9_-]+)-([v0-9\.-]+)\.tgz'
+  - |
+    for file in *
+    do
+      echo "file: '${file}'"
+      CHART_NAME=$(echo ${file} | sed -E "s/$regex/\1/")
+      CHART_VERSION=$(echo "${file}" | sed -E "s/$regex/\2/")
+      IMAGE="oci://${CI_REGISTRY_IMAGE}/${CHART_NAME}"
+      if helm pull "${IMAGE}" --version ${CHART_VERSION}; then
+        echo "verdict: ${IMAGE}:${CHART_VERSION} skipping"
+      else
+        echo "verdict: ${IMAGE}:${CHART_VERSION} publishing"
+        helm push "$file" oci://${CI_REGISTRY_IMAGE}
+      fi
+    done
+  needs:
+  - job: helm-chart-build
+    artifacts: true
