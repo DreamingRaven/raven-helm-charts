@@ -1,14 +1,8 @@
 helm-chart-lint:
+  extends: [.helm]
   stage: lint
-  image:
-    name: alpine/helm:latest
-    entrypoint: ["/bin/sh", "-c"]
   script:
     - |
-      apk add --no-cache git make musl-dev go
-      export GOPATH=$HOME/.go
-      export PATH=$PATH:$GOPATH/bin
-      go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.7
       for dir in ${CHARTS_DIR}/*/
       do
         dir=${dir%*/} # removes trailing "/"
