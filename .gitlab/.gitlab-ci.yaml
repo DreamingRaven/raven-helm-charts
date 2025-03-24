@@ -60,3 +60,4 @@ include:
 - local: /.gitlab/helm/build.yaml
 # - local: /.gitlab/helm/generate.yaml
 - local: /.gitlab/helm/deploy-helm.yaml
+- local: /.gitlab/helm/deploy-oci.yaml
