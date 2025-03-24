@@ -61,6 +61,26 @@ Thus this can expedite the development process, as long as all you need fits in 
 
 ## Installing the Chart
 
+### Install via OCI helm registry
+
+To install the chart with the release name `corvid-app`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.10.2
+```
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
+
 To install the chart with the release name `corvid-app`, run the following commands:
 
 ```console

@@ -2,9 +2,29 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.14](https://img.shields.io/badge/AppVersion-8.14-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.14](https://img.shields.io/badge/AppVersion-8.14-informational?style=flat-square)
 
 ## Installing the Chart
+
+### Install via OCI helm registry
+
+To install the chart with the release name `pgadmin`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install pgadmin oci://registry.gitlab.com/georgeraven/raven-helm-charts/pgadmin
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install pgadmin oci://registry.gitlab.com/georgeraven/raven-helm-charts/pgadmin --version 0.5.0
+```
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
 To install the chart with the release name `pgadmin`, run the following commands:
 
@@ -44,7 +64,7 @@ $ helm install pgadmin raven/pgadmin
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"dpage/pgadmin4"` |  |
-| image.tag | string | `"9.0"` |  |
+| image.tag | string | `"9.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -56,7 +76,7 @@ $ helm install pgadmin raven/pgadmin
 | initContainers[0].command[0] | string | `"bash"` |  |
 | initContainers[0].command[1] | string | `"-c"` |  |
 | initContainers[0].command[2] | string | `"echo \"Chowning the following by changing dir:\"\ncp -r /usr/bin/python3.12 /chowned/.\nls -l /chowned\necho \"fin\"\n"` |  |
-| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.0"` |  |
+| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.1"` |  |
 | initContainers[0].name | string | `"chown"` |  |
 | initContainers[0].securityContext.allowPrivilegeEscalation | bool | `true` |  |
 | initContainers[0].securityContext.runAsUser | int | `0` |  |

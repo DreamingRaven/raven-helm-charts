@@ -11,6 +11,26 @@ In this instance this is a meta chart for jellyfin, with components like metube 
 
 ## Installing the Chart
 
+### Install via OCI helm registry
+
+To install the chart with the release name `jellymeta`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install jellymeta oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellymeta
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install jellymeta oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellymeta --version 0.3.0
+```
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
+
 To install the chart with the release name `jellymeta`, run the following commands:
 
 ```console

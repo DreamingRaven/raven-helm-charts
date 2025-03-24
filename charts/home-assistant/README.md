@@ -2,9 +2,29 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.1.4](https://img.shields.io/badge/AppVersion-2025.1.4-informational?style=flat-square)
+![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.1.4](https://img.shields.io/badge/AppVersion-2025.1.4-informational?style=flat-square)
 
 ## Installing the Chart
+
+### Install via OCI helm registry
+
+To install the chart with the release name `home-assistant`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install home-assistant oci://registry.gitlab.com/georgeraven/raven-helm-charts/home-assistant
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install home-assistant oci://registry.gitlab.com/georgeraven/raven-helm-charts/home-assistant --version 0.8.1
+```
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
 To install the chart with the release name `home-assistant`, run the following commands:
 
@@ -44,7 +64,7 @@ $ helm install home-assistant raven/home-assistant
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2025.2.5"` |  |
+| image.tag | string | `"2025.3.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
