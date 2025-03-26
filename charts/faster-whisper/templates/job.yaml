@@ -1,0 +1,5 @@
+{{- define "faster-whisper.job" -}}
+{{- end -}}
+{{- if .Values.job.enabled }}
+{{- include "corvid.job" (list . "faster-whisper.job") -}}
+{{- end }}

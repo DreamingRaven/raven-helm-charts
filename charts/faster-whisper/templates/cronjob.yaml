@@ -1,0 +1,5 @@
+{{- define "faster-whisper.cronjob" -}}
+{{- end -}}
+{{- if .Values.cron.enabled }}
+{{- include "corvid.cronjob" (list . "faster-whisper.cronjob") -}}
+{{- end }}

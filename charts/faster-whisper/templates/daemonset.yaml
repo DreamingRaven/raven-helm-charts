@@ -1,0 +1,9 @@
+{{- define "faster-whisper.daemonset" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "faster-whisper-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.daemonset.enabled }}
+{{- include "corvid.daemonset" (list . "faster-whisper.daemonset") }}
+{{- end }}

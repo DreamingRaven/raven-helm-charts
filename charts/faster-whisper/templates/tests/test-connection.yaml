@@ -1,0 +1,3 @@
+{{- include "corvid.testConnectivity" (list . "faster-whisper.testConnectivity") -}}
+{{- define "faster-whisper.testConnectivity" -}}
+{{- end -}}

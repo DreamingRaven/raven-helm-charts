@@ -1,0 +1,5 @@
+{{- if .Values.netpol.enabled }}
+{{- include "corvid.netpol" (list . "faster-whisper.netpol") -}}
+{{- end }}
+{{- define "faster-whisper.netpol" -}}
+{{- end -}}

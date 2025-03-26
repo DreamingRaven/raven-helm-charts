@@ -1,0 +1,3 @@
+{{- include "corvid.svc" (list . "faster-whisper.svc") -}}
+{{- define "faster-whisper.svc" -}}
+{{- end -}}

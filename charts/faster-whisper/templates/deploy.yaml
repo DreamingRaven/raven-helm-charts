@@ -1,0 +1,9 @@
+{{- define "faster-whisper.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "faster-whisper-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.deployment.enabled }}
+{{- include "corvid.deploy" (list . "faster-whisper.deploy") }}
+{{- end }}

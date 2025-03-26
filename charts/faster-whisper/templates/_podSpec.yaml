@@ -1,0 +1,4 @@
+{{- define "faster-whisper-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "faster-whisper-container") | indent 2 | trim }}
+{{- end -}}

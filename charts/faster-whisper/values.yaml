@@ -1,0 +1,283 @@
+# Default values for faster-whisper.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @param replicaCount [string] Server deployment replica count
+replicaCount: 1
+
+image:
+  ## @param image.registry [string] Image container registry
+  registry: ghcr.io
+  ## @param image.repository [string] Image repository
+  repository: linuxserver/faster-whisper
+  ## @param image.pullPolicy [string] Image pull policy
+  pullPolicy: IfNotPresent
+  ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
+  tag: "2.4.0"
+
+persistence:
+  enabled: false
+  size: 8Gi
+  accessModes:
+  - ReadWriteOnce
+  existingClaim: ""
+
+command:
+args:
+runtimeClassName:
+
+daemonset:
+  enabled: false
+
+deployment:
+  enabled: true
+  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+  strategy: ""
+
+cron:
+  # -- enable or disable cronjob
+  enabled: false
+  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+  schedule: "@midnight"
+  # -- cronjob will not trigger on schedule but can be manually triggered
+  suspend: false
+
+job:
+  enabled: false
+
+## @param initContainers Add bespoke init containers to the pods
+initContainers: []
+# - name: some-pod-name
+#   image: some-image
+#   imagePullPolicy: Always
+#   ports:
+#     - name: some-port
+#       containerPort: 1234
+
+restartPolicy: Always
+
+## @param imagePullSecrets [array] Image pull secrets
+imagePullSecrets: []
+## @param nameOverride [string] Partial name override
+nameOverride: ""
+## @param fullnameOverride [string] Full name override
+fullnameOverride: ""
+
+## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
+secrets: []
+# - name: faster-whisper
+#   lookup:
+#   - key: faster-whisperUsername
+#     env: faster-whisper_USERNAME
+#   - key: faster-whisperPassword
+#     env: faster-whisper_PASSWORD
+
+## @param env [array] Raw helm environment variable settings for static or dynamic values
+env:
+- name: PUID
+  value: "1000"
+- name: PGID
+  value: "1000"
+- name: TZ
+  value: "Etc/UTC" # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+- name: WHISPER_MODEL
+  value: "tiny-int8" # https://github.com/SYSTRAN/faster-whisper/blob/master/faster_whisper/utils.py#L12-L31
+- name: WHISPER_BEAM
+  value: "1" # Number of candidates to consider simultaneously during transcription.
+- name: WHISPER_LANG
+  value: en # Language that you will speak to the add-on.
+
+## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+envFrom:
+# - configMapRef:
+#     name: someConfigMap
+#     optional: false
+# - secretRef:
+#     name: someSecret
+#     optional: false
+
+
+serviceAccount:
+  ## @param serviceAccount.create [string] Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  ## @param serviceAccount.annotations [object] Annotations to add to the service account
+  annotations: {}
+  ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+## @param podAnnotations [object] Pod annotations
+podAnnotations: {}
+podLabels: {}
+
+# -- enable or disable podSecurityContext entirely
+podSecurityContextEnabled: true
+# -- default podSecurityContext if none specified
+podSecurityContextDefault:
+  fsGroup: 1000
+# -- podSecurityContext for consumer overrides
+podSecurityContext: {}
+  # fsGroup: 1000
+
+# -- enable or disable securityContext entirely
+securityContextEnabled: true
+# -- default securityContext if none specified
+securityContextDefault:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
+# -- securityContext for consumer overrides
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  ## @param service.type [string] Service type
+  type: ClusterIP
+
+## @param ports [array] Ports to expose, tie to the service, and ingress
+ports:
+- name: wyoming
+  containerPort: 10300
+  servicePort: 10300
+  protocol: TCP
+  # appProtocol: http
+
+ingress:
+  ## @param ingress.enabled [string] Enable ingress
+  enabled: false
+  ## @param ingress.className [string] Ingress class
+  className: ""
+  ## @param ingress.annotations [object] Ingress annotations
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  ## @param ingress.hosts [array] Ingress hosts
+  hosts:
+    - host: faster-whisper.org.example
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  ## @param ingress.tls [array] Ingress TLS
+  tls: []
+  #  - secretName: faster-whisper.org.example-tls
+  #    hosts:
+  #      - faster-whisper.org.example
+
+# -- enable or disable resources entirely
+resourcesEnabled: true
+# -- default resources if not specified by user
+resourcesDefault:
+  limits:
+    memory: 128Mi
+  requests:
+    cpu: 100m
+# -- raw resources block overrides for user
+resources:
+  # limits:
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+
+# -- enable or disable startup probe entirely
+startupProbeEnabled: true
+# -- default startup probe if not specified by user
+startupProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw startup probe overrides for user
+startupProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable liveness probe entirely
+livenessProbeEnabled: true
+# -- default liveness probe if not specified by user
+livenessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw liveness probe overrides for user
+livenessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+# -- enable or disable readiness probe entirely
+readinessProbeEnabled: true
+# -- default readiness probe if not specified by user
+readinessProbeDefault:
+  httpGet:
+    path: /
+    port: http
+# -- raw readiness probe overrides for user
+readinessProbe:
+  # httpGet:
+  #   path: /
+  #   port: http
+
+autoscaling:
+  ## @param autoscaling.enabled [string] Enable autoscaling
+  enabled: false
+  ## @param autoscaling.minReplicas [string] Minimum number of replicas
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas [string] Maximum number of replicas
+  maxReplicas: 100
+  ## @param autoscaling.targetCPUUtilizationPercentage [string] Target CPU utilization percentage
+  targetCPUUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+topologySpreadConstraints: []
+# - maxSkew: 1
+#   topologyKey: kubernetes.io/hostname
+#   whenUnsatisfiable: DoNotSchedule # cant benefit from HA on same node
+#   labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: faster-whisper
+# - maxSkew: 1
+#   topologyKey: zone
+#   whenUnsatisfiable: ScheduleAnyway # can still benefit from HA in zone
+#   labelSelector:
+#     matchLabels:
+#       app.kubernetes.io/name: faster-whisper
+
+affinity: {}
+
+netpol:
+  enabled: true
+
+dnsPolicy: "" # default is ClusterFirst
+dnsConfig: {}
+  # nameservers:
+  # - 1.1.1.1
+  # options:
+  # - name: ndots
+  #   value: "1"

@@ -1,0 +1,5 @@
+{{- define "faster-whisper.hpa" -}}
+{{- end -}}
+{{- if .Values.autoscaling.enabled }}
+{{- include "corvid.hpa" (list . "faster-whisper.hpa") -}}
+{{- end }}
