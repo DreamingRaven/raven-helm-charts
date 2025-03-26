@@ -1,0 +1,5 @@
+{{- define "piper.job" -}}
+{{- end -}}
+{{- if .Values.job.enabled }}
+{{- include "corvid.job" (list . "piper.job") -}}
+{{- end }}

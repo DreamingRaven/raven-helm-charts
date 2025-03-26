@@ -1,0 +1,9 @@
+{{- define "piper.deploy" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "piper-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.deployment.enabled }}
+{{- include "corvid.deploy" (list . "piper.deploy") }}
+{{- end }}

@@ -1,0 +1,9 @@
+{{- define "piper.daemonset" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "piper-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.daemonset.enabled }}
+{{- include "corvid.daemonset" (list . "piper.daemonset") }}
+{{- end }}

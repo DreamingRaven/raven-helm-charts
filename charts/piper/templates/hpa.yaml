@@ -1,0 +1,5 @@
+{{- define "piper.hpa" -}}
+{{- end -}}
+{{- if .Values.autoscaling.enabled }}
+{{- include "corvid.hpa" (list . "piper.hpa") -}}
+{{- end }}

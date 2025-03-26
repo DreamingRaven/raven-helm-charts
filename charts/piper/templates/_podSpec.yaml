@@ -1,0 +1,4 @@
+{{- define "piper-podSpec" -}}
+containers:
+- {{ include "corvid.container" (list . "piper-container") | indent 2 | trim }}
+{{- end -}}

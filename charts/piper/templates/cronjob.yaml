@@ -1,0 +1,5 @@
+{{- define "piper.cronjob" -}}
+{{- end -}}
+{{- if .Values.cron.enabled }}
+{{- include "corvid.cronjob" (list . "piper.cronjob") -}}
+{{- end }}

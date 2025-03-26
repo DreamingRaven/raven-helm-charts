@@ -40,7 +40,7 @@ variables:
     entrypoint: ["/bin/sh", "-c"]
   cache:
     paths:
-    - "${CI_PROJECT_DIR}/.gocache"
+    - "${CI_PROJECT_DIR}/.gocache/pkg/mod"
   before_script:
   - |
     apk add --no-cache \
