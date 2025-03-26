@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 2.4.0](https://img.shields.io/badge/Version-2.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.0](https://img.shields.io/badge/AppVersion-2.4.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install faster-whisper oci://registry.gitlab.com/georgeraven/raven-helm-charts/faster-whisper --version 2.4.0
+helm install faster-whisper oci://registry.gitlab.com/georgeraven/raven-helm-charts/faster-whisper --version 0.1.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
