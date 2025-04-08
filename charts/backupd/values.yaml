@@ -23,6 +23,9 @@ backup:
     monthly: 2
     yearly: 1
 
+cache:
+  size: 1Gi
+
 restore:
   enabled: false
   # define when a restore should happen

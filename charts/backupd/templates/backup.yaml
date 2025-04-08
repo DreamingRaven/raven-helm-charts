@@ -16,6 +16,7 @@ spec:
     schedule: {{ .Values.backup.schedule }}
   {{- end }}
   restic:
+    cacheCapacity: {{ .Values.cache.size }}
     # Prune the repository (repack to free space) every week
     pruneIntervalDays: {{ .Values.backup.pruneIntervalDays }}
     # Name of the Secret with the connection information

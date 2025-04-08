@@ -2,7 +2,7 @@
 
 Corvid approved backupd manifests
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.7.1](https://img.shields.io/badge/Version-0.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart will provision volsync backupd and restore manifests.
 This is to centralize the otherwise repeated backupd and restore manifests, from being ludicrously repetitive.
@@ -30,7 +30,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install backupd oci://registry.gitlab.com/georgeraven/raven-helm-charts/backupd --version 0.7.0
+helm install backupd oci://registry.gitlab.com/georgeraven/raven-helm-charts/backupd --version 0.7.1
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -57,6 +57,7 @@ $ helm install backupd raven/backupd
 | backup.retain.yearly | int | `1` |  |
 | backup.schedule | string | `"0 * * * 1"` |  |
 | backup.trigger | object | `{}` |  |
+| cache.size | string | `"1Gi"` |  |
 | existingPVC | string | `""` |  |
 | existingSecret | string | `""` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
@@ -69,6 +70,15 @@ $ helm install backupd raven/backupd
 | restore.trigger | string | `nil` |  |
 
 ## Changelog
+
+### 0.7.1
+
+This minor patch adds cache size control. That is all, it keeps restics default of 1Gi so nothing changes in manifests other than its presence.
+
+```yaml
+cache:
+	size: 1Gi
+```
 
 ### 0.7.0
 

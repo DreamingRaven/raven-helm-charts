@@ -1,5 +1,14 @@
 ## Changelog
 
+### 0.7.1
+
+This minor patch adds cache size control. That is all, it keeps restics default of 1Gi so nothing changes in manifests other than its presence.
+
+```yaml
+cache:
+	size: 1Gi
+```
+
 ### 0.7.0
 
 This minor patch introduced backwards compatible restore changes. This included being able to select the previous integer, and asOf date so users can select which backup to restore.

@@ -14,6 +14,7 @@ spec:
     schedule: {{ .Values.restore.schedule }}
   {{- end }}
   restic:
+    cacheCapacity: {{ .Values.cache.size }}
     repository: {{ .Values.existingSecret | default (include "backupd.fullname" .) }}
     copyMethod: Snapshot
     {{- with .Values.restore.asOf }}
