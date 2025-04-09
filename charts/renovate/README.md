@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
+![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.2.1
+helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.2.2
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -38,7 +38,7 @@ $ helm install renovate raven/renovate
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
+| oci://registry.gitlab.com/georgeraven/raven-helm-charts | corvid | 0.13.1 |
 
 ## Values
 
@@ -81,6 +81,7 @@ $ helm install renovate raven/renovate
 | podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
 | podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
 | podSecurityContextEnabled | bool | `false` | enable or disable podSecurityContext entirely |
+| ports[0].appProtocol | string | `"http"` |  |
 | ports[0].containerPort | int | `8080` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |

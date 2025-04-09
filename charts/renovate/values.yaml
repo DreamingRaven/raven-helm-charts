@@ -136,6 +136,7 @@ ports:
   containerPort: 8080
   servicePort: 80
   protocol: TCP
+  appProtocol: http
 
 # -- enable or disable resources entirely
 resourcesEnabled: false

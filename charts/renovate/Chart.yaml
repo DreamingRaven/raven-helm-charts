@@ -3,8 +3,8 @@ appVersion: "39-full"
 description: A Helm chart for Kubernetes
 name: renovate
 type: application
-version: 0.2.1
+version: 0.2.2
 dependencies:
 - name: corvid
-  version: 0.12.0
-  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
+  version: 0.13.1
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
