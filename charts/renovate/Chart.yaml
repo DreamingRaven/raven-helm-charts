@@ -3,7 +3,7 @@ appVersion: "39-full"
 description: A Helm chart for Kubernetes
 name: renovate
 type: application
-version: 0.2.0
+version: 0.2.1
 dependencies:
 - name: corvid
   version: 0.12.0

@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.2.0
+helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.2.1
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -61,8 +61,8 @@ $ helm install renovate raven/renovate
 | env[1].value | string | `"/opt/renovate/config.json"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.registry | string | `"docker.io"` |  |
-| image.repository | string | `"renovate/renovate"` |  |
+| image.registry | string | `"ghcr.io"` |  |
+| image.repository | string | `"renovatebot/renovate"` |  |
 | image.tag | string | `"39-full"` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
@@ -109,4 +109,19 @@ $ helm install renovate raven/renovate
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
+
+# Changelog
+
+## 0.2.1
+
+Added backwards compatible change to image source.
+This now sources from ghcr instead of dockerhub.
+
+```yaml
+image:
+  registry: ghcr.io
+  repository: renovatebot/renovate
+  pullPolicy: IfNotPresent
+  tag: "39-full"
+```
 

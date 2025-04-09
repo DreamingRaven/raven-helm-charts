@@ -7,9 +7,9 @@ replicaCount: 1
 
 image:
   ## @param image.registry [string] Image container registry
-  registry: docker.io
+  registry: ghcr.io
   ## @param image.repository [string] Image repository
-  repository: renovate/renovate
+  repository: renovatebot/renovate
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
