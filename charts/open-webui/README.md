@@ -64,7 +64,7 @@ $ helm install open-webui raven/open-webui
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"open-webui/open-webui"` |  |
-| image.tag | string | `"0.5.20"` |  |
+| image.tag | string | `"v0.6.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

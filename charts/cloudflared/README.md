@@ -70,7 +70,7 @@ $ helm install cloudflared raven/cloudflared
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"cloudflare/cloudflared"` |  |
-| image.tag | string | `"2025.2.1"` |  |
+| image.tag | string | `"2025.4.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
