@@ -37,6 +37,10 @@ cron:
   schedule: "@hourly"
   # -- cronjob will not trigger on schedule but can be manually triggered
   suspend: false
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  backoffLimit: 1
+  concurrencyPolicy: Replace # Allow, Forbid, Replace
 
 ## @param initContainers Add bespoke init containers to the pods
 initContainers: []

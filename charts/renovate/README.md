@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.2.2
+helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.3.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -38,7 +38,7 @@ $ helm install renovate raven/renovate
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://registry.gitlab.com/georgeraven/raven-helm-charts | corvid | 0.13.1 |
+| oci://registry.gitlab.com/georgeraven/raven-helm-charts | corvid | 0.13.2 |
 
 ## Values
 
@@ -47,8 +47,12 @@ $ helm install renovate raven/renovate
 | affinity | object | `{}` |  |
 | args | string | `nil` |  |
 | command | string | `nil` |  |
+| cron.backoffLimit | int | `1` |  |
+| cron.concurrencyPolicy | string | `"Replace"` |  |
 | cron.enabled | bool | `true` | enable or disable cronjob |
+| cron.failedJobsHistoryLimit | int | `2` |  |
 | cron.schedule | string | `"@hourly"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.successfulJobsHistoryLimit | int | `1` |  |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
 | deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
@@ -112,6 +116,11 @@ $ helm install renovate raven/renovate
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.3.0
+
+This changes the behavior of the retries and historic resources.
+While this likely does not affect most users in any substantive manner, I have marked it as a minor change because it does change the default retry behavior.
 
 ## 0.2.1
 
