@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.13.1](https://img.shields.io/badge/Version-0.13.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.13.2](https://img.shields.io/badge/Version-0.13.2-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.13.1
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.13.2
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -47,8 +47,12 @@ $ helm install corvid raven/corvid
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| cron.backoffLimit | int | `3` |  |
+| cron.concurrencyPolicy | string | `"Allow"` |  |
 | cron.enabled | bool | `false` | enable or disable cronjob |
+| cron.failedJobsHistoryLimit | int | `1` |  |
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.successfulJobsHistoryLimit | int | `1` |  |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
 | deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | envFrom[0].configMapRef.name | string | `"someConfigMap"` |  |
@@ -116,6 +120,20 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.13.2
+
+Substantively backwards compatible changes to enable controls of ctonjobs:
+
+```yaml
+cron:
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  backoffLimit: 3
+  concurrencyPolicy: Allow # Allow, Forbid, Replace
+```
+
+This changes defaults, however the defaults changes are only to history and backoffLimits which would clog up kubernetes with many resources.
 
 ## 0.13.1
 

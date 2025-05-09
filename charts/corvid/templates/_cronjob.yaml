@@ -10,8 +10,20 @@ spec:
   {{- with .Values.cron.suspend }}
   suspend: {{ . }}
   {{- end }}
+  {{- with .Values.cron.successfulJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ . }}
+  {{- end }}
+  {{- with .Values.cron.failedJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ . }}
+  {{- end }}
+  {{- with .Values.cron.concurrencyPolicy }}
+  concurrencyPolicy: {{ . }}
+  {{- end }}
   jobTemplate:
     spec:
+      {{- with .Values.cron.backoffLimit }}
+      backoffLimit: {{ . }}
+      {{- end }}
       template:
         metadata:
           {{- with .Values.podAnnotations }}

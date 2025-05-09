@@ -93,7 +93,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.13.1 |
+| file://../corvid | corvid | 0.13.2 |
 
 ## Values
 
@@ -106,8 +106,12 @@ $ helm install corvid-app raven/corvid-app
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | string | `nil` |  |
+| cron.backoffLimit | int | `3` |  |
+| cron.concurrencyPolicy | string | `"Allow"` |  |
 | cron.enabled | bool | `true` | enable or disable cronjob |
+| cron.failedJobsHistoryLimit | int | `1` |  |
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
+| cron.successfulJobsHistoryLimit | int | `1` |  |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
 | daemonset.enabled | bool | `true` |  |
 | deployment.enabled | bool | `true` |  |

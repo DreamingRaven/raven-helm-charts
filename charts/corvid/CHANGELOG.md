@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.13.2
+
+Substantively backwards compatible changes to enable controls of ctonjobs:
+
+```yaml
+cron:
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  backoffLimit: 3
+  concurrencyPolicy: Allow # Allow, Forbid, Replace
+```
+
+This changes defaults, however the defaults changes are only to history and backoffLimits which would clog up kubernetes with many resources.
+
 ## 0.13.1
 
 Added backwards compatible optional AppProtocol.

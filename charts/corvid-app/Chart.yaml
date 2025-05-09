@@ -3,8 +3,8 @@ appVersion: 0.1.0
 description: A Helm chart for Kubernetes
 name: corvid-app
 type: application
-version: 0.10.2
+version: 0.10.3
 dependencies:
 - name: corvid
-  version: 0.13.1
+  version: 0.13.2
   repository: "file://../corvid"
