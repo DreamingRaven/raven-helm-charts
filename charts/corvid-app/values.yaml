@@ -9,7 +9,7 @@ image:
   ## @param image.registry [string] Image container registry
   registry: docker.io
   ## @param image.repository [string] Image repository
-  repository: corvid-app/corvid-app
+  repository: library/alpine
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
