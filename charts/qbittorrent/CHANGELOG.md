@@ -1,5 +1,9 @@
 ## Changelog
 
+### 0.6.0
+
+Minor version bump of default qbit to 5.1.0
+
 ### 0.3.1
 
 Minor internal patch to prevent a PVC from being generated blankly if persistence.existingClaim is set. This is backwards compatible and requires no user changes.

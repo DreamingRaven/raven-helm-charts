@@ -3,7 +3,7 @@ appVersion: "5.0.5" # renovate: datasource=docker depName=ghcr.io/linuxserver/qb
 description: A Helm chart for Kubernetes
 name: qbittorrent
 type: application
-version: 0.5.1
+version: 0.6.0
 dependencies:
 - name: corvid
   version: 0.12.0

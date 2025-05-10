@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.0.5](https://img.shields.io/badge/AppVersion-5.0.5-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.0.5](https://img.shields.io/badge/AppVersion-5.0.5-informational?style=flat-square)
 
 This helm chart is used to deploy qBittorrent into a kubernetes cluster.
 This uses mostly standard values you will also find in other charts like those of bitnami.
@@ -113,7 +113,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install qbittorrent oci://registry.gitlab.com/georgeraven/raven-helm-charts/qbittorrent --version 0.5.1
+helm install qbittorrent oci://registry.gitlab.com/georgeraven/raven-helm-charts/qbittorrent --version 0.6.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -160,7 +160,7 @@ $ helm install qbittorrent raven/qbittorrent
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"linuxserver/qbittorrent"` |  |
-| image.tag | string | `"5.0.5"` |  |
+| image.tag | string | `"5.1.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -215,6 +215,10 @@ $ helm install qbittorrent raven/qbittorrent
 | volumes | list | `[]` |  |
 
 ## Changelog
+
+### 0.6.0
+
+Minor version bump of default qbit to 5.1.0
 
 ### 0.3.1
 
