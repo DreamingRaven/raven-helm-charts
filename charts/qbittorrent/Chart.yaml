@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "5.0.5" # renovate: datasource=docker depName=ghcr.io/linuxserver/qbittorrent
+appVersion: "5.1.0" # renovate: datasource=docker depName=ghcr.io/linuxserver/qbittorrent
 description: A Helm chart for Kubernetes
 name: qbittorrent
 type: application
