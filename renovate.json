@@ -1,15 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    ":rebaseStalePrs",
-    ":semanticCommits",
-    ":semanticCommitScope(deps)",
-    "helpers:pinGitHubActionDigests"
+    "config:recommended"
   ],
   "packageRules": [
     {
-      "description": "Automerge non-major updates",
+      "description": "Automerge patches",
+      "matchPackageNames": [],
       "matchUpdateTypes": [
         "patch"
       ],
@@ -40,15 +37,11 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "(^|\\/)Makefile$",
-        "(^|\\/)values.yaml$",
-        "(^|\\/)Chart.yaml$",
-        "(^|\\/)charts\\/(.+)\\/templates\\/.*"
+      "managerFilePatterns": [
+        "/^.*$/"
       ],
       "matchStrings": [
-        "MINIKUBE_KUBE_VERSION=(?<currentValue>.*) # renovate: datasource=(?<datasource>.*) depName=(?<depName>.*)",
-        "(tag|appVersion):\\s+\"?(?<currentValue>.*)\"?\\s+# renovate: datasource=(?<datasource>.*) depName=(?<depName>.*)"
+        "\"?v?(?<currentValue>(?<major>0|[1-9]\\d*)\\.(?<minor>0|[1-9]\\d*)\\.(?<patch>0|[1-9]\\d*)(?:-(?<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?)\"?\\s+# renovate: datasource=(?<datasource>.*) depName=(?<depName>.*)"
       ],
       "extractVersionTemplate": "^v?(?<version>.*)$"
     }
