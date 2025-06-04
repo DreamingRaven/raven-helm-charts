@@ -127,7 +127,6 @@ securityContextDefault:
   # https://github.com/felddy/foundryvtt-docker/discussions/1197
   runAsUser: 421
   runAsGroup: 421
-  fsGroup: 421
   allowPrivilegeEscalation: false
 # -- securityContext for consumer overrides
 securityContext: {}
