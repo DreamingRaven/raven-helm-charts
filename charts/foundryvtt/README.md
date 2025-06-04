@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v12.331.0](https://img.shields.io/badge/AppVersion-v12.331.0-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v12.331.0](https://img.shields.io/badge/AppVersion-v12.331.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.5.0
+helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.6.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -95,8 +95,8 @@ $ helm install foundryvtt raven/foundryvtt
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
-| podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
-| podSecurityContextEnabled | bool | `false` | enable or disable podSecurityContext entirely |
+| podSecurityContextDefault | object | `{"fsGroup":421}` | default podSecurityContext if none specified |
+| podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
 | ports[0].containerPort | int | `30000` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
@@ -118,8 +118,8 @@ $ helm install foundryvtt raven/foundryvtt
 | secrets[0].lookup[2].key | string | `"adminPassword"` |  |
 | secrets[0].name | string | `"foundryvtt"` |  |
 | securityContext | object | `{}` | securityContext for consumer overrides |
-| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
-| securityContextEnabled | bool | `false` | enable or disable securityContext entirely |
+| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"fsGroup":421,"readOnlyRootFilesystem":false,"runAsGroup":421,"runAsNonRoot":true,"runAsUser":421}` | default securityContext if none specified |
+| securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |

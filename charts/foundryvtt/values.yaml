@@ -106,25 +106,28 @@ podAnnotations: {}
 podLabels: {}
 
 # -- enable or disable podSecurityContext entirely
-podSecurityContextEnabled: false # TODO: temporarily disabled while confirming functionality
+podSecurityContextEnabled: true
 # -- default podSecurityContext if none specified
 podSecurityContextDefault:
-  fsGroup: 1000
+  fsGroup: 421
 # -- podSecurityContext for consumer overrides
 podSecurityContext: {}
-  # fsGroup: 1000
+  # fsGroup: 421
 
 # -- enable or disable securityContext entirely
-securityContextEnabled: false # TODO: temporarily disabled while confirming functionality
+securityContextEnabled: true
 # -- default securityContext if none specified
 securityContextDefault:
   capabilities:
     drop:
     - ALL
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
   runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
+  # maintaining compat with previous file perms
+  # https://github.com/felddy/foundryvtt-docker/discussions/1197
+  runAsUser: 421
+  runAsGroup: 421
+  fsGroup: 421
   allowPrivilegeEscalation: false
 # -- securityContext for consumer overrides
 securityContext: {}
