@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.13.2](https://img.shields.io/badge/Version-0.13.2-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.13.2
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.14.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -64,8 +64,8 @@ $ helm install corvid raven/corvid
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
-| image.repository | string | `"bitnami/kubectl"` |  |
-| image.tag | string | `"1.32.2"` |  |
+| image.repository | string | `"library/alpine"` |  |
+| image.tag | string | `"3.21.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -82,7 +82,8 @@ $ helm install corvid raven/corvid
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| persistence.enabled | bool | `true` |  |
+| persistence.defaultVolumeMounts | string | `nil` |  |
+| persistence.enabled | bool | `false` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
@@ -120,6 +121,24 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.14.0
+
+This breaking change introduces the ability to configure the default persistent volume mounts. This is more useful for packagers since this allows the packages to define the default volume mounts for others to consume.
+
+While this does not change corvids default behaviour it does change corvid-apps default behaviour since it issues a default data volume.
+
+To restore this behaviour:
+
+```yaml
+persistence:
+  enabled: true # corvid persistence is now false by default
+  # the rest of your persistence config
+  defaultVolumeMounts:
+  - name: data
+    mountPath: /data/
+    subPath: data
+```
 
 ## 0.13.2
 

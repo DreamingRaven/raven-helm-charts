@@ -112,9 +112,17 @@ resources:
 {{- end }}
 {{- end }}
 {{- end }}
-{{- with .Values.volumeMounts }}
+{{- if or (.Values.volumeMounts) (and (.Values.persistence.enabled) (.Values.persistence.defaultVolumeMounts)) }}
+# volumeMounts both default and overrides
 volumeMounts:
+{{- if .Values.persistence.enabled }}
+{{- with .Values.persistence.defaultVolumeMounts }}
   {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+{{- with .Values.volumeMounts }}
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 {{- end }}
 {{- end -}}
 {{- define "corvid.container" -}}

@@ -15,11 +15,17 @@ image:
   tag: "3.21.3"
 
 persistence:
-  enabled: true
+  enabled: false
   size: 8Gi
   accessModes:
   - ReadWriteOnce
   existingClaim: ""
+  defaultVolumeMounts:
+  # # this defines what volumeMounts to create by default
+  # # when .Values.persistence.enabled is true
+  # - name: data # note the default volume is always called data
+  #   mountPath: /data/
+  #   subPath: data
 
 command:
 args:

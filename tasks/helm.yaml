@@ -1,0 +1,33 @@
+version: '3'
+
+tasks:
+
+  local-helm-chart-install:
+    internal: true
+    desc: "(Re-)Install the helm chart `{{ .CHART }}`."
+    requires:
+      vars:
+      - CHART
+      - CHART_NAMESPACE
+      - CHART_NAME
+      - EXTRA_ARGS
+    deps:
+    - task: local-helm-chart-dependencies
+      vars:
+        CHART: "{{ .CHART }}"
+    cmds:
+    - "helm upgrade --install --create-namespace --namespace {{ .CHART_NAMESPACE }} {{ .CHART_NAME }} {{ .CHART }} {{ .EXTRA_ARGS }}"
+
+  local-helm-chart-dependencies:
+    internal: true
+    desc: "(Re-)Update dependencies if out-of-date for the helm chart `{{ .CHART }}`."
+    requires:
+      vars:
+      - CHART
+    cmds:
+    - "helm dependency update {{ .CHART }}"
+    sources:
+    - "{{ .CHART }}/Chart.yaml"
+    generates:
+    - "{{ .CHART }}/Chart.lock"
+    method: timestamp

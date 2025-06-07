@@ -1,0 +1,19 @@
+version: '3'
+
+env:
+  MINIKUBE_KUBE_VERSION: 1.31.0
+  CHARTS_DIR: "charts"
+
+includes:
+  helm: ./tasks/helm.yaml
+  minikube:
+    taskfile: ./tasks/minikube.yaml
+    flatten: true
+
+tasks:
+
+  default:
+    desc: "Default task listing all tasks."
+    cmds:
+      - "task --list-all"
+    silent: true

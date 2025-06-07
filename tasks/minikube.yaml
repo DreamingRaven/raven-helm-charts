@@ -1,0 +1,28 @@
+version: '3'
+
+tasks:
+
+  minikube:
+    desc: "(Re-)Create minikube instance."
+    deps:
+    - cilium-template # using cilium with hubble to debug and test network policies
+    cmds: # cmds run in series
+    - "minikube delete"
+    - "minikube start --cni ./cni.yaml --kubernetes-version={{ .MINIKUBE_KUBE_VERSION }}" # --registry-mirror="https://harbor.org.example" --driver=podman
+    - task: traefik # using traefik as ingress controller with external IP
+    - task: metrics-server
+
+  cilium-template:
+    desc: "Template and save Cilium CNI helm chart for use in minikube."
+    cmds:
+    - "helm template --namespace kube-system cilium cilium/cilium --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set operator.replicas=1 > cni.yaml"
+
+  traefik:
+    desc: "(Re-)Install Traefik as ingress controller with external IP."
+    cmds:
+    - "helm upgrade --install --create-namespace --namespace traefik traefik traefik/traefik --set service.externalIPs={192.168.49.2}"
+
+  metrics-server:
+    desc: "(Re-)Install kubernetes metrics server"
+    cmds:
+    - "helm upgrade --install --create-namespace --namespace metrics-server metrics-server metrics-server/metrics-server --set replicas=1 --set apiService.insecureSkipTLSVerify=true --set args={--kubelet-insecure-tls}"

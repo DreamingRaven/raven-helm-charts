@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.10.2](https://img.shields.io/badge/Version-0.10.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -76,7 +76,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.10.2
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.11.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -93,7 +93,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.13.2 |
+| file://../corvid | corvid | 0.14.0 |
 
 ## Values
 
@@ -124,8 +124,8 @@ $ helm install corvid-app raven/corvid-app
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
-| image.repository | string | `"corvid-app/corvid-app"` |  |
-| image.tag | string | `"0.10.2"` |  |
+| image.repository | string | `"library/alpine"` |  |
+| image.tag | string | `"3.21.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -143,6 +143,9 @@ $ helm install corvid-app raven/corvid-app
 | netpol.enabled | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| persistence.defaultVolumeMounts[0].mountPath | string | `"/data/"` |  |
+| persistence.defaultVolumeMounts[0].name | string | `"data"` |  |
+| persistence.defaultVolumeMounts[0].subPath | string | `"data"` |  |
 | persistence.enabled | bool | `false` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
@@ -181,4 +184,24 @@ $ helm install corvid-app raven/corvid-app
 | topologySpreadConstraints | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
+
+# Changelog
+
+## 0.11.0 (corvid 0.14.0)
+
+This breaking change introduces the ability to configure the default persistent volume mounts. This is more useful for packagers since this allows the packages to define the default volume mounts for others to consume.
+
+While this does not change corvids default behaviour it does change corvid-apps default behaviour since it issues a default data volume.
+
+To restore this behaviour:
+
+```yaml
+persistence:
+  enabled: true # corvid persistence is now false by default
+  # the rest of your persistence config
+  defaultVolumeMounts:
+  - name: data
+    mountPath: /data/
+    subPath: data
+```
 
