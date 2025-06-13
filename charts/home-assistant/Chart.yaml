@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "2025.5.3" # renovate: datasource=docker depName=ghcr.io/home-assistant/home-assistant
+appVersion: "2025.6.1" # renovate: datasource=docker depName=ghcr.io/home-assistant/home-assistant
 description: A Helm chart for Kubernetes
 name: home-assistant
 type: application
