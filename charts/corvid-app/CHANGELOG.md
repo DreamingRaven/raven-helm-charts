@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.12.0 (corvid 0.15.0)
+
+This adds schema validation to the values.yaml in the most basic way possible.
+This should not be effectual, but will eventually become expanded to support more validation.
+
+This also adds backwards compatible HTTPRoute support.
+Since ingress is dying a slow but steady death, I have added the most basic HTTPRoute
+It is advised that you add the new values to your values.yaml even if it is disabled by default:
+
+```yaml
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+  - name: my-gateway
+  hostnames:
+  - "corvid.org.example"
+  exposedPorts:
+  - number: 80
+```
+
+This will be slowly expanded to support more features.
+If you need more features sooner it is advised to bring your own HTTPRoute.
+
 ## 0.11.0 (corvid 0.14.0)
 
 This breaking change introduces the ability to configure the default persistent volume mounts. This is more useful for packagers since this allows the packages to define the default volume mounts for others to consume.

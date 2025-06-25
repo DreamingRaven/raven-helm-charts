@@ -139,6 +139,16 @@ ports:
   servicePort: 80
   protocol: TCP
 
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+  - name: my-gateway
+  hostnames:
+  - "corvid.org.example"
+  exposedPorts:
+  - number: 80
+
 ingress:
   enabled: false
   className: ""

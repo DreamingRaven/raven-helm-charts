@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.14.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.15.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -62,6 +62,11 @@ $ helm install corvid raven/corvid
 | env[0].name | string | `"CORVID_EXAMPLE_VARIABLE"` |  |
 | env[0].value | string | `"false"` |  |
 | fullnameOverride | string | `""` |  |
+| httpRoute.annotations | object | `{}` |  |
+| httpRoute.enabled | bool | `false` |  |
+| httpRoute.exposedPorts[0].number | int | `80` |  |
+| httpRoute.hostnames[0] | string | `"corvid.org.example"` |  |
+| httpRoute.parentRefs[0].name | string | `"my-gateway"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"library/alpine"` |  |
@@ -121,6 +126,27 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.15.0
+
+This adds backwards compatible HTTPRoute support.
+Since ingress is dying a slow but steady death, I have added the most basic HTTPRoute
+It is advised that you add the new values to your values.yaml even if it is disabled by default:
+
+```yaml
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+  - name: my-gateway
+  hostnames:
+  - "corvid.org.example"
+  exposedPorts:
+  - number: 80
+```
+
+This will be slowly expanded to support more features.
+If you need more features sooner it is advised to bring your own HTTPRoute.
 
 ## 0.14.0
 

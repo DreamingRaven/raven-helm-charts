@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -76,7 +76,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.11.0
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.12.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -93,7 +93,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.14.0 |
+| file://../corvid | corvid | 0.15.0 |
 
 ## Values
 
@@ -122,6 +122,11 @@ $ helm install corvid-app raven/corvid-app
 | env[0].name | string | `"corvid-app_EXAMPLE_VARIABLE"` |  |
 | env[0].value | string | `"false"` |  |
 | fullnameOverride | string | `""` |  |
+| httpRoute.annotations | object | `{}` |  |
+| httpRoute.enabled | bool | `false` |  |
+| httpRoute.exposedPorts[0].number | int | `80` |  |
+| httpRoute.hostnames[0] | string | `"corvid-app.org.example"` |  |
+| httpRoute.parentRefs[0].name | string | `"my-gateway"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"library/alpine"` |  |
@@ -129,7 +134,7 @@ $ helm install corvid-app raven/corvid-app
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
+| ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].host | string | `"corvid-app.org.example"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -186,6 +191,30 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.12.0 (corvid 0.15.0)
+
+This adds schema validation to the values.yaml in the most basic way possible.
+This should not be effectual, but will eventually become expanded to support more validation.
+
+This also adds backwards compatible HTTPRoute support.
+Since ingress is dying a slow but steady death, I have added the most basic HTTPRoute
+It is advised that you add the new values to your values.yaml even if it is disabled by default:
+
+```yaml
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+  - name: my-gateway
+  hostnames:
+  - "corvid.org.example"
+  exposedPorts:
+  - number: 80
+```
+
+This will be slowly expanded to support more features.
+If you need more features sooner it is advised to bring your own HTTPRoute.
 
 ## 0.11.0 (corvid 0.14.0)
 

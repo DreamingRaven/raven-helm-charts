@@ -1,0 +1,5 @@
+{{- if .Values.httpRoute.enabled }}
+{{- include "corvid.httpRoute" (list . "corvid-app.httpRoute") -}}
+{{- end }}
+{{- define "corvid-app.httpRoute" -}}
+{{- end -}}

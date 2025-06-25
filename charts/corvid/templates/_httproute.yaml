@@ -1,0 +1,32 @@
+{{- define "corvid.httpRoute.tpl" -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "corvid.fullname" . }}
+  labels:
+    {{- include "corvid.labels" . | nindent 4 }}
+  {{- with .Values.httpRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.httpRoute.parentRefs }}
+  parentRefs:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+  {{- with .Values.httpRoute.hostnames }}
+  hostnames:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+  {{- with .Values.httpRoute.exposedPorts }}
+  rules:
+  {{- range . }}
+  - backendRefs:
+    - name: {{ include "corvid.fullname" $ }}
+      port: {{ .number }}
+  {{- end }}
+  {{- end }}
+{{- end -}}
+{{- define "corvid.httpRoute" -}}
+{{- include "corvid.util.merge" (append . "corvid.httpRoute.tpl") -}}
+{{- end -}}

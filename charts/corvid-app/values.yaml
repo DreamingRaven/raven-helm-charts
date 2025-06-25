@@ -153,9 +153,19 @@ ports:
   protocol: TCP
   appProtocol: http
 
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+  - name: my-gateway
+  hostnames:
+  - "corvid-app.org.example"
+  exposedPorts:
+  - number: 80
+
 ingress:
   ## @param ingress.enabled [string] Enable ingress
-  enabled: false
+  enabled: true
   ## @param ingress.className [string] Ingress class
   className: ""
   ## @param ingress.annotations [object] Ingress annotations
