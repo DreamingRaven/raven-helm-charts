@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: "8.1.1-alpine" # renovate: datasource=docker depName=ghcr.io/valkey-io/valkey
 description: A Helm chart for Kubernetes
 name: valkey
 type: application
