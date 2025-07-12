@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "0.6.13" # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
+appVersion: "0.6.15" # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
 description: A Helm chart for Kubernetes
 name: open-webui
 type: application
