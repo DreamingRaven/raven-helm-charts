@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v12.331.0](https://img.shields.io/badge/AppVersion-v12.331.0-informational?style=flat-square)
+![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v12.331.0](https://img.shields.io/badge/AppVersion-v12.331.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.6.0
+helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.6.1
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -118,7 +118,7 @@ $ helm install foundryvtt raven/foundryvtt
 | secrets[0].lookup[2].key | string | `"adminPassword"` |  |
 | secrets[0].name | string | `"foundryvtt"` |  |
 | securityContext | object | `{}` | securityContext for consumer overrides |
-| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"fsGroup":421,"readOnlyRootFilesystem":false,"runAsGroup":421,"runAsNonRoot":true,"runAsUser":421}` | default securityContext if none specified |
+| securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":false,"runAsGroup":421,"runAsNonRoot":true,"runAsUser":421}` | default securityContext if none specified |
 | securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |

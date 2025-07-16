@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.5.7](https://img.shields.io/badge/AppVersion-0.5.7-informational?style=flat-square)
+![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.15](https://img.shields.io/badge/AppVersion-0.6.15-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install open-webui oci://registry.gitlab.com/georgeraven/raven-helm-charts/open-webui --version 0.2.5
+helm install open-webui oci://registry.gitlab.com/georgeraven/raven-helm-charts/open-webui --version 0.2.8
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -64,7 +64,7 @@ $ helm install open-webui raven/open-webui
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"open-webui/open-webui"` |  |
-| image.tag | string | `"v0.6.0"` |  |
+| image.tag | string | `"v0.6.15"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

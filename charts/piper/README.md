@@ -82,7 +82,7 @@ $ helm install piper raven/piper
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"linuxserver/piper"` |  |
-| image.tag | string | `"1.4.0"` |  |
+| image.tag | string | `"1.5.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

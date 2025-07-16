@@ -70,7 +70,7 @@ $ helm install cyberchef raven/cyberchef
 | cyberchef.image.pullPolicy | string | `"IfNotPresent"` |  |
 | cyberchef.image.registry | string | `"ghcr.io"` |  |
 | cyberchef.image.repository | string | `"nginx/nginx-unprivileged"` |  |
-| cyberchef.image.tag | string | `"1.27.5-alpine3.21"` |  |
+| cyberchef.image.tag | string | `"1.28.0-alpine3.21"` |  |
 | cyberchef.imagePullSecrets | list | `[]` |  |
 | cyberchef.ingress.annotations | object | `{}` |  |
 | cyberchef.ingress.className | string | `""` |  |

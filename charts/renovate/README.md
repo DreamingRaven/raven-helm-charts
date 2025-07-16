@@ -67,7 +67,7 @@ $ helm install renovate raven/renovate
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"renovatebot/renovate"` |  |
-| image.tag | string | `"39-full"` |  |
+| image.tag | string | `"40-full"` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |

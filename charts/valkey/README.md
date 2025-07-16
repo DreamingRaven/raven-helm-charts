@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.1.1-alpine](https://img.shields.io/badge/AppVersion-8.1.1--alpine-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.1.3-alpine](https://img.shields.io/badge/AppVersion-8.1.3--alpine-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -77,7 +77,7 @@ $ helm install valkey raven/valkey
 | valkey.image.pullPolicy | string | `"IfNotPresent"` |  |
 | valkey.image.registry | string | `"ghcr.io"` |  |
 | valkey.image.repository | string | `"valkey-io/valkey"` |  |
-| valkey.image.tag | string | `"8.1.1-alpine"` |  |
+| valkey.image.tag | string | `"8.1.3-alpine"` |  |
 | valkey.imagePullSecrets | list | `[]` |  |
 | valkey.ingress.annotations | object | `{}` |  |
 | valkey.ingress.className | string | `""` |  |

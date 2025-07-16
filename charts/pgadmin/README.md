@@ -64,7 +64,7 @@ $ helm install pgadmin raven/pgadmin
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"dpage/pgadmin4"` |  |
-| image.tag | string | `"9.1"` |  |
+| image.tag | string | `"9.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -76,7 +76,7 @@ $ helm install pgadmin raven/pgadmin
 | initContainers[0].command[0] | string | `"bash"` |  |
 | initContainers[0].command[1] | string | `"-c"` |  |
 | initContainers[0].command[2] | string | `"echo \"Chowning the following by changing dir:\"\ncp -r /usr/bin/python3.12 /chowned/.\nls -l /chowned\necho \"fin\"\n"` |  |
-| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.1"` |  |
+| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.5"` |  |
 | initContainers[0].name | string | `"chown"` |  |
 | initContainers[0].securityContext.allowPrivilegeEscalation | bool | `true` |  |
 | initContainers[0].securityContext.runAsUser | int | `0` |  |
