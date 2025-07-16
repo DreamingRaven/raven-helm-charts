@@ -36,7 +36,7 @@ variables:
 
 .helm:
   image:
-    name: alpine:3.21.3
+    name: alpine:3.22.1
     entrypoint: ["/bin/sh", "-c"]
   cache:
     paths:
