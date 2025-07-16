@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 0.6.1
-appVersion: "v12.331.0"
+version: 0.7.0
+appVersion: "13.344.0"
 description: A Helm chart for Kubernetes
 name: foundryvtt
 type: application
