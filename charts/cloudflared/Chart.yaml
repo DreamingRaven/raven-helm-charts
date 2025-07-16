@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "2025.5.0" # renovate: datasource=docker depName=docker.io/cloudflare/cloudflared
+appVersion: "2025.7.0" # renovate: datasource=docker depName=docker.io/cloudflare/cloudflared
 description: A Helm chart for Kubernetes
 name: cloudflared
 type: application
