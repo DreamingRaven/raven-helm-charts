@@ -44,10 +44,10 @@ variables:
   before_script:
   - |
     apk add --no-cache \
-    curl=~8.12 \
-    grep=~3.11 \
-    go=~1.23 \
-    helm=~3.16
+    curl \
+    grep \
+    go \
+    helm
   # creating cache dir that HAS to be inside project workspace
   - mkdir -p ${CI_PROJECT_DIR}/.gocache
   - export GOPATH=${CI_PROJECT_DIR}/.gocache
