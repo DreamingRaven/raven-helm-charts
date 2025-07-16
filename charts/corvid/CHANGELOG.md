@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.0
+
+Added backwards compatible statefulset support.
+
 ## 0.15.0
 
 This adds backwards compatible HTTPRoute support.

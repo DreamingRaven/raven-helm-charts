@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -76,7 +76,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.12.0
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.13.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -93,7 +93,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.15.0 |
+| file://../corvid | corvid | 0.16.0 |
 
 ## Values
 
@@ -130,7 +130,7 @@ $ helm install corvid-app raven/corvid-app
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"library/alpine"` |  |
-| image.tag | string | `"3.21.3"` |  |
+| image.tag | string | `"3.22.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -151,7 +151,7 @@ $ helm install corvid-app raven/corvid-app
 | persistence.defaultVolumeMounts[0].mountPath | string | `"/data/"` |  |
 | persistence.defaultVolumeMounts[0].name | string | `"data"` |  |
 | persistence.defaultVolumeMounts[0].subPath | string | `"data"` |  |
-| persistence.enabled | bool | `false` |  |
+| persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
@@ -185,6 +185,8 @@ $ helm install corvid-app raven/corvid-app
 | startupProbe | string | `nil` | raw startup probe overrides for user |
 | startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
+| sts.enabled | bool | `false` |  |
+| sts.updateStrategy | string | `"RollingUpdate"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | volumeMounts | list | `[]` |  |

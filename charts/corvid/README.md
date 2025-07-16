@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.16.0](https://img.shields.io/badge/Version-0.16.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.15.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.16.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -70,7 +70,7 @@ $ helm install corvid raven/corvid
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"library/alpine"` |  |
-| image.tag | string | `"3.21.3"` |  |
+| image.tag | string | `"3.22.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -120,12 +120,18 @@ $ helm install corvid raven/corvid
 | startupProbe | string | `nil` | raw startup probe overrides for user |
 | startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
+| sts.enabled | bool | `false` |  |
+| sts.updateStrategy | string | `"RollingUpdate"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.16.0
+
+Added backwards compatible statefulset support.
 
 ## 0.15.0
 

@@ -35,6 +35,10 @@ deployment:
   # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
   strategy: ""
 
+sts:
+  enabled: false
+  updateStrategy: RollingUpdate
+
 cron:
   # -- enable or disable cronjob
   enabled: false

@@ -16,7 +16,7 @@ image:
   tag: "3.22.0"
 
 persistence:
-  enabled: false
+  enabled: true
   size: 8Gi
   accessModes:
   - ReadWriteOnce
@@ -39,6 +39,10 @@ deployment:
   enabled: true
   # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
   strategy: ""
+
+sts:
+  enabled: false
+  updateStrategy: RollingUpdate
 
 cron:
   # -- enable or disable cronjob

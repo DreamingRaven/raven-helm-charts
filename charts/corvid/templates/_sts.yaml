@@ -1,0 +1,38 @@
+{{- define "corvid.sts.tpl" -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "corvid.fullname" . }}
+  labels:
+    {{- include "corvid.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "corvid.fullname" . }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  {{- if .Values.sts.updateStrategy }}
+  updateStrategy:
+    type: {{ .Values.sts.updateStrategy }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "corvid.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "corvid.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "corvid.podSpec.tpl" . | indent 6 }}
+  volumeClaimTemplates:
+  - {{ include "corvid.pvc.tpl" . | indent 4 | trim }}
+{{- end -}}
+{{- define "corvid.sts" -}}
+{{- include "corvid.util.merge" (append . "corvid.sts.tpl") -}}
+{{- end -}}

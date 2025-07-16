@@ -1,0 +1,9 @@
+{{- define "corvid-app.sts" }}
+spec:
+  template:
+    spec:
+      {{ include "corvid.podSpec" (list . "corvid-app-podSpec") | indent 6 | trim }}
+{{- end }}
+{{- if .Values.sts.enabled }}
+{{- include "corvid.sts" (list . "corvid-app.sts") }}
+{{- end }}
