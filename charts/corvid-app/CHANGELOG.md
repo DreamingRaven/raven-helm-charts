@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.0 (corvid 0.16.0)
+
+This release adds statefulset support.
+This is backwards compatible and is disabled by default.
+
+```yaml
+sts:
+  enabled: false
+  updateStrategy: RollingUpdate
+```
+
 ## 0.12.0 (corvid 0.15.0)
 
 This adds schema validation to the values.yaml in the most basic way possible.
