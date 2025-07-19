@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 2.4.0
+appVersion: 2.4.0 # renovate: datasource=docker depName=ghcr.io/linuxserver/faster-whisper
 description: A Helm chart for Kubernetes
 name: faster-whisper
 type: application

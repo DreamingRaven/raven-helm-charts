@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: 1.5.8 # renovate: datasource=docker depName=ghcr.io/jordan-dalby/bytestash
 description: A Helm chart for Kubernetes
 name: bytestash
 type: application
