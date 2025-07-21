@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+
+  renovate:
+    image: ghcr.io/renovatebot/renovate:40.11.19-full
+    volumes:
+    - renovate_data:/data
+    - .:/usr/src/app
+    # Use this to debug the container if there are issues like env variables
+    # entrypoint:
+    # - /bin/bash
+    # - -c
+    # - |
+    #   echo $PWD
+    #   env
+    env_file:
+    - path: .env
+      required: true
+    environment:
+      RENOVATE_BASE_DIR: "/data"
+      RENOVATE_GIT_AUTHOR: "Renovate Bot <bot@renovateapp.com>"
+      RENOVATE_PLATFORM: "local"
+      RENOVATE_GIT_LAB_IGNORE_APPROVALS: "true"
+      RENOVATE_ASSIGNEES_FROM_CODE_OWNERS: "true"
+      RENOVATE_LABELS: "dependencies,renovate"
+      RENOVATE_DEPENDENCY_DASHBOARD: "true"
+      RENOVATE_ONBOARDING: "true"
+      RENOVATE_PERSIST_REPO_DATA: "true"
+      RENOVATE_ONBOARDING_CONFIG_FILE_NAME: "renovate.json"
+      LOG_LEVEL: "debug"
+      RENOVATE_DRY_RUN: "full" # This prevents any changes from actually being made
+    networks:
+      - service_network
+    restart: "no"
+
+volumes:
+  renovate_data:
+    driver: local
+
+networks:
+  service_network:
+    driver: bridge
+
