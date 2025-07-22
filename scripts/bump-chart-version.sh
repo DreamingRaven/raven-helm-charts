@@ -8,11 +8,15 @@ is_major="$2"
 is_minor="$3"
 is_patch="$4"
 
+echo "Helm chart updater invoked for dir: '$parent_dir', major:'$is_major', minor:'$is_minor', patch:'$is_patch'"
+
 version=$(grep "^version:" "charts/${parent_dir}/Chart.yaml" | awk '{print $2}')
 if [[ ! $version ]]; then
-  echo "No valid version was found"
+  echo "No valid helm chart version was found"
   exit 1
 fi
+
+echo "Found existing helm chart version: '$version'"
 
 major=$(echo "$version" | cut -d. -f1)
 minor=$(echo "$version" | cut -d. -f2)
@@ -38,5 +42,5 @@ if [[ "$is_patch" = 'true' ]]; then
   patch=$(( patch + 1 ))
 fi
 
-echo "Bumping version for $parent_dir from $version to $major.$minor.$patch"
+echo "Bumping helm chart version for '$parent_dir' from '$version' to '$major.$minor.$patch'"
 sed -i "s/^version:.*/version: ${major}.${minor}.${patch}/g" "charts/${parent_dir}/Chart.yaml"
