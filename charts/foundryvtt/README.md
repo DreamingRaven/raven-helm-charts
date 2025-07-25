@@ -1,38 +1,18 @@
 # foundryvtt
 
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 13.346.0](https://img.shields.io/badge/AppVersion-13.346.0-informational?style=flat-square)
+
 A Helm chart for Kubernetes
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 13.344.0](https://img.shields.io/badge/AppVersion-13.344.0-informational?style=flat-square)
+## Maintainers
 
-## Installing the Chart
+| Name | Email | Url |
+| ---- | ------ | --- |
+| GeorgeRaven |  | <https://gitlab.com/GeorgeRaven> |
 
-### Install via OCI helm registry
+## Source Code
 
-To install the chart with the release name `foundryvtt`, run the following commands.
-For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
-
-To pull the latest version without authentication:
-
-```console
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt
-```
-
-With authentication:
-
-```console
-helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.7.0
-```
-
-### Install via Helm index.yaml (deprecated method since: 2025-03-24)
-
-To install the chart with the release name `foundryvtt`, run the following commands:
-
-```console
-$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
-$ helm repo update raven
-$ helm install foundryvtt raven/foundryvtt
-```
+* <https://gitlab.com/GeorgeRaven/raven-helm-charts>
 
 ## Requirements
 
@@ -72,7 +52,7 @@ $ helm install foundryvtt raven/foundryvtt
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"felddy/foundryvtt"` |  |
-| image.tag | string | `"13.344.0"` |  |
+| image.tag | string | `"13.346.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -131,21 +111,4 @@ $ helm install foundryvtt raven/foundryvtt
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
-
-# Changelog
-
-## 0.6.0
-
-This adds default security and pod security policies to enable users upgrading from v12 to seamlessley upgrade to v13.
-
-To restore the old behaviour simply disable both security policies.
-
-```yaml
-podSecurityContextEnabled: false
-securityContextEnabled: false
-```
-
-Otherwise this enhances security and compatibility.
-
-See also: https://github.com/felddy/foundryvtt-docker/discussions/1197
 
