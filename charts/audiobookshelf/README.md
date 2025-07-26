@@ -1,38 +1,8 @@
 # audiobookshelf
 
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.26.3](https://img.shields.io/badge/AppVersion-2.26.3-informational?style=flat-square)
+
 Self-hosted audiobook and podcast server
-
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.24.0](https://img.shields.io/badge/AppVersion-v2.24.0-informational?style=flat-square)
-
-## Installing the Chart
-
-### Install via OCI helm registry
-
-To install the chart with the release name `audiobookshelf`, run the following commands.
-For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
-
-To pull the latest version without authentication:
-
-```console
-helm install audiobookshelf oci://registry.gitlab.com/georgeraven/raven-helm-charts/audiobookshelf
-```
-
-With authentication:
-
-```console
-helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install audiobookshelf oci://registry.gitlab.com/georgeraven/raven-helm-charts/audiobookshelf --version 0.1.0
-```
-
-### Install via Helm index.yaml (deprecated method since: 2025-03-24)
-
-To install the chart with the release name `audiobookshelf`, run the following commands:
-
-```console
-$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
-$ helm repo update raven
-$ helm install audiobookshelf raven/audiobookshelf
-```
 
 ## Requirements
 
@@ -70,7 +40,7 @@ $ helm install audiobookshelf raven/audiobookshelf
 | audiobookshelf.image.pullPolicy | string | `"IfNotPresent"` |  |
 | audiobookshelf.image.registry | string | `"ghcr.io"` |  |
 | audiobookshelf.image.repository | string | `"advplyr/audiobookshelf"` |  |
-| audiobookshelf.image.tag | string | `"2.24.0"` |  |
+| audiobookshelf.image.tag | string | `"2.26.3"` |  |
 | audiobookshelf.imagePullSecrets | list | `[]` |  |
 | audiobookshelf.ingress.annotations | object | `{}` |  |
 | audiobookshelf.ingress.className | string | `""` |  |
