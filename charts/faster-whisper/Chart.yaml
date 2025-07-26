@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: 2.4.0 # renovate: datasource=docker depName=ghcr.io/linuxserver/faster-whisper
+appVersion: 2.5.0 # renovate: datasource=docker depName=ghcr.io/linuxserver/faster-whisper
 description: A Helm chart for Kubernetes
 name: faster-whisper
 type: application
-version: 0.1.0
+version: 0.2.0
 dependencies:
 - name: corvid
   version: 0.13.1
