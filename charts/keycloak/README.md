@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.3.2](https://img.shields.io/badge/AppVersion-26.3.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.1.0
+helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.1.1
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -39,7 +39,7 @@ $ helm install keycloak raven/keycloak
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://registry.gitlab.com/georgeraven/raven-helm-charts | keycloak(corvid-app) | 0.13.0 |
-| oci://registry.gitlab.com/georgeraven/raven-helm-charts | postgres | 0.1.0 |
+| oci://registry.gitlab.com/georgeraven/raven-helm-charts | postgres | 0.2.0 |
 
 ## Values
 

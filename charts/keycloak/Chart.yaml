@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: "26.3.2" # renovate: datasource=docker depName=quay.io/keycloak/keycloak
 description: A Helm chart for Kubernetes
 name: keycloak
 type: application
-version: 0.1.0
+version: 0.1.1
 dependencies:
 - alias: keycloak
   name: corvid-app
@@ -11,6 +11,6 @@ dependencies:
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   condition: keycloak.enabled
 - name: postgres
-  version: 0.1.0
+  version: 0.2.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   condition: postgres.enabled
