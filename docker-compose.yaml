@@ -6,7 +6,7 @@ services:
     image: ghcr.io/renovatebot/renovate:41.43.5-full
     volumes:
     - renovate_data:/data
-    - .:/usr/src/app
+    # - .:/usr/src/app # for local repository testing
     # Use this to debug the container if there are issues like env variables
     # entrypoint:
     # - /bin/bash
@@ -20,7 +20,8 @@ services:
     environment:
       RENOVATE_BASE_DIR: "/data"
       RENOVATE_GIT_AUTHOR: "Renovate Bot <bot@renovateapp.com>"
-      RENOVATE_PLATFORM: "local"
+      # RENOVATE_PLATFORM: "local"
+      RENOVATE_PLATFORM: "gitlab"
       RENOVATE_GIT_LAB_IGNORE_APPROVALS: "true"
       RENOVATE_ASSIGNEES_FROM_CODE_OWNERS: "true"
       RENOVATE_LABELS: "dependencies,renovate"
@@ -28,6 +29,10 @@ services:
       RENOVATE_ONBOARDING: "true"
       RENOVATE_PERSIST_REPO_DATA: "true"
       RENOVATE_ONBOARDING_CONFIG_FILE_NAME: "renovate.json"
+      RENOVATE_REPOSITORIES: >-
+        [
+          "GeorgeRaven/raven-helm-charts"
+        ]
       LOG_LEVEL: "debug"
       RENOVATE_DRY_RUN: "full" # This prevents any changes from actually being made
     networks:

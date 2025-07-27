@@ -132,6 +132,13 @@ $ helm install corvid raven/corvid
 ## 0.16.0
 
 Added backwards compatible statefulset support.
+Here is the default configuration for it if you would like to add it to your charts.
+
+```yaml
+sts:
+  enabled: false
+  updateStrategy: RollingUpdate
+```
 
 ## 0.15.0
 
