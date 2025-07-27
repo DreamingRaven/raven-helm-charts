@@ -25,7 +25,7 @@
         "commands": [
           "bash scripts/bump-chart-version.sh '{{{parentDir}}}' '{{{isMajor}}}' '{{{isMinor}}}' '{{{isPatch}}}'",
           "go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.14.2",
-          "helm-docs --template-files=./README.md.gotmpl -c charts/{{{parentDir}}}"
+          "helm-docs --template-files=../../README.md.gotmpl -c charts/{{{parentDir}}}"
         ],
         "fileFilters": [
           "**/Chart.yaml",
