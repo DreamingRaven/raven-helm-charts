@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart is a chart which contains multiple other more atomic charts as dependencies.
 This allows you to control a broader deployment of interconnected resources.
@@ -26,7 +26,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install jellymeta oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellymeta --version 0.3.0
+helm install jellymeta oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellymeta --version 0.4.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -43,7 +43,7 @@ $ helm install jellymeta raven/jellymeta
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | filebrowser | 0.1.0 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | filebrowser | 0.3.0 |
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.8.1 |
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | metube | 0.1.0 |
 
