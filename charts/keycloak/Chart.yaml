@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: A Helm chart for Kubernetes
+name: keycloak
+type: application
+version: 0.1.0
+dependencies:
+- alias: keycloak
+  name: corvid-app
+  version: 0.13.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  condition: keycloak.enabled
+- name: postgres
+  version: 0.1.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  condition: postgres.enabled
