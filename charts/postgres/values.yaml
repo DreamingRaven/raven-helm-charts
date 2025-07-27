@@ -177,7 +177,7 @@ postgres:
 
   ingress:
     ## @param ingress.enabled [string] Enable ingress
-    enabled: true
+    enabled: false
     ## @param ingress.className [string] Ingress class
     className: ""
     ## @param ingress.annotations [object] Ingress annotations

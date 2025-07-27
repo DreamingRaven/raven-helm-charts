@@ -3,7 +3,7 @@ appVersion: "17.5" # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/
 description: A simple postgres instance for testing and including batteries in other charts for the user to replace with their own CNPG etc
 name: postgres
 type: application
-version: 0.1.0
+version: 0.2.0
 dependencies:
 - alias: postgres
   name: corvid-app

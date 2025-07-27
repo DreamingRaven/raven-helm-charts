@@ -2,7 +2,7 @@
 
 A simple postgres instance for testing and including batteries in other charts for the user to replace with their own CNPG etc
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.5](https://img.shields.io/badge/AppVersion-17.5-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.5](https://img.shields.io/badge/AppVersion-17.5-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install postgres oci://registry.gitlab.com/georgeraven/raven-helm-charts/postgres --version 0.1.0
+helm install postgres oci://registry.gitlab.com/georgeraven/raven-helm-charts/postgres --version 0.2.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -91,7 +91,7 @@ $ helm install postgres raven/postgres
 | postgres.imagePullSecrets | list | `[]` |  |
 | postgres.ingress.annotations | object | `{}` |  |
 | postgres.ingress.className | string | `""` |  |
-| postgres.ingress.enabled | bool | `true` |  |
+| postgres.ingress.enabled | bool | `false` |  |
 | postgres.ingress.hosts[0].host | string | `"postgres.org.example"` |  |
 | postgres.ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | postgres.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -147,4 +147,12 @@ $ helm install postgres raven/postgres
 | postgres.topologySpreadConstraints | list | `[]` |  |
 | postgres.volumeMounts | list | `[]` |  |
 | postgres.volumes | list | `[]` |  |
+
+# Changelog
+
+## 0.2.0
+
+This is a breaking change, to set the default `postgres.ingress.enabled=false` thus disabling unintentional ingress, since this chart is not likely to be exposed.
+
+I would like to affirm, do not use this chart in production. This is meant to enable quick testing of other charts. Please replace the usage of this chart with CNPG.
 
