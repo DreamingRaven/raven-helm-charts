@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: "17.5" # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
+description: A simple postgres instance for testing and including batteries in other charts for the user to replace with their own CNPG etc
+name: postgres
+type: application
+version: 0.1.0
+dependencies:
+- alias: postgres
+  name: corvid-app
+  version: 0.13.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
