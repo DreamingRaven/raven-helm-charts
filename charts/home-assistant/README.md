@@ -1,8 +1,38 @@
 # home-assistant
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.7.3](https://img.shields.io/badge/AppVersion-2025.7.3-informational?style=flat-square)
-
 A Helm chart for Kubernetes
+
+![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.7.4](https://img.shields.io/badge/AppVersion-2025.7.4-informational?style=flat-square)
+
+## Installing the Chart
+
+### Install via OCI helm registry
+
+To install the chart with the release name `home-assistant`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install home-assistant oci://registry.gitlab.com/georgeraven/raven-helm-charts/home-assistant
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install home-assistant oci://registry.gitlab.com/georgeraven/raven-helm-charts/home-assistant --version 0.9.1
+```
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
+
+To install the chart with the release name `home-assistant`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install home-assistant raven/home-assistant
+```
 
 ## Requirements
 
@@ -34,7 +64,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2025.7.3"` |  |
+| image.tag | string | `"2025.7.4"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -93,4 +123,19 @@ A Helm chart for Kubernetes
 | volumes[0].secret.items[0].key | string | `"configuration.yaml"` |  |
 | volumes[0].secret.items[0].path | string | `"configuration.yaml"` |  |
 | volumes[0].secret.secretName | string | `"ha"` |  |
+
+# Changelog
+
+## 0.7.0
+
+Added default volume and volumemount for a secret which should contain the home assistant configuration.
+
+This will be made optional in a further patch, however if you override volumes and mounts this wont affect you currently.
+
+## 0.6.0
+
+DO NOT UPGRADE TO THIS UNLESS YOU HAVE A BACKUP OF YOUR DATA.
+
+This change overhauled this chart to make use of the common corvid chart.
+This brings multiple new features, but also completely broke some older conventions, and I am keen to rip off the bandaid too rather than introduce many smaller breaking changes, to take advantage of the relatively few people using this chart at this stage.
 
