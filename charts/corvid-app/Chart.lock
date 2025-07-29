@@ -1,0 +1,6 @@
+dependencies:
+- name: corvid
+  repository: file://../corvid
+  version: 0.17.0
+digest: sha256:8c06aedab28e35840d4d93ed858a4c66d1bc878e0d789805d0ba5fd24518439d
+generated: "2025-07-29T09:13:05.763634667+01:00"

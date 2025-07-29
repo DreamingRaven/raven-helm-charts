@@ -7,7 +7,9 @@ Expand the name of the chart.
 
 {{/*
 Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+We truncate at 63 chars for because some Kubernetes name fields are limited to this (by the DNS naming spec).
+We further trunicate to 52 characters for metadata.names to enable controllers to spawn subresources which
+add characters to the names.
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "corvid.fullname" -}}

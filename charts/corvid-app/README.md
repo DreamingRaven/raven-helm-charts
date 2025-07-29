@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -76,7 +76,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.13.0
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.14.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -93,7 +93,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.16.0 |
+| file://../corvid | corvid | 0.17.0 |
 
 ## Values
 
@@ -193,6 +193,12 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.14.0 (corvid 0.17.0)
+
+This release truncates cronjob names from 63 to 52 characters.
+This could potentially be breaking in cases where this behaviour was relied upon.
+However I imagine your cronjobs were failing since they cannot be applied with more than 52 chars to k8s.
 
 ## 0.13.0 (corvid 0.16.0)
 

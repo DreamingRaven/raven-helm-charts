@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.0 (corvid 0.17.0)
+
+This release truncates cronjob names from 63 to 52 characters.
+This could potentially be breaking in cases where this behaviour was relied upon.
+However I imagine your cronjobs were failing since they cannot be applied with more than 52 chars to k8s.
+
 ## 0.13.0 (corvid 0.16.0)
 
 This release adds statefulset support.

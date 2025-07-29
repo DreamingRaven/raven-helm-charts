@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "corvid.fullname" . }}
+  name: {{ include "corvid.fullname" . | trunc 52 | trimSuffix "-" }}
   labels:
     {{- include "corvid.labels" . | nindent 4 }}
 spec:

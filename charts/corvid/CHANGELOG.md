@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0
+
+This lowers the truncation of cronjob names from 63 to 52 characters.
+This is because cronjobs create jobs which create pods, and at each stage it adds a suffix.
+To support this I have truncated the cronjob name to 52 characters.
+
+This just like the 63 char limit is baked in and cannot be overridden.
+
 ## 0.16.0
 
 Added backwards compatible statefulset support.
