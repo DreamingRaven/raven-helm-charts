@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: "2025.7.3" # renovate: datasource=docker depName=ghcr.io/home-assistant/home-assistant
+appVersion: "2025.7.4" # renovate: datasource=docker depName=ghcr.io/home-assistant/home-assistant
 description: A Helm chart for Kubernetes
 name: home-assistant
 type: application
-version: 0.9.0
+version: 0.9.1
 dependencies:
 - name: corvid
   version: 0.12.0
