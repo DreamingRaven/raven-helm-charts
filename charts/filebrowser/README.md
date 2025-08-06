@@ -1,10 +1,8 @@
 # filebrowser
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.42.0](https://img.shields.io/badge/AppVersion-v2.42.0-informational?style=flat-square)
-
 A Helm chart for Kubernetes
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.40.2](https://img.shields.io/badge/AppVersion-v2.40.2-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.42.2](https://img.shields.io/badge/AppVersion-v2.42.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -23,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install filebrowser oci://registry.gitlab.com/georgeraven/raven-helm-charts/filebrowser --version 0.1.0
+helm install filebrowser oci://registry.gitlab.com/georgeraven/raven-helm-charts/filebrowser --version 0.3.1
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -52,7 +50,7 @@ $ helm install filebrowser raven/filebrowser
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"filebrowser/filebrowser"` |  |
-| image.tag | string | `"v2.42.0"` |  |
+| image.tag | string | `"v2.42.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
