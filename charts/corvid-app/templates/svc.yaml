@@ -1,3 +1,5 @@
+{{- if .Values.service.enabled }}
 {{- include "corvid.svc" (list . "corvid-app.svc") -}}
+{{- end }}
 {{- define "corvid-app.svc" -}}
 {{- end -}}

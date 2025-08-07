@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.17.0](https://img.shields.io/badge/Version-0.17.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.18.0](https://img.shields.io/badge/Version-0.18.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.17.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.18.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -112,6 +112,8 @@ $ helm install corvid raven/corvid
 | securityContext | object | `{}` | securityContext for consumer overrides |
 | securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
 | securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
+| service.annotations | object | `{}` |  |
+| service.enabled | bool | `true` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
@@ -128,6 +130,19 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.18.0
+
+This adds backwards compatible service options, to enable disabling the service,
+and add custom annotations as needed. No changes are necessary as the defaults,
+match the old behaviour.
+
+```yaml
+service:
+  enabled: true
+  annotations: {}
+  type: ClusterIP
+```
 
 ## 0.17.0
 

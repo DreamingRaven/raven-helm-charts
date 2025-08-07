@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.18.0
+
+This adds backwards compatible service options, to enable disabling the service,
+and add custom annotations as needed. No changes are necessary as the defaults,
+match the old behaviour.
+
+```yaml
+service:
+  enabled: true
+  annotations: {}
+  type: ClusterIP
+```
+
 ## 0.17.0
 
 This lowers the truncation of cronjob names from 63 to 52 characters.

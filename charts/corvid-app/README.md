@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -76,7 +76,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.14.0
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.15.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -93,7 +93,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.17.0 |
+| file://../corvid | corvid | 0.18.0 |
 
 ## Values
 
@@ -177,7 +177,9 @@ $ helm install corvid-app raven/corvid-app
 | securityContext | object | `{}` | securityContext for consumer overrides |
 | securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
 | securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
-| service.type | string | `"ClusterIP"` |  |
+| service.annotations | object | `{}` | additional service annotations to add |
+| service.enabled | bool | `true` | enable or disable the provided service |
+| service.type | string | `"ClusterIP"` | service type to generate |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -193,6 +195,19 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.15.0 (corvid 0.18.0)
+
+This release adds backwards compatible service options, to enable disabling the service,
+and add custom annotations as needed. No changes are necessary as the defaults,
+match the old behaviour. The new defaults are as follows:
+
+```yaml
+service:
+  enabled: true
+  annotations: {}
+  type: ClusterIP
+```
 
 ## 0.14.0 (corvid 0.17.0)
 

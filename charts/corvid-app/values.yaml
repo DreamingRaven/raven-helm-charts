@@ -146,7 +146,11 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  ## @param service.type [string] Service type
+  # -- enable or disable the provided service
+  enabled: true
+  # -- additional service annotations to add
+  annotations: {}
+  # -- service type to generate
   type: ClusterIP
 
 ## @param ports [array] Ports to expose, tie to the service, and ingress

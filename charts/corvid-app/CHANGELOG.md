@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.15.0 (corvid 0.18.0)
+
+This release adds backwards compatible service options, to enable disabling the service,
+and add custom annotations as needed. No changes are necessary as the defaults,
+match the old behaviour. The new defaults are as follows:
+
+```yaml
+service:
+  enabled: true
+  annotations: {}
+  type: ClusterIP
+```
+
 ## 0.14.0 (corvid 0.17.0)
 
 This release truncates cronjob names from 63 to 52 characters.
