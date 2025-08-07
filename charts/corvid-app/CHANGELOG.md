@@ -1,5 +1,83 @@
 # Changelog
 
+## 0.16.0 (corvid 0.18.0)
+
+*BREAKING RELEASE*
+
+#### What
+
+This breaking release disables all forms of deployment by default. I.E `deployments` `daemonsets`, `statefulsets`, `jobs`, `cronjobs`
+
+This also disables all exposure by default, other than the internal cluster service. I.E `ingress`, `httproute`
+
+This also disables the default network policy, which can lead to confusion for users. `netpol`
+
+This also disables the default connectivity test, which often plays no role in most charts. `test`
+
+This means the new chart will only create 2 resources by default without being otherwise instructed:
+
+- a default `pvc` to ensure users don't lose data
+- a default `serviceAccount` due to how the podSpec defaults currently work
+
+**We support all previous functionality, we merely make it an opt-in** for the user, which works better with helms lack of safeguards, for things like incorrect indentation.
+
+We maintain default enablement of persistence, to prevent accidental data loss, by those not reading these changelogs.
+
+We also maintain the default probes and resources, to provide some starting points (although we are looking to better merge overrides between `httpGet` and `exec` probes).
+
+#### Why
+
+The intention behind this change is to:
+
+- Lean-in to the DIY / component based, low-abstraction approach this chart takes.
+- Reduce boilerplate, as currently you have to disable all forms of deployment everywhere. This change would mean you now only have to enable the one you are interested in, whichever one that may be.
+- Prevent accidentally bombing cluster resources with simultaneous deployments, daemonsets, statefulsets etc, without the willing opt-in of the user, which also confirms the user has properly mapped their values.
+- Prevent accidentally exposing applications that users did not intend to be exposed.
+
+While this is breaking, it is also very easily reverted, you need simply specifically enable the features you would like.
+
+This also potentially means you can reduce the number of overrides you need to make in your own `values.yaml`.
+
+#### Advised Actions
+
+It is advised that you tweak your values.yaml to specifically enable everything you want, and rely on the defaults to keep everything else disabled.
+
+```diff
+- daemonset:
+-   enabled: false
++ deployment:
++   enabled: true
+- cron:
+-   enabled: false
+- job:
+-   enabled: false
+- ingress:
+-   enabled: false
+- service:
+-   enabled: false
+```
+
+#### Backwards Compatibility
+
+With this new change you can restore the exact old behaviour by setting the following in your `values.yaml` overrides (not advised, as not a useful default):
+
+```yaml
+daemonset:
+  enabled: true
+deployment:
+  enabled: true
+cron:
+  enabled: true
+job:
+  enabled: true
+ingress:
+  enabled: true
+service:
+  enabled: true
+test:
+  enabled: true
+```
+
 ## 0.15.0 (corvid 0.18.0)
 
 This release adds backwards compatible service options, to enable disabling the service,

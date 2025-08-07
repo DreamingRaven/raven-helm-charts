@@ -33,10 +33,10 @@ args:
 runtimeClassName:
 
 daemonset:
-  enabled: true
+  enabled: false
 
 deployment:
-  enabled: true
+  enabled: false
   # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
   strategy: ""
 
@@ -46,7 +46,7 @@ sts:
 
 cron:
   # -- enable or disable cronjob
-  enabled: true
+  enabled: false
   # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
   schedule: "@midnight"
   # -- cronjob will not trigger on schedule but can be manually triggered
@@ -57,7 +57,7 @@ cron:
   concurrencyPolicy: Allow # Allow, Forbid, Replace
 
 job:
-  enabled: true
+  enabled: false
 
 ## @param initContainers Add bespoke init containers to the pods
 initContainers: []
@@ -147,7 +147,7 @@ securityContext: {}
 
 service:
   # -- enable or disable the provided service
-  enabled: true
+  enabled: false
   # -- additional service annotations to add
   annotations: {}
   # -- service type to generate
@@ -173,7 +173,7 @@ httpRoute:
 
 ingress:
   ## @param ingress.enabled [string] Enable ingress
-  enabled: true
+  enabled: false
   ## @param ingress.className [string] Ingress class
   className: ""
   ## @param ingress.annotations [object] Ingress annotations
@@ -289,8 +289,11 @@ topologySpreadConstraints: []
 
 affinity: {}
 
+test:
+  enabled: false
+
 netpol:
-  enabled: true
+  enabled: false
 
 dnsPolicy: "" # default is ClusterFirst
 dnsConfig: {}

@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.16.0](https://img.shields.io/badge/Version-0.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -15,45 +15,42 @@ dependencies:
 - alias: api
   condition: api.enabled
   name: corvid-app
-  version: 0.9.0 # change to be latest corvid-app version
-  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
+  version: 0.16.0 # change to be latest corvid-app version
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
 - alias: web
   condition: web.enabled
   name: corvid-app
-  version: 0.9.0 # change to be latest corvid-app version
-  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
+  version: 0.16.0 # change to be latest corvid-app version
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
 ```
 
 Using the alias function we can rename corvid-app to suit whatever app name we want it to become.
 We can then override settings in values.yaml using the aliases name:
 
 ```yaml
-api:
-	image:
-	  registry: registry.example.org
-	  repository: foo/someapi
-	  tag: ""
-	deployment:
-		enabled: true
-	cron:
-		enabled: false
-	job:
-		enabled: false
-	daemonset:
-		enabled: false
-web:
-	image:
-	  registry: registry.example.org
-	  repository: foo/somefrontend
-	  tag: ""
-	deployment:
-		enabled: true
-	cron:
-		enabled: false
-	job:
-		enabled: false
-	daemonset:
-		enabled: false
+api: # must match Chart.yaml alias
+  image:
+    registry: registry.example.org
+    repository: foo/someapi
+    tag: ""
+  deployment:
+    enabled: true # specifically enable from a plethora of deployment options
+  service:
+    enabled: true
+  ingress:
+    enabled: true
+
+web: # must match Chart.yaml alias
+  image:
+    registry: registry.example.org
+    repository: foo/somefrontend
+    tag: ""
+  deployment:
+    enabled: true
+  service:
+    enabled: true
+  ingress:
+    enabled: true
 ```
 
 Now we have a chart with no templates, creating very different applications with only `values.yaml` and `Chart.yaml`. This can be a very quick way to prototype a new application.
@@ -76,7 +73,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.15.0
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.16.0
 ```
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
@@ -108,13 +105,13 @@ $ helm install corvid-app raven/corvid-app
 | command | string | `nil` |  |
 | cron.backoffLimit | int | `3` |  |
 | cron.concurrencyPolicy | string | `"Allow"` |  |
-| cron.enabled | bool | `true` | enable or disable cronjob |
+| cron.enabled | bool | `false` | enable or disable cronjob |
 | cron.failedJobsHistoryLimit | int | `1` |  |
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
 | cron.successfulJobsHistoryLimit | int | `1` |  |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
-| daemonset.enabled | bool | `true` |  |
-| deployment.enabled | bool | `true` |  |
+| daemonset.enabled | bool | `false` |  |
+| deployment.enabled | bool | `false` |  |
 | deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
@@ -134,18 +131,18 @@ $ helm install corvid-app raven/corvid-app
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
-| ingress.enabled | bool | `true` |  |
+| ingress.enabled | bool | `false` |  |
 | ingress.hosts[0].host | string | `"corvid-app.org.example"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| job.enabled | bool | `true` |  |
+| job.enabled | bool | `false` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
 | livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
 | livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
-| netpol.enabled | bool | `true` |  |
+| netpol.enabled | bool | `false` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.defaultVolumeMounts[0].mountPath | string | `"/data/"` |  |
@@ -178,7 +175,7 @@ $ helm install corvid-app raven/corvid-app
 | securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
 | securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | service.annotations | object | `{}` | additional service annotations to add |
-| service.enabled | bool | `true` | enable or disable the provided service |
+| service.enabled | bool | `false` | enable or disable the provided service |
 | service.type | string | `"ClusterIP"` | service type to generate |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
@@ -189,12 +186,91 @@ $ helm install corvid-app raven/corvid-app
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | sts.enabled | bool | `false` |  |
 | sts.updateStrategy | string | `"RollingUpdate"` |  |
+| test.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.16.0 (corvid 0.18.0)
+
+*BREAKING RELEASE*
+
+#### What
+
+This breaking release disables all forms of deployment by default. I.E `deployments` `daemonsets`, `statefulsets`, `jobs`, `cronjobs`
+
+This also disables all exposure by default, other than the internal cluster service. I.E `ingress`, `httproute`
+
+This also disables the default network policy, which can lead to confusion for users. `netpol`
+
+This also disables the default connectivity test, which often plays no role in most charts. `test`
+
+This means the new chart will only create 2 resources by default without being otherwise instructed:
+
+- a default `pvc` to ensure users don't lose data
+- a default `serviceAccount` due to how the podSpec defaults currently work
+
+**We support all previous functionality, we merely make it an opt-in** for the user, which works better with helms lack of safeguards, for things like incorrect indentation.
+
+We maintain default enablement of persistence, to prevent accidental data loss, by those not reading these changelogs.
+
+We also maintain the default probes and resources, to provide some starting points (although we are looking to better merge overrides between `httpGet` and `exec` probes).
+
+#### Why
+
+The intention behind this change is to:
+
+- Lean-in to the DIY / component based, low-abstraction approach this chart takes.
+- Reduce boilerplate, as currently you have to disable all forms of deployment everywhere. This change would mean you now only have to enable the one you are interested in, whichever one that may be.
+- Prevent accidentally bombing cluster resources with simultaneous deployments, daemonsets, statefulsets etc, without the willing opt-in of the user, which also confirms the user has properly mapped their values.
+- Prevent accidentally exposing applications that users did not intend to be exposed.
+
+While this is breaking, it is also very easily reverted, you need simply specifically enable the features you would like.
+
+This also potentially means you can reduce the number of overrides you need to make in your own `values.yaml`.
+
+#### Advised Actions
+
+It is advised that you tweak your values.yaml to specifically enable everything you want, and rely on the defaults to keep everything else disabled.
+
+```diff
+- daemonset:
+-   enabled: false
++ deployment:
++   enabled: true
+- cron:
+-   enabled: false
+- job:
+-   enabled: false
+- ingress:
+-   enabled: false
+- service:
+-   enabled: false
+```
+
+#### Backwards Compatibility
+
+With this new change you can restore the exact old behaviour by setting the following in your `values.yaml` overrides (not advised, as not a useful default):
+
+```yaml
+daemonset:
+  enabled: true
+deployment:
+  enabled: true
+cron:
+  enabled: true
+job:
+  enabled: true
+ingress:
+  enabled: true
+service:
+  enabled: true
+test:
+  enabled: true
+```
 
 ## 0.15.0 (corvid 0.18.0)
 

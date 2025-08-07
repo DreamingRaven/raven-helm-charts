@@ -9,45 +9,42 @@ dependencies:
 - alias: api
   condition: api.enabled
   name: corvid-app
-  version: 0.9.0 # change to be latest corvid-app version
-  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
+  version: 0.16.0 # change to be latest corvid-app version
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
 - alias: web
   condition: web.enabled
   name: corvid-app
-  version: 0.9.0 # change to be latest corvid-app version
-  repository: "https://gitlab.com/api/v4/projects/55284972/packages/helm/stable"
+  version: 0.16.0 # change to be latest corvid-app version
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
 ```
 
 Using the alias function we can rename corvid-app to suit whatever app name we want it to become.
 We can then override settings in values.yaml using the aliases name:
 
 ```yaml
-api:
-	image:
-	  registry: registry.example.org
-	  repository: foo/someapi
-	  tag: ""
-	deployment:
-		enabled: true
-	cron:
-		enabled: false
-	job:
-		enabled: false
-	daemonset:
-		enabled: false
-web:
-	image:
-	  registry: registry.example.org
-	  repository: foo/somefrontend
-	  tag: ""
-	deployment:
-		enabled: true
-	cron:
-		enabled: false
-	job:
-		enabled: false
-	daemonset:
-		enabled: false
+api: # must match Chart.yaml alias
+  image:
+    registry: registry.example.org
+    repository: foo/someapi
+    tag: ""
+  deployment:
+    enabled: true # specifically enable from a plethora of deployment options
+  service:
+    enabled: true
+  ingress:
+    enabled: true
+
+web: # must match Chart.yaml alias
+  image:
+    registry: registry.example.org
+    repository: foo/somefrontend
+    tag: ""
+  deployment:
+    enabled: true
+  service:
+    enabled: true
+  ingress:
+    enabled: true
 ```
 
 Now we have a chart with no templates, creating very different applications with only `values.yaml` and `Chart.yaml`. This can be a very quick way to prototype a new application.
