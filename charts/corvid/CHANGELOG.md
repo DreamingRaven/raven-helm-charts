@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.19.0
+
+This adds backwards compatible job annotation support.
+
+This is particularly useful for the purpose of adding `helm.sh/hook` annotations.
+
+No action is necessary, however here are the new defaults for your reference:
+
+```yaml
+job:
+  enabled: true
+  # -- annotations to add to the generated job e.g for helm hooks
+  annotations: {}
+    # helm.sh/hook: post-install,post-upgrade
+    # helm.sh/hook-weight: "-1"
+    # helm.sh/hook-delete-policy: before-hook-creation
+```
+
 ## 0.18.0
 
 This adds backwards compatible service options, to enable disabling the service,

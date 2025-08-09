@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+## @param replicaCount [string] Server deployment replica count
 replicaCount: 1
 
 image:
@@ -11,27 +12,31 @@ image:
   repository: library/alpine
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
   tag: "3.22.0"
 
 persistence:
-  enabled: false
+  enabled: true
   size: 8Gi
   accessModes:
   - ReadWriteOnce
   existingClaim: ""
   defaultVolumeMounts:
-  # # this defines what volumeMounts to create by default
-  # # when .Values.persistence.enabled is true
-  # - name: data # note the default volume is always called data
-  #   mountPath: /data/
-  #   subPath: data
+  # this defines what volumeMounts to create by default
+  # when .Values.persistence.enabled is true
+  - name: data # note the default volume is always called data
+    mountPath: /data/
+    subPath: data
 
 command:
 args:
 runtimeClassName:
 
+daemonset:
+  enabled: false
+
 deployment:
+  enabled: false
   # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
   strategy: ""
 
@@ -51,8 +56,16 @@ cron:
   backoffLimit: 3
   concurrencyPolicy: Allow # Allow, Forbid, Replace
 
-## @param initContainers add bespoke init containers to the pod spec
-initContainers:
+job:
+  enabled: false
+  # -- annotations to add to the job e.g for helm hooks
+  annotations: {}
+    # helm.sh/hook: post-install,post-upgrade
+    # helm.sh/hook-weight: "-1"
+    # helm.sh/hook-delete-policy: before-hook-creation
+
+## @param initContainers Add bespoke init containers to the pods
+initContainers: []
 # - name: some-pod-name
 #   image: some-image
 #   imagePullPolicy: Always
@@ -60,45 +73,50 @@ initContainers:
 #     - name: some-port
 #       containerPort: 1234
 
+restartPolicy: Always
+
+## @param imagePullSecrets [array] Image pull secrets
 imagePullSecrets: []
+## @param nameOverride [string] Partial name override
 nameOverride: ""
+## @param fullnameOverride [string] Full name override
 fullnameOverride: ""
 
 ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
 secrets: []
-#- name: corvid
-#  lookup:
-#  - key: corvidUsername
-#    env: corvid_USERNAME
-#  - key: corvidPassword
-#    env: corvid_PASSWORD
+# - name: corvid
+#   lookup:
+#   - key: corvidUsername
+#     env: corvid_USERNAME
+#   - key: corvidPassword
+#     env: corvid_PASSWORD
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
 env:
-- name: CORVID_EXAMPLE_VARIABLE
+- name: corvid_EXAMPLE_VARIABLE
   value: "false"
 
 ## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
 envFrom:
-- configMapRef:
-    name: someConfigMap
-    optional: false
-- secretRef:
-    name: someSecret
-    optional: false
+# - configMapRef:
+#     name: someConfigMap
+#     optional: false
+# - secretRef:
+#     name: someSecret
+#     optional: false
 
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  ## @param serviceAccount.create [string] Specifies whether a service account should be created
   create: true
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
-  # Annotations to add to the service account
+  ## @param serviceAccount.annotations [object] Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## @param podAnnotations [object] Pod annotations
 podAnnotations: {}
 podLabels: {}
 
@@ -133,8 +151,11 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  enabled: true
+  # -- enable or disable the provided service
+  enabled: false
+  # -- additional service annotations to add
   annotations: {}
+  # -- service type to generate
   type: ClusterIP
 
 ## @param ports [array] Ports to expose, tie to the service, and ingress
@@ -143,6 +164,7 @@ ports:
   containerPort: 8080
   servicePort: 80
   protocol: TCP
+  appProtocol: http
 
 httpRoute:
   enabled: false
@@ -155,16 +177,21 @@ httpRoute:
   - number: 80
 
 ingress:
+  ## @param ingress.enabled [string] Enable ingress
   enabled: false
+  ## @param ingress.className [string] Ingress class
   className: ""
+  ## @param ingress.annotations [object] Ingress annotations
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  ## @param ingress.hosts [array] Ingress hosts
   hosts:
     - host: corvid.org.example
       paths:
         - path: /
           pathType: ImplementationSpecific
+  ## @param ingress.tls [array] Ingress TLS
   tls: []
   #  - secretName: corvid.org.example-tls
   #    hosts:
@@ -225,11 +252,14 @@ readinessProbe:
   #   port: http
 
 autoscaling:
+  ## @param autoscaling.enabled [string] Enable autoscaling
   enabled: false
+  ## @param autoscaling.minReplicas [string] Minimum number of replicas
   minReplicas: 1
+  ## @param autoscaling.maxReplicas [string] Maximum number of replicas
   maxReplicas: 100
+  ## @param autoscaling.targetCPUUtilizationPercentage [string] Target CPU utilization percentage
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
 volumes: []
@@ -254,15 +284,26 @@ topologySpreadConstraints: []
 #   whenUnsatisfiable: DoNotSchedule # cant benefit from HA on same node
 #   labelSelector:
 #     matchLabels:
-#       app.kubernetes.io/name: corvid-app
+#       app.kubernetes.io/name: corvid
 # - maxSkew: 1
 #   topologyKey: zone
 #   whenUnsatisfiable: ScheduleAnyway # can still benefit from HA in zone
 #   labelSelector:
 #     matchLabels:
-#       app.kubernetes.io/name: corvid-app
+#       app.kubernetes.io/name: corvid
 
 affinity: {}
 
+test:
+  enabled: false
+
 netpol:
-  enabled: true
+  enabled: false
+
+dnsPolicy: "" # default is ClusterFirst
+dnsConfig: {}
+  # nameservers:
+  # - 1.1.1.1
+  # options:
+  # - name: ndots
+  #   value: "1"

@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.16.0](https://img.shields.io/badge/Version-0.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.16.1](https://img.shields.io/badge/Version-0.16.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -73,8 +73,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.16.0
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.16.1
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: corvid-app
+  version: 0.16.1
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: corvid-app.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -90,7 +111,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.18.0 |
+| file://../corvid | corvid | 0.19.0 |
 
 ## Values
 
@@ -137,6 +158,7 @@ $ helm install corvid-app raven/corvid-app
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
+| job.annotations | object | `{}` | annotations to add to the job e.g for helm hooks |
 | job.enabled | bool | `false` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
 | livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
@@ -193,6 +215,24 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.16.1 (corvid 0.19.0)
+
+This adds the corvid backwards compatible job annotation field.
+
+This is particularly useful for the purpose of adding `helm.sh/hook` annotations.
+
+No action is necessary, however here are the new defaults for your reference:
+
+```yaml
+job:
+  enabled: true
+  # -- annotations to add to the generated job e.g for helm hooks
+  annotations: {}
+    # helm.sh/hook: post-install,post-upgrade
+    # helm.sh/hook-weight: "-1"
+    # helm.sh/hook-delete-policy: before-hook-creation
+```
 
 ## 0.16.0 (corvid 0.18.0)
 

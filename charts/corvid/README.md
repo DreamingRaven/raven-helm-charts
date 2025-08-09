@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.18.0](https://img.shields.io/badge/Version-0.18.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.19.0](https://img.shields.io/badge/Version-0.19.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,8 +23,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.18.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.19.0
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: corvid
+  version: 0.19.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: corvid.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -54,12 +75,13 @@ $ helm install corvid raven/corvid
 | cron.schedule | string | `"@midnight"` | schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax |
 | cron.successfulJobsHistoryLimit | int | `1` |  |
 | cron.suspend | bool | `false` | cronjob will not trigger on schedule but can be manually triggered |
+| daemonset.enabled | bool | `false` |  |
+| deployment.enabled | bool | `false` |  |
 | deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
-| envFrom[0].configMapRef.name | string | `"someConfigMap"` |  |
-| envFrom[0].configMapRef.optional | bool | `false` |  |
-| envFrom[1].secretRef.name | string | `"someSecret"` |  |
-| envFrom[1].secretRef.optional | bool | `false` |  |
-| env[0].name | string | `"CORVID_EXAMPLE_VARIABLE"` |  |
+| dnsConfig | object | `{}` |  |
+| dnsPolicy | string | `""` |  |
+| envFrom | string | `nil` |  |
+| env[0].name | string | `"corvid_EXAMPLE_VARIABLE"` |  |
 | env[0].value | string | `"false"` |  |
 | fullnameOverride | string | `""` |  |
 | httpRoute.annotations | object | `{}` |  |
@@ -79,16 +101,20 @@ $ helm install corvid raven/corvid
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| initContainers | string | `nil` |  |
+| initContainers | list | `[]` |  |
+| job.annotations | object | `{}` | annotations to add to the job e.g for helm hooks |
+| job.enabled | bool | `false` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
 | livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
 | livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
-| netpol.enabled | bool | `true` |  |
+| netpol.enabled | bool | `false` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| persistence.defaultVolumeMounts | string | `nil` |  |
-| persistence.enabled | bool | `false` |  |
+| persistence.defaultVolumeMounts[0].mountPath | string | `"/data/"` |  |
+| persistence.defaultVolumeMounts[0].name | string | `"data"` |  |
+| persistence.defaultVolumeMounts[0].subPath | string | `"data"` |  |
+| persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.size | string | `"8Gi"` |  |
 | podAnnotations | object | `{}` |  |
@@ -96,6 +122,7 @@ $ helm install corvid raven/corvid
 | podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
 | podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
 | podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
+| ports[0].appProtocol | string | `"http"` |  |
 | ports[0].containerPort | int | `8080` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
@@ -107,14 +134,15 @@ $ helm install corvid raven/corvid
 | resources | string | `nil` | raw resources block overrides for user |
 | resourcesDefault | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":"100m"}}` | default resources if not specified by user |
 | resourcesEnabled | bool | `true` | enable or disable resources entirely |
+| restartPolicy | string | `"Always"` |  |
 | runtimeClassName | string | `nil` |  |
 | secrets | list | `[]` |  |
 | securityContext | object | `{}` | securityContext for consumer overrides |
 | securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
 | securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
-| service.annotations | object | `{}` |  |
-| service.enabled | bool | `true` |  |
-| service.type | string | `"ClusterIP"` |  |
+| service.annotations | object | `{}` | additional service annotations to add |
+| service.enabled | bool | `false` | enable or disable the provided service |
+| service.type | string | `"ClusterIP"` | service type to generate |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -124,12 +152,31 @@ $ helm install corvid raven/corvid
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | sts.enabled | bool | `false` |  |
 | sts.updateStrategy | string | `"RollingUpdate"` |  |
+| test.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.19.0
+
+This adds backwards compatible job annotation support.
+
+This is particularly useful for the purpose of adding `helm.sh/hook` annotations.
+
+No action is necessary, however here are the new defaults for your reference:
+
+```yaml
+job:
+  enabled: true
+  # -- annotations to add to the generated job e.g for helm hooks
+  annotations: {}
+    # helm.sh/hook: post-install,post-upgrade
+    # helm.sh/hook-weight: "-1"
+    # helm.sh/hook-delete-policy: before-hook-creation
+```
 
 ## 0.18.0
 

@@ -58,6 +58,11 @@ cron:
 
 job:
   enabled: false
+  # -- annotations to add to the job e.g for helm hooks
+  annotations: {}
+    # helm.sh/hook: post-install,post-upgrade
+    # helm.sh/hook-weight: "-1"
+    # helm.sh/hook-delete-policy: before-hook-creation
 
 ## @param initContainers Add bespoke init containers to the pods
 initContainers: []

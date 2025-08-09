@@ -5,6 +5,10 @@ metadata:
   name: {{ include "corvid.fullname" . }}
   labels:
     {{- include "corvid.labels" . | nindent 4 }}
+  {{- with .Values.job.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   template:
     metadata:
