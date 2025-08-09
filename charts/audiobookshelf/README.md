@@ -1,10 +1,8 @@
 # audiobookshelf
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.26.3](https://img.shields.io/badge/AppVersion-2.26.3-informational?style=flat-square)
-
 Self-hosted audiobook and podcast server
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.24.0](https://img.shields.io/badge/AppVersion-2.24.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.27.0](https://img.shields.io/badge/AppVersion-2.27.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -23,8 +21,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install audiobookshelf oci://registry.gitlab.com/georgeraven/raven-helm-charts/audiobookshelf --version 0.1.0
+helm install audiobookshelf oci://registry.gitlab.com/georgeraven/raven-helm-charts/audiobookshelf --version 0.3.0
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: audiobookshelf
+  version: 0.3.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: audiobookshelf.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -72,7 +91,7 @@ $ helm install audiobookshelf raven/audiobookshelf
 | audiobookshelf.image.pullPolicy | string | `"IfNotPresent"` |  |
 | audiobookshelf.image.registry | string | `"ghcr.io"` |  |
 | audiobookshelf.image.repository | string | `"advplyr/audiobookshelf"` |  |
-| audiobookshelf.image.tag | string | `"2.26.3"` |  |
+| audiobookshelf.image.tag | string | `"2.27.0"` |  |
 | audiobookshelf.imagePullSecrets | list | `[]` |  |
 | audiobookshelf.ingress.annotations | object | `{}` |  |
 | audiobookshelf.ingress.className | string | `""` |  |

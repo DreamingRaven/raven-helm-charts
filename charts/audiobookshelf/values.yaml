@@ -14,7 +14,7 @@ audiobookshelf:
     ## @param image.pullPolicy [string] Image pull policy
     pullPolicy: IfNotPresent
     ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-    tag: "2.26.3"
+    tag: "2.27.0"
 
   persistence:
     enabled: true
