@@ -12,11 +12,68 @@ exampleSecret:
   name: hoppscotch
 
 frontend:
-  enabled: false
+  enabled: true
+  initContainers:
+  - name: hoppscotch-fe
+    image: docker.io/hoppscotch/hoppscotch:2025.7.1
+    command:
+    - sh
+    - -c
+    - |
+      cp -r /site/selfhost-web/ /static/html
+    volumeMounts:
+    - name: static
+      mountPath: "/static/"
   image:
-    registry: docker.io
-    repository: hoppscotch/hoppscotch
-    tag: "2025.7.1"
+    registry: ghcr.io
+    repository: nginx/nginx-unprivileged
+    tag: "1.28.0-alpine3.21"
+  envFrom:
+  - secretRef:
+      name: hoppscotch
+  persistence:
+    enabled: false
+  deployment:
+    enabled: true
+  netpol:
+    enabled: true
+  startupProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  readinessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  livenessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  service:
+    enabled: true
+  ports:
+  - name: http
+    containerPort: 8080
+    servicePort: 80
+    protocol: TCP
+    appProtocol: http
+  volumeMounts:
+  - name: static
+    mountPath: "/usr/share/nginx/html/"
+    subPath: "html"
+    readOnly: true
+  volumes:
+  - name: static
+    emptyDir: {}
+  securityContextDefault:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
 
 admin:
   enabled: false
@@ -31,6 +88,42 @@ backend:
     registry: docker.io
     repository: hoppscotch/hoppscotch
     tag: "2025.7.1"
+  command:
+  - /bin/sh
+  - -c
+  - |
+    export DATABASE_URL=${DATABASE_URL:-"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}"}
+    echo "Attempting to run backend..."
+    node prod_run.mjs
+  envFrom:
+  - secretRef:
+      name: hoppscotch
+  persistence:
+    enabled: false
+  deployment:
+    enabled: true
+  netpol:
+    enabled: true
+  startupProbeDefault:
+    httpGet:
+      path: /health
+      port: http
+  readinessProbeDefault:
+    httpGet:
+      path: /health
+      port: http
+  livenessProbeDefault:
+    httpGet:
+      path: /health
+      port: http
+  service:
+    enabled: true
+  ports:
+  - name: http
+    containerPort: 8080
+    servicePort: 80
+    protocol: TCP
+    appProtocol: http
 
 # DB Migration hook definition
 migrate:
@@ -43,35 +136,37 @@ migrate:
   - /bin/sh
   - -c
   - |
-    export DATABASE_URL=${DATABASE_URL:-"postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}"}
-    echo "Attempting to migrate database... '${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}' as '${DATABASE_USER}'"
+    export DATABASE_URL=${DATABASE_URL:-"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}"}
+    echo "Attempting to migrate database... '${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}' as '${POSTGRES_USER}'"
     pnpx prisma migrate deploy
   env:
-  - name: DATABASE_USER
+  - name: POSTGRES_USER
     valueFrom:
       secretKeyRef:
         name: hoppscotch
         key: POSTGRES_USER
-  - name: DATABASE_PASSWORD
+  - name: POSTGRES_PASSWORD
     valueFrom:
       secretKeyRef:
         name: hoppscotch
         key: POSTGRES_PASSWORD
-  - name: DATABASE_HOST
+  - name: POSTGRES_HOST
     valueFrom:
       secretKeyRef:
         name: hoppscotch
         key: POSTGRES_HOST
-  - name: DATABASE_PORT
+  - name: POSTGRES_PORT
     valueFrom:
       secretKeyRef:
         name: hoppscotch
         key: POSTGRES_PORT
-  - name: DATABASE_NAME
+  - name: POSTGRES_NAME
     valueFrom:
       secretKeyRef:
         name: hoppscotch
         key: POSTGRES_DB
+  persistence:
+    enabled: false
   job:
     enabled: true
     annotations:
