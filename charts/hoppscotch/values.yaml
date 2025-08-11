@@ -21,6 +21,10 @@ frontend:
     - -c
     - |
       cp -r /site/selfhost-web/ /static/html
+      # substitute localhost:3000 with the correct frontend url
+      # using grep on the entire directory
+      grep -r "localhost:3000" /static/html -l | xargs sed -i 's|localhost:3000|localhost:8080|g'
+
     volumeMounts:
     - name: static
       mountPath: "/static/"
