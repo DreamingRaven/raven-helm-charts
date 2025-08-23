@@ -2,7 +2,7 @@
 
 A simple postgres instance for testing and including batteries in other charts for the user to replace with their own CNPG etc
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.5](https://img.shields.io/badge/AppVersion-17.5-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.5](https://img.shields.io/badge/AppVersion-17.5-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,8 +21,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install postgres oci://registry.gitlab.com/georgeraven/raven-helm-charts/postgres --version 0.2.0
+helm install postgres oci://registry.gitlab.com/georgeraven/raven-helm-charts/postgres --version 0.3.0
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: postgres
+  version: 0.3.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: postgres.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -87,7 +108,7 @@ $ helm install postgres raven/postgres
 | postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgres.image.registry | string | `"docker.io"` |  |
 | postgres.image.repository | string | `"library/postgres"` |  |
-| postgres.image.tag | string | `"17.5"` |  |
+| postgres.image.tag | string | `"17.6"` |  |
 | postgres.imagePullSecrets | list | `[]` |  |
 | postgres.ingress.annotations | object | `{}` |  |
 | postgres.ingress.className | string | `""` |  |
