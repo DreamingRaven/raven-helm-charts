@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 0.8.0
-appVersion: "13.346.0" # renovate: datasource=docker depName=ghcr.io/felddy/foundryvtt
+version: 0.9.0
+appVersion: "13.347.0" # renovate: datasource=docker depName=ghcr.io/felddy/foundryvtt
 description: A Helm chart for Kubernetes
 name: foundryvtt
 type: application
