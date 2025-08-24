@@ -251,9 +251,9 @@ keycloak:
   # -- default resources if not specified by user
   resourcesDefault:
     limits:
-      memory: 512Mi
+      memory: 1.75Gi
     requests:
-      cpu: 100m
+      cpu: 350m
   # -- raw resources block overrides for user
   resources:
     # limits:
@@ -266,7 +266,7 @@ keycloak:
   # -- default startup probe if not specified by user
   startupProbeDefault:
     httpGet:
-      path: /
+      path: /realms/master
       port: http
   # -- raw startup probe overrides for user
   startupProbe:
@@ -279,7 +279,7 @@ keycloak:
   # -- default liveness probe if not specified by user
   livenessProbeDefault:
     httpGet:
-      path: /
+      path: /realms/master
       port: http
   # -- raw liveness probe overrides for user
   livenessProbe:
@@ -292,7 +292,7 @@ keycloak:
   # -- default readiness probe if not specified by user
   readinessProbeDefault:
     httpGet:
-      path: /
+      path: /realms/master
       port: http
   # -- raw readiness probe overrides for user
   readinessProbe:
@@ -304,9 +304,9 @@ keycloak:
     ## @param autoscaling.enabled [string] Enable autoscaling
     enabled: false
     ## @param autoscaling.minReplicas [string] Minimum number of replicas
-    minReplicas: 1
+    minReplicas: 2
     ## @param autoscaling.maxReplicas [string] Maximum number of replicas
-    maxReplicas: 100
+    maxReplicas: 5
     ## @param autoscaling.targetCPUUtilizationPercentage [string] Target CPU utilization percentage
     targetCPUUtilizationPercentage: 80
 

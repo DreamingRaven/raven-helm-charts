@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.3.2](https://img.shields.io/badge/AppVersion-26.3.2-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.3.2](https://img.shields.io/badge/AppVersion-26.3.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,8 +21,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.1.1
+helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.2.0
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: keycloak
+  version: 0.2.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: keycloak.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -49,8 +70,8 @@ $ helm install keycloak raven/keycloak
 | keycloak.args[0] | string | `"start"` |  |
 | keycloak.args[1] | string | `"--verbose"` |  |
 | keycloak.autoscaling.enabled | bool | `false` |  |
-| keycloak.autoscaling.maxReplicas | int | `100` |  |
-| keycloak.autoscaling.minReplicas | int | `1` |  |
+| keycloak.autoscaling.maxReplicas | int | `5` |  |
+| keycloak.autoscaling.minReplicas | int | `2` |  |
 | keycloak.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | keycloak.command | string | `nil` |  |
 | keycloak.cron.backoffLimit | int | `3` |  |
@@ -89,7 +110,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.initContainers | list | `[]` |  |
 | keycloak.job.enabled | bool | `false` |  |
 | keycloak.livenessProbe | string | `nil` | raw liveness probe overrides for user |
-| keycloak.livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
+| keycloak.livenessProbeDefault | object | `{"httpGet":{"path":"/realms/master","port":"http"}}` | default liveness probe if not specified by user |
 | keycloak.livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | keycloak.nameOverride | string | `""` |  |
 | keycloak.netpol.enabled | bool | `true` |  |
@@ -117,11 +138,11 @@ $ helm install keycloak raven/keycloak
 | keycloak.ports[1].protocol | string | `"TCP"` |  |
 | keycloak.ports[1].servicePort | int | `9000` |  |
 | keycloak.readinessProbe | string | `nil` | raw readiness probe overrides for user |
-| keycloak.readinessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default readiness probe if not specified by user |
+| keycloak.readinessProbeDefault | object | `{"httpGet":{"path":"/realms/master","port":"http"}}` | default readiness probe if not specified by user |
 | keycloak.readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | keycloak.replicaCount | int | `1` |  |
 | keycloak.resources | string | `nil` | raw resources block overrides for user |
-| keycloak.resourcesDefault | object | `{"limits":{"memory":"512Mi"},"requests":{"cpu":"100m"}}` | default resources if not specified by user |
+| keycloak.resourcesDefault | object | `{"limits":{"memory":"1.75Gi"},"requests":{"cpu":"350m"}}` | default resources if not specified by user |
 | keycloak.resourcesEnabled | bool | `true` | enable or disable resources entirely |
 | keycloak.restartPolicy | string | `"Always"` |  |
 | keycloak.runtimeClassName | string | `nil` |  |
@@ -135,7 +156,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.serviceAccount.create | bool | `true` |  |
 | keycloak.serviceAccount.name | string | `""` |  |
 | keycloak.startupProbe | string | `nil` | raw startup probe overrides for user |
-| keycloak.startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
+| keycloak.startupProbeDefault | object | `{"httpGet":{"path":"/realms/master","port":"http"}}` | default startup probe if not specified by user |
 | keycloak.startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | keycloak.sts.enabled | bool | `false` |  |
 | keycloak.sts.updateStrategy | string | `"RollingUpdate"` |  |
@@ -159,4 +180,12 @@ $ helm install keycloak raven/keycloak
 | postgres.postgres.env[6].name | string | `"POSTGRES_INITDB_ARGS"` |  |
 | postgres.postgres.env[6].value | string | `"--auth-host=scram-sha-256"` |  |
 | postgres.postgres.fullnameOverride | string | `"postgres"` |  |
+
+# Changelog
+
+## 0.2.0
+
+- Changed all probes from `/` to `/realm/master` by default.
+- Changed default resources to 1.75Gi memory and 350m cpu, to match more realistic needs.
+- Changed auto-scaling to be max 5 by default, as 100 is obscene.
 
