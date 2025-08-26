@@ -1,8 +1,59 @@
 # pgadmin
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.14](https://img.shields.io/badge/AppVersion-8.14-informational?style=flat-square)
-
 A Helm chart for Kubernetes
+
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.14](https://img.shields.io/badge/AppVersion-8.14-informational?style=flat-square)
+
+## Installing the Chart
+
+### Install via OCI helm registry
+
+To install the chart with the release name `pgadmin`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install pgadmin oci://registry.gitlab.com/georgeraven/raven-helm-charts/pgadmin
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install pgadmin oci://registry.gitlab.com/georgeraven/raven-helm-charts/pgadmin --version 0.9.0
+```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: pgadmin
+  version: 0.9.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: pgadmin.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
+
+To install the chart with the release name `pgadmin`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install pgadmin raven/pgadmin
+```
 
 ## Requirements
 
@@ -34,7 +85,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"dpage/pgadmin4"` |  |
-| image.tag | string | `"9.6"` |  |
+| image.tag | string | `"9.7"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -46,7 +97,7 @@ A Helm chart for Kubernetes
 | initContainers[0].command[0] | string | `"bash"` |  |
 | initContainers[0].command[1] | string | `"-c"` |  |
 | initContainers[0].command[2] | string | `"echo \"Chowning the following by changing dir:\"\ncp -r /usr/bin/python3.12 /chowned/.\nls -l /chowned\necho \"fin\"\n"` |  |
-| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.6"` |  |
+| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.7"` |  |
 | initContainers[0].name | string | `"chown"` |  |
 | initContainers[0].securityContext.allowPrivilegeEscalation | bool | `true` |  |
 | initContainers[0].securityContext.runAsUser | int | `0` |  |
@@ -98,4 +149,11 @@ A Helm chart for Kubernetes
 | volumeMounts[0].subPath | string | `"python3.12"` |  |
 | volumes[0].emptyDir | object | `{}` |  |
 | volumes[0].name | string | `"bin"` |  |
+
+# Changelog
+
+# 0.3.0
+
+Changed default security context to be much more restrictive.
+Also changed volume mounting to modify python to 755 perms in an init container, so lower privileges can be used for pgadmin container itself. This is a very breaking change if you have set any of initContainers, volumes, volumeMounts, securityContext as these will need to now include this override init container and the volumes it uses.
 
