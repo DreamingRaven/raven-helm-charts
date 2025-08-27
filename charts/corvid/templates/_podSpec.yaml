@@ -6,7 +6,9 @@ runtimeClassName: {{ . }}
 imagePullSecrets:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- if .Values.serviceAccount.enabled }}
 serviceAccountName: {{ include "corvid.serviceAccountName" . }}
+{{- end }}
 # Pod Security Context
 {{- if .Values.podSecurityContextEnabled }}
 # Default Pod Security Context

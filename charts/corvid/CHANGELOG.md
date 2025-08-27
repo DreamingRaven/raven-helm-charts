@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.19.1
+
+This adds a flag to enable or disable the service account completely.
+This is backwards compatible and does not change the default behaviour.
+
 ## 0.19.0
 
 This adds backwards compatible job annotation support.

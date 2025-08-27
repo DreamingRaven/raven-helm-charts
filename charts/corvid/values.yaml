@@ -107,7 +107,9 @@ envFrom:
 
 
 serviceAccount:
-  ## @param serviceAccount.create [string] Specifies whether a service account should be created
+  # -- enable or disable the entire service account creation and consumption
+  enabled: true
+  # -- if enabled and create true, then create service account
   create: true
   # Automatically mount a ServiceAccount's API credentials?
   automount: true

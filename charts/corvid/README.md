@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.19.0](https://img.shields.io/badge/Version-0.19.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.19.1](https://img.shields.io/badge/Version-0.19.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.19.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.19.1
 ```
 
 ### As a helm dependency
@@ -33,7 +33,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: corvid
-  version: 0.19.0
+  version: 0.19.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: corvid.enabled # optional for more advanced use-cases
@@ -145,7 +145,8 @@ $ helm install corvid raven/corvid
 | service.type | string | `"ClusterIP"` | service type to generate |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
-| serviceAccount.create | bool | `true` |  |
+| serviceAccount.create | bool | `true` | if enabled and create true, then create service account |
+| serviceAccount.enabled | bool | `true` | enable or disable the entire service account creation and consumption |
 | serviceAccount.name | string | `""` |  |
 | startupProbe | string | `nil` | raw startup probe overrides for user |
 | startupProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default startup probe if not specified by user |
@@ -159,6 +160,11 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.19.1
+
+This adds a flag to enable or disable the service account completely.
+This is backwards compatible and does not change the default behaviour.
 
 ## 0.19.0
 
