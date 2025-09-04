@@ -9,7 +9,7 @@ postgres:
     registry: docker.io
     repository: library/postgres
     pullPolicy: IfNotPresent
-    tag: "17.5"
+    tag: "17.6"
 
   persistence:
     enabled: true
