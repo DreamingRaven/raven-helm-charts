@@ -13,7 +13,7 @@ image:
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-  tag: "9.7"
+  tag: "9.8"
 
 persistence:
   enabled: false
@@ -40,7 +40,7 @@ cron:
 
 initContainers:
 - name: chown
-  image: docker.io/dpage/pgadmin4:9.7
+  image: docker.io/dpage/pgadmin4:9.8
   command:
   - bash
   - -c
