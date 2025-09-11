@@ -1,0 +1,5 @@
+{{- define "corvid-app.kedaScaled" -}}
+{{- end -}}
+{{- if .Values.keda.enabled }}
+{{- include "corvid.kedaScaled" (list . "corvid-app.kedaScaled") -}}
+{{- end }}

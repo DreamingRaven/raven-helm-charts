@@ -1,5 +1,74 @@
 # Changelog
 
+## 0.20.0
+
+This adds backwards compatible support for keda scaledObject and scaledJob, both disabled by default.
+
+This also includes a slight breaking change to reduce the default maximum autoscaling to 5. Was originally 100.
+We felt this was a more reasonable default.
+
+This also adds backwards compatible behaviour for both HPA and keda.
+
+The new default keda section is as follows:
+
+```yaml
+keda:
+  # note autoscaling settings comes from the autoscaling section
+  enabled: false
+  kind: ScaledJob # ScaledJob or ScaledObject
+  transferHpaOwnership: true
+  paused: false
+  # only jobs are baked into the keda resources
+  # will use an existing deployment if ScaledObject
+  # thus ensure deployment is enabled if using ScaledObject
+  job:
+    activeDeadlineSeconds: 60
+    backoffLimit: 3
+    ttlSecondsAfterFinished: 0
+  object:
+    cooldownPeriod: 300
+    idleReplicaCount: 0
+    failureThreshold: 1
+    minReplicas: 0 # fallback number of replicas if HPA is unavailable
+    pollingInterval: 30
+  triggers: []
+  # - type: rabbitmq
+  #   metadata:
+  #     protocol: amqp
+  #     mode: QueueLength
+  #     # -- the number of tasks to handle per pod
+  #     value: "1"
+  #     # -- how many tasks in queue before triggering
+  #     activationValue: "1"
+  #     queueName: myQueue
+  #     vhostName: /
+  #     unsafeSsl: "true"
+  #   authenticationRef:
+  #     name: my-rabbitmq-connection-secret-name
+```
+
+The adjusted default autoscaling section is as follows:
+
+```yaml
+autoscaling:
+  # -- enable or disable autoscaling (settings are re-used if keda is enabled)
+  enabled: false
+  # -- minimum number of replicas to scale to
+  minReplicas: 1
+  # -- maximum number of replicas to scale to
+  maxReplicas: 5 # CHANGED from 100
+  # -- sets targetCPUUtilizationPercentage resource utilization of HPA
+  targetCPUUtilizationPercentage: 80
+  # -- HPA behavior settings (included in keda ScaledObject if enabled)
+  behavior: {}
+    # scaleDown:
+    #   stabilizationWindowSeconds: 300
+    #   policies:
+    #   - type: Percent
+    #     value: 80 # likely should be the same as targetCPUUtilizationPercentage
+    #     periodSeconds: 15
+```
+
 ## 0.19.1
 
 This adds a flag to enable or disable the service account completely.

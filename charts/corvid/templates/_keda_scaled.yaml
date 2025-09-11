@@ -1,0 +1,56 @@
+{{- define "corvid.kedaScaled.tpl" -}}
+apiVersion: keda.sh/v1alpha1
+{{- if ne .Values.keda.kind "ScaledJob" }}
+kind: ScaledObject
+{{- else }}
+kind: ScaledJob
+{{- end }}
+metadata:
+  name: {{ include "corvid.fullname" . }}
+  labels:
+    {{- include "corvid.labels" . | nindent 4 }}
+  annotations:
+    scaledobject.keda.sh/transfer-hpa-ownership: {{ .Values.keda.transferHpaOwnership | quote }}                                # Optional. Use to transfer an existing HPA ownership to this ScaledObject
+    autoscaling.keda.sh/paused-replicas: {{ .Values.autoscaling.minReplicas | quote }} # Optional. Use to pause autoscaling of objects
+    autoscaling.keda.sh/paused: {{ .Values.keda.paused | quote }}                      # Optional. Use to pause autoscaling of objects explicitly
+spec:
+  {{- if eq .Values.keda.kind "ScaledJob"}}
+  jobTargetRef:
+    ttlSecondsAfterFinished: {{ .Values.keda.job.ttlSecondsAfterFinished }}
+    activeDeadlineSeconds: {{ .Values.keda.job.activeDeadlineSeconds }}
+    backoffLimit: {{ .Values.keda.job.backoffLimit }}
+    template:
+      spec:
+        {{- include "corvid.podSpec.tpl" . | indent 8 }}
+        restartPolicy: Never
+  {{- else }}
+  scaleTargetRef:
+    apiVersion:    apps/v1                                  # Optional. Default: apps/v1
+    kind:          Deployment                               # Optional. Default: Deployment
+    name:          {{ include "corvid.fullname" . }}        # Mandatory. Must be in the same namespace as the ScaledObject
+  cooldownPeriod:   {{ .Values.keda.object.cooldownPeriod }}       # Optional. Default: 300 seconds
+  idleReplicaCount: {{ .Values.keda.object.idleReplicaCount }}     # Optional. Default: ignored, must be less than minReplicaCount
+  fallback:                                                 # Optional. Section to specify fallback options
+    failureThreshold: {{ .Values.keda.object.failureThreshold }}   # Mandatory if fallback section is included
+    replicas: {{ .Values.keda.object.minReplicas }}         # Mandatory if fallback section is included
+  {{- end }}
+  pollingInterval:  {{ .Values.keda.object.pollingInterval }}      # Optional. Default: 30 seconds
+  minReplicaCount:  {{ .Values.autoscaling.minReplicas }}   # Optional. Default: 0
+  maxReplicaCount:  {{ .Values.autoscaling.maxReplicas }}   # Optional. Default: 100
+  {{- if eq .Values.keda.kind "ScaledObject"}}
+  advanced:                                                 # Optional. Section to specify advanced options
+    restoreToOriginalReplicaCount: true                     # Optional. Default: false
+    {{- with .Values.autoscaling.behavior }}
+    horizontalPodAutoscalerConfig:                          # Optional. Section to specify HPA related options
+      behavior:                                             # Optional. Use to modify HPA's scaling behavior
+        {{- toYaml . | nindent 10 | trim }}
+    {{- end }}
+  {{- end }}
+  {{- with .Values.keda.triggers }}
+  triggers:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- define "corvid.kedaScaled" -}}
+{{- include "corvid.util.merge" (append . "corvid.kedaScaled.tpl") -}}
+{{- end -}}

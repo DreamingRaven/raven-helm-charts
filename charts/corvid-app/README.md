@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.16.2](https://img.shields.io/badge/Version-0.16.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.17.0](https://img.shields.io/badge/Version-0.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -73,7 +73,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.16.2
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.17.0
 ```
 
 ### As a helm dependency
@@ -83,7 +83,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: corvid-app
-  version: 0.16.2
+  version: 0.17.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: corvid-app.enabled # optional for more advanced use-cases
@@ -111,7 +111,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.19.1 |
+| file://../corvid | corvid | 0.20.0 |
 
 ## Values
 
@@ -119,10 +119,11 @@ $ helm install corvid-app raven/corvid-app
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | args | string | `nil` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| autoscaling.behavior | object | `{}` | HPA behavior settings (included in keda ScaledObject if enabled) |
+| autoscaling.enabled | bool | `false` | enable or disable autoscaling with a standalone HPA (settings are re-used if keda is enabled) |
+| autoscaling.maxReplicas | int | `5` | maximum number of replicas to scale to |
+| autoscaling.minReplicas | int | `1` | minimum number of replicas to scale to |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` | sets targetCPUUtilizationPercentage resource utilization of HPA |
 | command | string | `nil` |  |
 | cron.backoffLimit | int | `3` |  |
 | cron.concurrencyPolicy | string | `"Allow"` |  |
@@ -160,6 +161,19 @@ $ helm install corvid-app raven/corvid-app
 | initContainers | list | `[]` |  |
 | job.annotations | object | `{}` | annotations to add to the job e.g for helm hooks |
 | job.enabled | bool | `false` |  |
+| keda.enabled | bool | `false` |  |
+| keda.job.activeDeadlineSeconds | int | `60` |  |
+| keda.job.backoffLimit | int | `3` |  |
+| keda.job.ttlSecondsAfterFinished | int | `0` |  |
+| keda.kind | string | `"ScaledJob"` |  |
+| keda.object.cooldownPeriod | int | `300` |  |
+| keda.object.failureThreshold | int | `1` |  |
+| keda.object.idleReplicaCount | int | `0` |  |
+| keda.object.minReplicas | int | `0` |  |
+| keda.object.pollingInterval | int | `30` |  |
+| keda.paused | bool | `false` |  |
+| keda.transferHpaOwnership | bool | `true` |  |
+| keda.triggers | list | `[]` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
 | livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
 | livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
@@ -216,6 +230,75 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.17.0 (corvid 0.20.0)
+
+This adds backwards compatible support for keda scaledObject and scaledJob, both disabled by default.
+
+This also includes a slight breaking change to reduce the default maximum autoscaling to 5. Was originally 100.
+We felt this was a more reasonable default.
+
+This also adds backwards compatible behaviour for both HPA and keda.
+
+The new default keda section is as follows:
+
+```yaml
+keda:
+  # note autoscaling settings comes from the autoscaling section
+  enabled: false
+  kind: ScaledJob # ScaledJob or ScaledObject
+  transferHpaOwnership: true
+  paused: false
+  # only jobs are baked into the keda resources
+  # will use an existing deployment if ScaledObject
+  # thus ensure deployment is enabled if using ScaledObject
+  job:
+    activeDeadlineSeconds: 60
+    backoffLimit: 3
+    ttlSecondsAfterFinished: 0
+  object:
+    cooldownPeriod: 300
+    idleReplicaCount: 0
+    failureThreshold: 1
+    minReplicas: 0 # fallback number of replicas if HPA is unavailable
+    pollingInterval: 30
+  triggers: []
+  # - type: rabbitmq
+  #   metadata:
+  #     protocol: amqp
+  #     mode: QueueLength
+  #     # -- the number of tasks to handle per pod
+  #     value: "1"
+  #     # -- how many tasks in queue before triggering
+  #     activationValue: "1"
+  #     queueName: myQueue
+  #     vhostName: /
+  #     unsafeSsl: "true"
+  #   authenticationRef:
+  #     name: my-rabbitmq-connection-secret-name
+```
+
+The adjusted default autoscaling section is as follows:
+
+```yaml
+autoscaling:
+  # -- enable or disable autoscaling (settings are re-used if keda is enabled)
+  enabled: false
+  # -- minimum number of replicas to scale to
+  minReplicas: 1
+  # -- maximum number of replicas to scale to
+  maxReplicas: 5 # CHANGED from 100
+  # -- sets targetCPUUtilizationPercentage resource utilization of HPA
+  targetCPUUtilizationPercentage: 80
+  # -- HPA behavior settings (included in keda ScaledObject if enabled)
+  behavior: {}
+    # scaleDown:
+    #   stabilizationWindowSeconds: 300
+    #   policies:
+    #   - type: Percent
+    #     value: 80 # likely should be the same as targetCPUUtilizationPercentage
+    #     periodSeconds: 15
+```
 
 ## 0.16.2 (corvid 0.19.1)
 

@@ -7,6 +7,10 @@ metadata:
   labels:
     {{- include "corvid.labels" . | nindent 4 }}
 spec:
+  {{ with .Values.autoscaling.behavior }}
+  behavior:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
