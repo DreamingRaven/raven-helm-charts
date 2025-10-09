@@ -77,6 +77,15 @@ keda:
     activeDeadlineSeconds: 60
     backoffLimit: 3
     ttlSecondsAfterFinished: 0
+    scalingStrategy: {}
+      # strategy: "custom"
+      # customScalingQueueLengthDeduction: 1
+      # customScalingRunningJobPercentage: "0.5"
+      # pendingPodConditions:
+      #   - "Ready"
+      #   - "PodScheduled"
+      #   - "AnyOtherCustomPodCondition"
+      # multipleScalersCalculation : "max"
   object:
     cooldownPeriod: 300
     idleReplicaCount: 0

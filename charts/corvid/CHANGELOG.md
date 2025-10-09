@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.21.0
+
+This adds backwards compatible keda scaledJob scalingStrategy support.
+
+The defaults are empty and will do nothing unless overridden.
+
+```yaml
+keda:
+  job:
+    scalingStrategy: {}
+      # strategy: custom
+```
+
 ## 0.20.0
 
 This adds backwards compatible support for keda scaledObject and scaledJob, both disabled by default.

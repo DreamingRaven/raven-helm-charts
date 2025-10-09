@@ -23,6 +23,11 @@ spec:
       spec:
         {{- include "corvid.podSpec.tpl" . | indent 8 }}
         restartPolicy: Never
+
+  {{- with .Values.keda.job.scalingStrategy }}
+  scalingStrategy:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
   {{- else }}
   scaleTargetRef:
     apiVersion:    apps/v1                                  # Optional. Default: apps/v1

@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.20.0](https://img.shields.io/badge/Version-0.20.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.21.0](https://img.shields.io/badge/Version-0.21.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.20.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.21.0
 ```
 
 ### As a helm dependency
@@ -33,7 +33,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: corvid
-  version: 0.20.0
+  version: 0.21.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: corvid.enabled # optional for more advanced use-cases
@@ -108,6 +108,7 @@ $ helm install corvid raven/corvid
 | keda.enabled | bool | `false` |  |
 | keda.job.activeDeadlineSeconds | int | `60` |  |
 | keda.job.backoffLimit | int | `3` |  |
+| keda.job.scalingStrategy | object | `{}` |  |
 | keda.job.ttlSecondsAfterFinished | int | `0` |  |
 | keda.kind | string | `"ScaledJob"` |  |
 | keda.object.cooldownPeriod | int | `300` |  |
@@ -174,6 +175,19 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.21.0
+
+This adds backwards compatible keda scaledJob scalingStrategy support.
+
+The defaults are empty and will do nothing unless overridden.
+
+```yaml
+keda:
+  job:
+    scalingStrategy: {}
+      # strategy: custom
+```
 
 ## 0.20.0
 

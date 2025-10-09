@@ -111,7 +111,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.20.0 |
+| file://../corvid | corvid | 0.21.0 |
 
 ## Values
 
@@ -164,6 +164,7 @@ $ helm install corvid-app raven/corvid-app
 | keda.enabled | bool | `false` |  |
 | keda.job.activeDeadlineSeconds | int | `60` |  |
 | keda.job.backoffLimit | int | `3` |  |
+| keda.job.scalingStrategy | object | `{}` |  |
 | keda.job.ttlSecondsAfterFinished | int | `0` |  |
 | keda.kind | string | `"ScaledJob"` |  |
 | keda.object.cooldownPeriod | int | `300` |  |
@@ -230,6 +231,19 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.18.0 (corvid 0.21.0)
+
+This adds backwards compatible keda scaledJob scalingStrategy support.
+
+The defaults are empty and will do nothing unless overridden.
+
+```yaml
+keda:
+  job:
+    scalingStrategy: {}
+      # strategy: custom
+```
 
 ## 0.17.0 (corvid 0.20.0)
 
