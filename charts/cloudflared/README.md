@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.8.1](https://img.shields.io/badge/AppVersion-2025.8.1-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.10.0](https://img.shields.io/badge/AppVersion-2025.10.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install cloudflared oci://registry.gitlab.com/georgeraven/raven-helm-charts/cloudflared --version 0.3.1
+helm install cloudflared oci://registry.gitlab.com/georgeraven/raven-helm-charts/cloudflared --version 0.4.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: cloudflared
-  version: 0.3.1
+  version: 0.4.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: cloudflared.enabled # optional for more advanced use-cases
@@ -91,7 +91,7 @@ $ helm install cloudflared raven/cloudflared
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"cloudflare/cloudflared"` |  |
-| image.tag | string | `"2025.8.1"` |  |
+| image.tag | string | `"2025.10.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
