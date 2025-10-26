@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.3.3](https://img.shields.io/badge/AppVersion-26.3.3-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.4.2](https://img.shields.io/badge/AppVersion-26.4.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.2.1
+helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.3.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: keycloak
-  version: 0.2.1
+  version: 0.3.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: keycloak.enabled # optional for more advanced use-cases
@@ -98,7 +98,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.image.pullPolicy | string | `"IfNotPresent"` |  |
 | keycloak.image.registry | string | `"quay.io"` |  |
 | keycloak.image.repository | string | `"keycloak/keycloak"` |  |
-| keycloak.image.tag | string | `"26.3.3"` |  |
+| keycloak.image.tag | string | `"26.4.2"` |  |
 | keycloak.imagePullSecrets | list | `[]` |  |
 | keycloak.ingress.annotations | object | `{}` |  |
 | keycloak.ingress.className | string | `""` |  |
