@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.8](https://img.shields.io/badge/AppVersion-1.5.8-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.9](https://img.shields.io/badge/AppVersion-1.5.9-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,8 +21,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install bytestash oci://registry.gitlab.com/georgeraven/raven-helm-charts/bytestash --version 0.1.2
+helm install bytestash oci://registry.gitlab.com/georgeraven/raven-helm-charts/bytestash --version 0.1.3
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: bytestash
+  version: 0.1.3
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: bytestash.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -76,7 +97,7 @@ $ helm install bytestash raven/bytestash
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"jordan-dalby/bytestash"` |  |
-| image.tag | string | `"1.5.8"` |  |
+| image.tag | string | `"1.5.9"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
