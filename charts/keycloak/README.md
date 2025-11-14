@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.4.2](https://img.shields.io/badge/AppVersion-26.4.2-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.4.2](https://img.shields.io/badge/AppVersion-26.4.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.3.0
+helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.4.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: keycloak
-  version: 0.3.0
+  version: 0.4.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: keycloak.enabled # optional for more advanced use-cases
@@ -68,7 +68,6 @@ $ helm install keycloak raven/keycloak
 |-----|------|---------|-------------|
 | keycloak.affinity | object | `{}` |  |
 | keycloak.args[0] | string | `"start"` |  |
-| keycloak.args[1] | string | `"--verbose"` |  |
 | keycloak.autoscaling.enabled | bool | `false` |  |
 | keycloak.autoscaling.maxReplicas | int | `5` |  |
 | keycloak.autoscaling.minReplicas | int | `2` |  |
@@ -87,7 +86,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.dnsConfig | object | `{}` |  |
 | keycloak.dnsPolicy | string | `""` |  |
 | keycloak.enabled | bool | `true` |  |
-| keycloak.env | list | `[{"name":"KC_HOSTNAME","value":"keycloak.org.example"},{"name":"KC_HTTP_PORT","value":"8080"},{"name":"KC_MANAGEMENT_PORT","value":"9000"},{"name":"KC_HTTP_ENABLED","value":"true"},{"name":"KC_PROXY_HEADERS","value":"xforwarded"},{"name":"KC_DB","value":"postgres"},{"name":"KC_DB_URL_HOST","value":"postgres"},{"name":"KC_DB_URL_PORT","value":"5432"},{"name":"KC_DB_URL_DATABASE","value":"keycloak"},{"name":"KC_DB_USERNAME","value":"keycloak"},{"name":"KC_DB_PASSWORD","value":"keycloak"},{"name":"KC_BOOTSTRAP_ADMIN_USERNAME","value":"keycloak"},{"name":"KC_BOOTSTRAP_ADMIN_PASSWORD","value":"keycloak"}]` | available ENV options documented here: https://www.keycloak.org/server/all-config?options-filter=all#category-database |
+| keycloak.env | list | `[{"name":"KC_HOSTNAME","value":"keycloak.org.example"},{"name":"KC_HTTP_PORT","value":"8080"},{"name":"KC_MANAGEMENT_PORT","value":"9000"},{"name":"KC_HEALTH_ENABLED","value":"true"},{"name":"KC_HTTP_ENABLED","value":"true"},{"name":"KC_PROXY_HEADERS","value":"xforwarded"},{"name":"KC_DB","value":"postgres"},{"name":"KC_DB_URL_HOST","value":"postgres"},{"name":"KC_DB_URL_PORT","value":"5432"},{"name":"KC_DB_URL_DATABASE","value":"keycloak"},{"name":"KC_DB_USERNAME","value":"keycloak"},{"name":"KC_DB_PASSWORD","value":"keycloak"},{"name":"KC_BOOTSTRAP_ADMIN_USERNAME","value":"keycloak"},{"name":"KC_BOOTSTRAP_ADMIN_PASSWORD","value":"keycloak"}]` | available ENV options documented here: https://www.keycloak.org/server/all-config?options-filter=all#category-database |
 | keycloak.envFrom | string | `nil` |  |
 | keycloak.fullnameOverride | string | `""` |  |
 | keycloak.httpRoute.annotations | object | `{}` |  |
@@ -110,7 +109,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.initContainers | list | `[]` |  |
 | keycloak.job.enabled | bool | `false` |  |
 | keycloak.livenessProbe | string | `nil` | raw liveness probe overrides for user |
-| keycloak.livenessProbeDefault | object | `{"httpGet":{"path":"/realms/master","port":"http"}}` | default liveness probe if not specified by user |
+| keycloak.livenessProbeDefault | object | `{"httpGet":{"path":"/health/live","port":"management"}}` | default liveness probe if not specified by user |
 | keycloak.livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | keycloak.nameOverride | string | `""` |  |
 | keycloak.netpol.enabled | bool | `true` |  |
@@ -138,7 +137,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.ports[1].protocol | string | `"TCP"` |  |
 | keycloak.ports[1].servicePort | int | `9000` |  |
 | keycloak.readinessProbe | string | `nil` | raw readiness probe overrides for user |
-| keycloak.readinessProbeDefault | object | `{"httpGet":{"path":"/realms/master","port":"http"}}` | default readiness probe if not specified by user |
+| keycloak.readinessProbeDefault | object | `{"httpGet":{"path":"/health/ready","port":"management"}}` | default readiness probe if not specified by user |
 | keycloak.readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | keycloak.replicaCount | int | `1` |  |
 | keycloak.resources | string | `nil` | raw resources block overrides for user |
@@ -156,7 +155,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.serviceAccount.create | bool | `true` |  |
 | keycloak.serviceAccount.name | string | `""` |  |
 | keycloak.startupProbe | string | `nil` | raw startup probe overrides for user |
-| keycloak.startupProbeDefault | object | `{"httpGet":{"path":"/realms/master","port":"http"}}` | default startup probe if not specified by user |
+| keycloak.startupProbeDefault | object | `{"httpGet":{"path":"/health/started","port":"management"}}` | default startup probe if not specified by user |
 | keycloak.startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | keycloak.sts.enabled | bool | `false` |  |
 | keycloak.sts.updateStrategy | string | `"RollingUpdate"` |  |
@@ -182,6 +181,11 @@ $ helm install keycloak raven/keycloak
 | postgres.postgres.fullnameOverride | string | `"postgres"` |  |
 
 # Changelog
+
+## 0.4.0
+
+- (Breaking) Enabled keycloak health endpoints by default, and swapped default status probes to them.
+- (Breaking) Disable verbose logging by default.
 
 ## 0.2.0
 

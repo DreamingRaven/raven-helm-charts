@@ -3,7 +3,7 @@ appVersion: "26.4.2" # renovate: datasource=docker depName=quay.io/keycloak/keyc
 description: A Helm chart for Kubernetes
 name: keycloak
 type: application
-version: 0.3.0
+version: 0.4.0
 dependencies:
 - alias: keycloak
   name: corvid-app

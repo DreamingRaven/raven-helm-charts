@@ -54,7 +54,7 @@ keycloak:
   command:
   args:
   - start
-  - --verbose
+  # - --verbose
   runtimeClassName:
 
   daemonset:
@@ -119,6 +119,9 @@ keycloak:
     value: "8080"
   - name: KC_MANAGEMENT_PORT
     value: "9000"
+  # Enable health checks on the management port
+  - name: KC_HEALTH_ENABLED
+    value: "true"
   # Reverse proxy settings
   - name: KC_HTTP_ENABLED
     value: "true"
@@ -266,8 +269,8 @@ keycloak:
   # -- default startup probe if not specified by user
   startupProbeDefault:
     httpGet:
-      path: /realms/master
-      port: http
+      path: /health/started
+      port: management
   # -- raw startup probe overrides for user
   startupProbe:
     # httpGet:
@@ -279,8 +282,8 @@ keycloak:
   # -- default liveness probe if not specified by user
   livenessProbeDefault:
     httpGet:
-      path: /realms/master
-      port: http
+      path: /health/live
+      port: management
   # -- raw liveness probe overrides for user
   livenessProbe:
     # httpGet:
@@ -292,8 +295,8 @@ keycloak:
   # -- default readiness probe if not specified by user
   readinessProbeDefault:
     httpGet:
-      path: /realms/master
-      port: http
+      path: /health/ready
+      port: management
   # -- raw readiness probe overrides for user
   readinessProbe:
     # httpGet:
