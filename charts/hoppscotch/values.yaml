@@ -15,7 +15,7 @@ frontend:
   enabled: true
   initContainers:
   - name: hoppscotch-fe
-    image: docker.io/hoppscotch/hoppscotch:2025.7.1
+    image: docker.io/hoppscotch/hoppscotch:2025.10.1
     command:
     - sh
     - -c
@@ -84,14 +84,16 @@ admin:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2025.7.1"
+    tag: "2025.10.1"
+  deployment:
+    enabled: true
 
 backend:
   enabled: true
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2025.7.1"
+    tag: "2025.10.1"
   command:
   - /bin/sh
   - -c
@@ -135,7 +137,7 @@ migrate:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2025.7.1"
+    tag: "2025.10.1"
   command:
   - /bin/sh
   - -c
@@ -144,6 +146,11 @@ migrate:
     echo "Attempting to migrate database... '${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}' as '${POSTGRES_USER}'"
     pnpx prisma migrate deploy
   env:
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: DATABASE_URL
   - name: POSTGRES_USER
     valueFrom:
       secretKeyRef:
