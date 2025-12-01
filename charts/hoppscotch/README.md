@@ -1,6 +1,6 @@
 # hoppscotch
 
-A Helm chart for Kubernetes
+Open-Source API Development Ecosystem
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
@@ -69,10 +69,11 @@ $ helm install hoppscotch raven/hoppscotch
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| admin.deployment.enabled | bool | `true` |  |
 | admin.enabled | bool | `false` |  |
 | admin.image.registry | string | `"docker.io"` |  |
 | admin.image.repository | string | `"hoppscotch/hoppscotch"` |  |
-| admin.image.tag | string | `"2025.7.1"` |  |
+| admin.image.tag | string | `"2025.10.1"` |  |
 | backend.command[0] | string | `"/bin/sh"` |  |
 | backend.command[1] | string | `"-c"` |  |
 | backend.command[2] | string | `"export DATABASE_URL=${DATABASE_URL:-\"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}\"}\necho \"Attempting to run backend...\"\nnode prod_run.mjs\n"` |  |
@@ -81,7 +82,7 @@ $ helm install hoppscotch raven/hoppscotch
 | backend.envFrom[0].secretRef.name | string | `"hoppscotch"` |  |
 | backend.image.registry | string | `"docker.io"` |  |
 | backend.image.repository | string | `"hoppscotch/hoppscotch"` |  |
-| backend.image.tag | string | `"2025.7.1"` |  |
+| backend.image.tag | string | `"2025.10.1"` |  |
 | backend.livenessProbeDefault.httpGet.path | string | `"/health"` |  |
 | backend.livenessProbeDefault.httpGet.port | string | `"http"` |  |
 | backend.netpol.enabled | bool | `true` |  |
@@ -106,8 +107,8 @@ $ helm install hoppscotch raven/hoppscotch
 | frontend.image.tag | string | `"1.28.0-alpine3.21"` |  |
 | frontend.initContainers[0].command[0] | string | `"sh"` |  |
 | frontend.initContainers[0].command[1] | string | `"-c"` |  |
-| frontend.initContainers[0].command[2] | string | `"cp -r /site/selfhost-web/ /static/html\n"` |  |
-| frontend.initContainers[0].image | string | `"docker.io/hoppscotch/hoppscotch:2025.7.1"` |  |
+| frontend.initContainers[0].command[2] | string | `"cp -r /site/selfhost-web/ /static/html\n# substitute localhost:3000 with the correct frontend url\n# using grep on the entire directory\ngrep -r \"localhost:3000\" /static/html -l | xargs sed -i 's|localhost:3000|localhost:8080|g'\n"` |  |
+| frontend.initContainers[0].image | string | `"docker.io/hoppscotch/hoppscotch:2025.10.1"` |  |
 | frontend.initContainers[0].name | string | `"hoppscotch-fe"` |  |
 | frontend.initContainers[0].volumeMounts[0].mountPath | string | `"/static/"` |  |
 | frontend.initContainers[0].volumeMounts[0].name | string | `"static"` |  |
@@ -141,24 +142,27 @@ $ helm install hoppscotch raven/hoppscotch
 | migrate.command[1] | string | `"-c"` |  |
 | migrate.command[2] | string | `"export DATABASE_URL=${DATABASE_URL:-\"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}\"}\necho \"Attempting to migrate database... '${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}' as '${POSTGRES_USER}'\"\npnpx prisma migrate deploy\n"` |  |
 | migrate.enabled | bool | `true` |  |
-| migrate.env[0].name | string | `"POSTGRES_USER"` |  |
-| migrate.env[0].valueFrom.secretKeyRef.key | string | `"POSTGRES_USER"` |  |
+| migrate.env[0].name | string | `"DATABASE_URL"` |  |
+| migrate.env[0].valueFrom.secretKeyRef.key | string | `"DATABASE_URL"` |  |
 | migrate.env[0].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
-| migrate.env[1].name | string | `"POSTGRES_PASSWORD"` |  |
-| migrate.env[1].valueFrom.secretKeyRef.key | string | `"POSTGRES_PASSWORD"` |  |
+| migrate.env[1].name | string | `"POSTGRES_USER"` |  |
+| migrate.env[1].valueFrom.secretKeyRef.key | string | `"POSTGRES_USER"` |  |
 | migrate.env[1].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
-| migrate.env[2].name | string | `"POSTGRES_HOST"` |  |
-| migrate.env[2].valueFrom.secretKeyRef.key | string | `"POSTGRES_HOST"` |  |
+| migrate.env[2].name | string | `"POSTGRES_PASSWORD"` |  |
+| migrate.env[2].valueFrom.secretKeyRef.key | string | `"POSTGRES_PASSWORD"` |  |
 | migrate.env[2].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
-| migrate.env[3].name | string | `"POSTGRES_PORT"` |  |
-| migrate.env[3].valueFrom.secretKeyRef.key | string | `"POSTGRES_PORT"` |  |
+| migrate.env[3].name | string | `"POSTGRES_HOST"` |  |
+| migrate.env[3].valueFrom.secretKeyRef.key | string | `"POSTGRES_HOST"` |  |
 | migrate.env[3].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
-| migrate.env[4].name | string | `"POSTGRES_NAME"` |  |
-| migrate.env[4].valueFrom.secretKeyRef.key | string | `"POSTGRES_DB"` |  |
+| migrate.env[4].name | string | `"POSTGRES_PORT"` |  |
+| migrate.env[4].valueFrom.secretKeyRef.key | string | `"POSTGRES_PORT"` |  |
 | migrate.env[4].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
+| migrate.env[5].name | string | `"POSTGRES_NAME"` |  |
+| migrate.env[5].valueFrom.secretKeyRef.key | string | `"POSTGRES_DB"` |  |
+| migrate.env[5].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
 | migrate.image.registry | string | `"docker.io"` |  |
 | migrate.image.repository | string | `"hoppscotch/hoppscotch"` |  |
-| migrate.image.tag | string | `"2025.7.1"` |  |
+| migrate.image.tag | string | `"2025.10.1"` |  |
 | migrate.job.annotations."helm.sh/hook" | string | `"post-install,post-upgrade"` |  |
 | migrate.job.annotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
 | migrate.job.annotations."helm.sh/hook-weight" | string | `"-1"` |  |
@@ -201,153 +205,7 @@ $ helm install hoppscotch raven/hoppscotch
 
 # Changelog
 
-## 0.16.0 (corvid 0.18.0)
+## 0.1.0
 
-*BREAKING RELEASE*
-
-#### What
-
-This breaking release disables all forms of deployment by default. I.E `deployments` `daemonsets`, `statefulsets`, `jobs`, `cronjobs`
-
-This also disables all exposure by default, other than the internal cluster service. I.E `ingress`, `httproute`
-
-This also disables the default network policy, which can lead to confusion for users. `netpol`
-
-This also disables the default connectivity test, which often plays no role in most charts. `test`
-
-This means the new chart will only create 2 resources by default without being otherwise instructed:
-
-- a default `pvc` to ensure users don't lose data
-- a default `serviceAccount` due to how the podSpec defaults currently work
-
-**We support all previous functionality, we merely make it an opt-in** for the user, which works better with helms lack of safeguards, for things like incorrect indentation.
-
-We maintain default enablement of persistence, to prevent accidental data loss, by those not reading these changelogs.
-
-We also maintain the default probes and resources, to provide some starting points (although we are looking to better merge overrides between `httpGet` and `exec` probes).
-
-#### Why
-
-The intention behind this change is to:
-
-- Lean-in to the DIY / component based, low-abstraction approach this chart takes.
-- Reduce boilerplate, as currently you have to disable all forms of deployment everywhere. This change would mean you now only have to enable the one you are interested in, whichever one that may be.
-- Prevent accidentally bombing cluster resources with simultaneous deployments, daemonsets, statefulsets etc, without the willing opt-in of the user, which also confirms the user has properly mapped their values.
-- Prevent accidentally exposing applications that users did not intend to be exposed.
-
-While this is breaking, it is also very easily reverted, you need simply specifically enable the features you would like.
-
-This also potentially means you can reduce the number of overrides you need to make in your own `values.yaml`.
-
-#### Advised Actions
-
-It is advised that you tweak your values.yaml to specifically enable everything you want, and rely on the defaults to keep everything else disabled.
-
-```diff
-- daemonset:
--   enabled: false
-+ deployment:
-+   enabled: true
-- cron:
--   enabled: false
-- job:
--   enabled: false
-- ingress:
--   enabled: false
-- service:
--   enabled: false
-```
-
-#### Backwards Compatibility
-
-With this new change you can restore the exact old behaviour by setting the following in your `values.yaml` overrides (not advised, as not a useful default):
-
-```yaml
-daemonset:
-  enabled: true
-deployment:
-  enabled: true
-cron:
-  enabled: true
-job:
-  enabled: true
-ingress:
-  enabled: true
-service:
-  enabled: true
-test:
-  enabled: true
-```
-
-## 0.15.0 (corvid 0.18.0)
-
-This release adds backwards compatible service options, to enable disabling the service,
-and add custom annotations as needed. No changes are necessary as the defaults,
-match the old behaviour. The new defaults are as follows:
-
-```yaml
-service:
-  enabled: true
-  annotations: {}
-  type: ClusterIP
-```
-
-## 0.14.0 (corvid 0.17.0)
-
-This release truncates cronjob names from 63 to 52 characters.
-This could potentially be breaking in cases where this behaviour was relied upon.
-However I imagine your cronjobs were failing since they cannot be applied with more than 52 chars to k8s.
-
-## 0.13.0 (corvid 0.16.0)
-
-This release adds statefulset support.
-This is backwards compatible and is disabled by default.
-
-```yaml
-sts:
-  enabled: false
-  updateStrategy: RollingUpdate
-```
-
-## 0.12.0 (corvid 0.15.0)
-
-This adds schema validation to the values.yaml in the most basic way possible.
-This should not be effectual, but will eventually become expanded to support more validation.
-
-This also adds backwards compatible HTTPRoute support.
-Since ingress is dying a slow but steady death, I have added the most basic HTTPRoute
-It is advised that you add the new values to your values.yaml even if it is disabled by default:
-
-```yaml
-httpRoute:
-  enabled: false
-  annotations: {}
-  parentRefs:
-  - name: my-gateway
-  hostnames:
-  - "corvid.org.example"
-  exposedPorts:
-  - number: 80
-```
-
-This will be slowly expanded to support more features.
-If you need more features sooner it is advised to bring your own HTTPRoute.
-
-## 0.11.0 (corvid 0.14.0)
-
-This breaking change introduces the ability to configure the default persistent volume mounts. This is more useful for packagers since this allows the packages to define the default volume mounts for others to consume.
-
-While this does not change corvids default behaviour it does change hoppscotchs default behaviour since it issues a default data volume.
-
-To restore this behaviour:
-
-```yaml
-persistence:
-  enabled: true # corvid persistence is now false by default
-  # the rest of your persistence config
-  defaultVolumeMounts:
-  - name: data
-    mountPath: /data/
-    subPath: data
-```
+Initial release of the helm chart.
 
