@@ -1,0 +1,381 @@
+# Default values for metube.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+metube:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    registry: ghcr.io
+    repository: alexta69/metube
+    pullPolicy: IfNotPresent
+    tag: "2025.11.29"
+
+  persistence:
+    enabled: true
+    size: 8Gi
+    accessModes:
+    - ReadWriteOnce
+    existingClaim: ""
+    defaultVolumeMounts:
+    # this defines what volumeMounts to create by default
+    # when .Values.persistence.enabled is true
+    - name: data # note the default volume is always called data
+      mountPath: /data/
+      subPath: data
+
+  command:
+  args:
+  runtimeClassName:
+
+  daemonset:
+    enabled: false
+
+  deployment:
+    enabled: true
+    # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+    strategy: ""
+
+  sts:
+    enabled: false
+    updateStrategy: RollingUpdate
+
+  cron:
+    # -- enable or disable cronjob
+    enabled: false
+    # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+    schedule: "@midnight"
+    # -- cronjob will not trigger on schedule but can be manually triggered
+    suspend: false
+    successfulJobsHistoryLimit: 1
+    failedJobsHistoryLimit: 1
+    backoffLimit: 3
+    concurrencyPolicy: Allow # Allow, Forbid, Replace
+
+  job:
+    enabled: false
+    # -- annotations to add to the job e.g for helm hooks
+    annotations: {}
+      # helm.sh/hook: post-install,post-upgrade
+      # helm.sh/hook-weight: "-1"
+      # helm.sh/hook-delete-policy: before-hook-creation
+
+  keda:
+    # note autoscaling settings comes from the autoscaling section
+    enabled: false
+    kind: ScaledJob # ScaledJob or ScaledObject
+    transferHpaOwnership: true
+    paused: false
+    # only jobs are baked into the keda resources
+    # will use an existing deployment if ScaledObject
+    # thus ensure deployment is enabled if using ScaledObject
+    job:
+      activeDeadlineSeconds: 60
+      backoffLimit: 3
+      ttlSecondsAfterFinished: 0
+      scalingStrategy: {}
+        # strategy: "custom"
+        # customScalingQueueLengthDeduction: 1
+        # customScalingRunningJobPercentage: "0.5"
+        # pendingPodConditions:
+        #   - "Ready"
+        #   - "PodScheduled"
+        #   - "AnyOtherCustomPodCondition"
+        # multipleScalersCalculation : "max"
+    object:
+      cooldownPeriod: 300
+      idleReplicaCount: 0
+      failureThreshold: 1
+      minReplicas: 0 # fallback number of replicas if HPA is unavailable
+      pollingInterval: 30
+    triggers: []
+    # - type: rabbitmq
+    #   metadata:
+    #     protocol: amqp
+    #     mode: QueueLength
+    #     # -- the number of tasks to handle per pod
+    #     value: "1"
+    #     # -- how many tasks in queue before triggering
+    #     activationValue: "1"
+    #     queueName: myQueue
+    #     vhostName: /
+    #     unsafeSsl: "true"
+    #   authenticationRef:
+    #     name: my-rabbitmq-connection-secret-name
+
+  ## @param initContainers Add bespoke init containers to the pods
+  initContainers: []
+  # - name: some-pod-name
+  #   image: some-image
+  #   imagePullPolicy: Always
+  #   ports:
+  #     - name: some-port
+  #       containerPort: 1234
+
+  restartPolicy: Always
+
+  ## @param imagePullSecrets [array] Image pull secrets
+  imagePullSecrets: []
+  ## @param nameOverride [string] Partial name override
+  nameOverride: ""
+  ## @param fullnameOverride [string] Full name override
+  fullnameOverride: ""
+
+  ## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
+  secrets: []
+  # - name: corvid-app
+  #   lookup:
+  #   - key: corvid-appUsername
+  #     env: corvid-app_USERNAME
+  #   - key: corvid-appPassword
+  #     env: corvid-app_PASSWORD
+
+  ## @param env [array] Raw helm environment variable settings for static or dynamic values
+  env:
+  - name: DOWNLOAD_MODE
+    value: "limited"
+  - name: MAX_CONCURRENT_DOWNLOADS
+    value: "3"
+  - name: DELETE_FILE_ON_TRASHCAN
+    value: "true"
+  - name: DEFAULT_OPTION_PLAYLIST_STRICT_MODE
+    value: "true"
+  - name: DOWNLOAD_DIR
+    value: "/data/downloads"
+  - name: CREATE_CUSTOM_DIRS
+    value: "true"
+  - name: STATE_DIR
+    value: "/data/.metube"
+  - name: TEMP_DIR
+    value: "/data/tmp"
+  - name: HTTPS
+    value: "false"
+  - name: URL_PREFIX
+    value: "/"
+  - name: ENABLE_ACCESSLOG
+    value: "true"
+  - name: DEFAULT_THEME
+    value: "dark"
+
+  ## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+  envFrom:
+  # - configMapRef:
+  #     name: someConfigMap
+  #     optional: false
+  # - secretRef:
+  #     name: someSecret
+  #     optional: false
+
+
+  serviceAccount:
+    # -- enable or disable the entire service account creation and consumption
+    enabled: true
+    # -- if enabled and create true, then create service account
+    create: true
+    # Automatically mount a ServiceAccount's API credentials?
+    automount: true
+    ## @param serviceAccount.annotations [object] Annotations to add to the service account
+    annotations: {}
+    ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  ## @param podAnnotations [object] Pod annotations
+  podAnnotations: {}
+  podLabels: {}
+
+  # -- enable or disable podSecurityContext entirely
+  podSecurityContextEnabled: true
+  # -- default podSecurityContext if none specified
+  podSecurityContextDefault:
+    fsGroup: 1000
+  # -- podSecurityContext for consumer overrides
+  podSecurityContext: {}
+    # fsGroup: 1000
+
+  # -- enable or disable securityContext entirely
+  securityContextEnabled: true
+  # -- default securityContext if none specified
+  securityContextDefault:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
+  # -- securityContext for consumer overrides
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    # -- enable or disable the provided service
+    enabled: true
+    # -- additional service annotations to add
+    annotations: {}
+    # -- service type to generate
+    type: ClusterIP
+
+  ## @param ports [array] Ports to expose, tie to the service, and ingress
+  ports:
+  - name: http
+    containerPort: 8081
+    servicePort: 80
+    protocol: TCP
+    appProtocol: http
+
+  httpRoute:
+    enabled: false
+    annotations: {}
+    parentRefs:
+    - name: my-gateway
+    hostnames:
+    - "corvid-app.org.example"
+    exposedPorts:
+    - number: 80
+
+  ingress:
+    ## @param ingress.enabled [string] Enable ingress
+    enabled: false
+    ## @param ingress.className [string] Ingress class
+    className: ""
+    ## @param ingress.annotations [object] Ingress annotations
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    ## @param ingress.hosts [array] Ingress hosts
+    hosts:
+      - host: corvid-app.org.example
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    ## @param ingress.tls [array] Ingress TLS
+    tls: []
+    #  - secretName: corvid-app.org.example-tls
+    #    hosts:
+    #      - corvid-app.org.example
+
+  # -- enable or disable resources entirely
+  resourcesEnabled: true
+  # -- default resources if not specified by user
+  resourcesDefault:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 100m
+  # -- raw resources block overrides for user
+  resources:
+    # limits:
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+
+  # -- enable or disable startup probe entirely
+  startupProbeEnabled: true
+  # -- default startup probe if not specified by user
+  startupProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  # -- raw startup probe overrides for user
+  startupProbe:
+    # httpGet:
+    #   path: /
+    #   port: http
+
+  # -- enable or disable liveness probe entirely
+  livenessProbeEnabled: true
+  # -- default liveness probe if not specified by user
+  livenessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  # -- raw liveness probe overrides for user
+  livenessProbe:
+    # httpGet:
+    #   path: /
+    #   port: http
+
+  # -- enable or disable readiness probe entirely
+  readinessProbeEnabled: true
+  # -- default readiness probe if not specified by user
+  readinessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  # -- raw readiness probe overrides for user
+  readinessProbe:
+    # httpGet:
+    #   path: /
+    #   port: http
+
+  autoscaling:
+    # -- enable or disable autoscaling with a standalone HPA (settings are re-used if keda is enabled)
+    enabled: false
+    # -- minimum number of replicas to scale to
+    minReplicas: 1
+    # -- maximum number of replicas to scale to
+    maxReplicas: 5
+    # -- sets targetCPUUtilizationPercentage resource utilization of HPA
+    targetCPUUtilizationPercentage: 80
+    # -- HPA behavior settings (included in keda ScaledObject if enabled)
+    behavior: {}
+      # scaleDown:
+      #   stabilizationWindowSeconds: 300
+      #   policies:
+      #   - type: Percent
+      #     value: 80 # likely should be the same as targetCPUUtilizationPercentage
+      #     periodSeconds: 15
+
+  # Additional volumes on the output Deployment definition.
+  volumes: []
+  # - name: foo
+  #   secret:
+  #     secretName: mysecret
+  #     optional: false
+
+  # Additional volumeMounts on the output Deployment definition.
+  volumeMounts: []
+  # - name: foo
+  #   mountPath: "/etc/foo"
+  #   readOnly: true
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: kubernetes.io/hostname
+  #   whenUnsatisfiable: DoNotSchedule # cant benefit from HA on same node
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: corvid-app
+  # - maxSkew: 1
+  #   topologyKey: zone
+  #   whenUnsatisfiable: ScheduleAnyway # can still benefit from HA in zone
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: corvid-app
+
+  affinity: {}
+
+  test:
+    enabled: false
+
+  netpol:
+    enabled: true
+
+  dnsPolicy: "" # default is ClusterFirst
+  dnsConfig: {}
+    # nameservers:
+    # - 1.1.1.1
+    # options:
+    # - name: ndots
+    #   value: "1"
