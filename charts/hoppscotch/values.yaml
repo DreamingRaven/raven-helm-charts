@@ -1,0 +1,240 @@
+# This values.yaml does NOT contain the full defaults.
+# This merely contains overrides for the corvid-app chart which is used to template each individual component.
+# MANY MANY OTHER OPTIONS ARE AVAILABLE BEYOND THE ONES SHOWN HERE, THESE ARE ONLY THE MINIMUM EXAMPLE OVERRIDES
+#
+# To see all available options for each section (each section is derived from the same options)
+# please see https://gitlab.com/GeorgeRaven/raven-helm-charts/-/blob/main/charts/corvid-app/values.yaml?ref_type=heads
+
+# please bring your own secret, this is here only as an example
+# this exampleSecret is the only bespoke template of this chart
+exampleSecret:
+  enabled: true
+  name: hoppscotch
+
+frontend:
+  enabled: true
+  initContainers:
+  - name: hoppscotch-fe
+    image: docker.io/hoppscotch/hoppscotch:2025.10.1
+    command:
+    - sh
+    - -c
+    - |
+      cp -r /site/selfhost-web/ /static/html
+      # substitute localhost:3000 with the correct frontend url
+      # using grep on the entire directory
+      grep -r "localhost:3000" /static/html -l | xargs sed -i 's|localhost:3000|localhost:8080|g'
+
+    volumeMounts:
+    - name: static
+      mountPath: "/static/"
+  image:
+    registry: ghcr.io
+    repository: nginx/nginx-unprivileged
+    tag: "1.28.0-alpine3.21"
+  envFrom:
+  - secretRef:
+      name: hoppscotch
+  persistence:
+    enabled: false
+  deployment:
+    enabled: true
+  netpol:
+    enabled: true
+  startupProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  readinessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  livenessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  service:
+    enabled: true
+  ports:
+  - name: http
+    containerPort: 8080
+    servicePort: 80
+    protocol: TCP
+    appProtocol: http
+  volumeMounts:
+  - name: static
+    mountPath: "/usr/share/nginx/html/"
+    subPath: "html"
+    readOnly: true
+  volumes:
+  - name: static
+    emptyDir: {}
+  securityContextDefault:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
+
+admin:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: hoppscotch/hoppscotch
+    tag: "2025.10.1"
+  deployment:
+    enabled: true
+
+backend:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: hoppscotch/hoppscotch
+    tag: "2025.10.1"
+  command:
+  - /bin/sh
+  - -c
+  - |
+    export DATABASE_URL=${DATABASE_URL:-"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}"}
+    echo "Attempting to run backend..."
+    node prod_run.mjs
+  envFrom:
+  - secretRef:
+      name: hoppscotch
+  persistence:
+    enabled: false
+  deployment:
+    enabled: true
+  netpol:
+    enabled: true
+  startupProbeDefault:
+    httpGet:
+      path: /health
+      port: http
+  readinessProbeDefault:
+    httpGet:
+      path: /health
+      port: http
+  livenessProbeDefault:
+    httpGet:
+      path: /health
+      port: http
+  service:
+    enabled: true
+  ports:
+  - name: http
+    containerPort: 8080
+    servicePort: 80
+    protocol: TCP
+    appProtocol: http
+
+# DB Migration hook definition
+migrate:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: hoppscotch/hoppscotch
+    tag: "2025.10.1"
+  command:
+  - /bin/sh
+  - -c
+  - |
+    export DATABASE_URL=${DATABASE_URL:-"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}"}
+    echo "Attempting to migrate database... '${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}' as '${POSTGRES_USER}'"
+    pnpx prisma migrate deploy
+  env:
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: DATABASE_URL
+  - name: POSTGRES_USER
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_USER
+  - name: POSTGRES_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_PASSWORD
+  - name: POSTGRES_HOST
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_HOST
+  - name: POSTGRES_PORT
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_PORT
+  - name: POSTGRES_NAME
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_DB
+  persistence:
+    enabled: false
+  job:
+    enabled: true
+    annotations:
+      helm.sh/hook: post-install,post-upgrade
+      helm.sh/hook-weight: "-1"
+      helm.sh/hook-delete-policy: before-hook-creation
+  netpol:
+    enabled: true
+  volumes:
+  - name: scratch
+    emptyDir: {}
+  volumeMounts:
+  - name: scratch
+    mountPath: /.cache
+    subPath: cache
+  - name: scratch
+    mountPath: /.local
+    subPath: local
+  - name: scratch
+    mountPath: /tmp
+    subPath: tmp
+  resourcesDefault:
+    requests:
+      cpu: 100m
+    limits:
+      memory: 1Gi
+
+# Ideally this should be disabled in favor of
+# your own postgres instance like CNPG
+postgres:
+  enabled: true
+  postgres:
+    fullnameOverride: postgres
+  env:
+  - name: PGDATA
+    value: "/var/lib/postgresql/data/pgdata"
+  - name: PGPORT
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_PORT
+  - name: POSTGRES_DB
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_DB
+  - name: POSTGRES_USER
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_USER
+  - name: POSTGRES_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: hoppscotch
+        key: POSTGRES_PASSWORD
+  - name: POSTGRES_HOST_AUTH_METHOD
+    value: "scram-sha-256"
+  - name: POSTGRES_INITDB_ARGS
+    value: "--auth-host=scram-sha-256"
