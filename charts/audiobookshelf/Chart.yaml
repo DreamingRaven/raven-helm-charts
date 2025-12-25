@@ -2,8 +2,8 @@ apiVersion: v2
 name: audiobookshelf
 description: Self-hosted audiobook and podcast server
 type: application
-version: 0.4.0
-appVersion: "2.29.0" # renovate: datasource=docker depName=ghcr.io/advplyr/audiobookshelf
+version: 0.5.0
+appVersion: "2.32.1" # renovate: datasource=docker depName=ghcr.io/advplyr/audiobookshelf
 dependencies:
   - alias: audiobookshelf
     name: corvid-app
