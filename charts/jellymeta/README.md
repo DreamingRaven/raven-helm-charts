@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart is a chart which contains multiple other more atomic charts as dependencies.
 This allows you to control a broader deployment of interconnected resources.
@@ -26,7 +26,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install jellymeta oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellymeta --version 0.4.2
+helm install jellymeta oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellymeta --version 0.5.0
 ```
 
 ### As a helm dependency
@@ -36,7 +36,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: jellymeta
-  version: 0.4.2
+  version: 0.5.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: jellymeta.enabled # optional for more advanced use-cases
@@ -65,7 +65,7 @@ $ helm install jellymeta raven/jellymeta
 | Repository | Name | Version |
 |------------|------|---------|
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | filebrowser | 0.3.2 |
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.8.1 |
+| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | jellyfin | 0.9.0 |
 | https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | metube | 0.1.0 |
 
 ## Values
