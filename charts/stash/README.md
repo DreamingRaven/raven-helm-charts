@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install stash oci://registry.gitlab.com/georgeraven/raven-helm-charts/stash --version 0.1.0
+helm install stash oci://registry.gitlab.com/georgeraven/raven-helm-charts/stash --version 0.1.1
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: stash
-  version: 0.1.0
+  version: 0.1.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: stash.enabled # optional for more advanced use-cases
@@ -66,13 +66,14 @@ $ helm install stash raven/stash
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | stash.affinity | object | `{}` |  |
-| stash.args | string | `nil` |  |
+| stash.args[0] | string | `"stash --nobrowser --config ${STASH_CONFIG}\n"` |  |
 | stash.autoscaling.behavior | object | `{}` | HPA behavior settings (included in keda ScaledObject if enabled) |
 | stash.autoscaling.enabled | bool | `false` | enable or disable autoscaling with a standalone HPA (settings are re-used if keda is enabled) |
 | stash.autoscaling.maxReplicas | int | `5` | maximum number of replicas to scale to |
 | stash.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale to |
 | stash.autoscaling.targetCPUUtilizationPercentage | int | `80` | sets targetCPUUtilizationPercentage resource utilization of HPA |
-| stash.command | string | `nil` |  |
+| stash.command[0] | string | `"/bin/sh"` |  |
+| stash.command[1] | string | `"-c"` |  |
 | stash.cron.backoffLimit | int | `3` |  |
 | stash.cron.concurrencyPolicy | string | `"Allow"` |  |
 | stash.cron.enabled | bool | `false` | enable or disable cronjob |
@@ -97,14 +98,18 @@ $ helm install stash raven/stash
 | stash.env[4].name | string | `"STASH_BLOBS"` |  |
 | stash.env[4].value | string | `"/blobs"` |  |
 | stash.env[5].name | string | `"STASH_CONFIG"` |  |
-| stash.env[5].value | string | `"/config"` |  |
+| stash.env[5].value | string | `"/config/config.yaml"` |  |
 | stash.env[6].name | string | `"STASH_PORT"` |  |
 | stash.env[6].value | string | `"9999"` |  |
+| stash.env[7].name | string | `"USER"` |  |
+| stash.env[7].value | string | `"1000"` |  |
+| stash.env[8].name | string | `"GROUP"` |  |
+| stash.env[8].value | string | `"1000"` |  |
 | stash.fullnameOverride | string | `""` |  |
 | stash.httpRoute.annotations | object | `{}` |  |
 | stash.httpRoute.enabled | bool | `false` |  |
 | stash.httpRoute.exposedPorts[0].number | int | `80` |  |
-| stash.httpRoute.hostnames[0] | string | `"corvid-app.org.example"` |  |
+| stash.httpRoute.hostnames[0] | string | `"stash.org.example"` |  |
 | stash.httpRoute.parentRefs[0].name | string | `"my-gateway"` |  |
 | stash.image.pullPolicy | string | `"IfNotPresent"` |  |
 | stash.image.registry | string | `"docker.io"` |  |
@@ -114,7 +119,7 @@ $ helm install stash raven/stash
 | stash.ingress.annotations | object | `{}` |  |
 | stash.ingress.className | string | `""` |  |
 | stash.ingress.enabled | bool | `false` |  |
-| stash.ingress.hosts[0].host | string | `"corvid-app.org.example"` |  |
+| stash.ingress.hosts[0].host | string | `"stash.org.example"` |  |
 | stash.ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | stash.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | stash.ingress.tls | list | `[]` |  |
@@ -139,7 +144,7 @@ $ helm install stash raven/stash
 | stash.livenessProbeDefault | object | `{"httpGet":{"path":"/","port":"http"}}` | default liveness probe if not specified by user |
 | stash.livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | stash.nameOverride | string | `""` |  |
-| stash.netpol.enabled | bool | `false` |  |
+| stash.netpol.enabled | bool | `true` |  |
 | stash.nodeSelector | object | `{}` |  |
 | stash.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | stash.persistence.defaultVolumeMounts[0].mountPath | string | `"/data/"` |  |
@@ -169,7 +174,7 @@ $ helm install stash raven/stash
 | stash.podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
 | stash.podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
 | stash.ports[0].appProtocol | string | `"http"` |  |
-| stash.ports[0].containerPort | int | `8080` |  |
+| stash.ports[0].containerPort | int | `9999` |  |
 | stash.ports[0].name | string | `"http"` |  |
 | stash.ports[0].protocol | string | `"TCP"` |  |
 | stash.ports[0].servicePort | int | `80` |  |
@@ -187,7 +192,7 @@ $ helm install stash raven/stash
 | stash.securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
 | stash.securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | stash.service.annotations | object | `{}` | additional service annotations to add |
-| stash.service.enabled | bool | `false` | enable or disable the provided service |
+| stash.service.enabled | bool | `true` | enable or disable the provided service |
 | stash.service.type | string | `"ClusterIP"` | service type to generate |
 | stash.serviceAccount.annotations | object | `{}` |  |
 | stash.serviceAccount.automount | bool | `true` |  |
@@ -206,6 +211,10 @@ $ helm install stash raven/stash
 | stash.volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.1.1 (corvid-app 0.17.0)
+
+Minor bug fixes to ensure volumes are correctly mounting to the container, to enable initial setup to complete successfully.
 
 ## 0.1.0 (corvid-app 0.17.0)
 

@@ -3,7 +3,7 @@ appVersion: 0.1.0
 description: A Helm chart for Kubernetes
 name: stash
 type: application
-version: 0.1.0
+version: 0.1.1
 dependencies:
 - name: corvid-app
   alias: stash

@@ -40,7 +40,11 @@ stash:
       subPath: config
 
   command:
+  - /bin/sh
+  - -c
   args:
+  - |
+    stash --nobrowser --config ${STASH_CONFIG}
   runtimeClassName:
 
   daemonset:
@@ -158,9 +162,13 @@ stash:
   - name: STASH_BLOBS
     value: "/blobs"
   - name: STASH_CONFIG
-    value: "/config"
+    value: "/config/config.yaml"
   - name: STASH_PORT
     value: "9999"
+  - name: USER
+    value: "1000"
+  - name: GROUP
+    value: "1000"
 
 
   ## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
@@ -221,7 +229,7 @@ stash:
 
   service:
     # -- enable or disable the provided service
-    enabled: false
+    enabled: true
     # -- additional service annotations to add
     annotations: {}
     # -- service type to generate
@@ -375,7 +383,7 @@ stash:
     enabled: false
 
   netpol:
-    enabled: false
+    enabled: true
 
   dnsPolicy: "" # default is ClusterFirst
   dnsConfig: {}
