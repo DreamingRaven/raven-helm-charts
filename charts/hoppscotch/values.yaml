@@ -15,7 +15,7 @@ frontend:
   enabled: true
   initContainers:
   - name: hoppscotch-fe
-    image: docker.io/hoppscotch/hoppscotch:2025.10.1
+    image: docker.io/hoppscotch/hoppscotch:2025.12.1
     command:
     - sh
     - -c
@@ -84,7 +84,7 @@ admin:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2025.10.1"
+    tag: "2025.12.1"
   deployment:
     enabled: true
 
@@ -93,7 +93,7 @@ backend:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2025.10.1"
+    tag: "2025.12.1"
   command:
   - /bin/sh
   - -c
@@ -137,7 +137,7 @@ migrate:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2025.10.1"
+    tag: "2025.12.1"
   command:
   - /bin/sh
   - -c
