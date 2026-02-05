@@ -10,7 +10,7 @@ metube:
     registry: ghcr.io
     repository: alexta69/metube
     pullPolicy: IfNotPresent
-    tag: "2025.11.29"
+    tag: "2025.12.30"
 
   persistence:
     enabled: true
