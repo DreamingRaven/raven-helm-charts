@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2025.12.30](https://img.shields.io/badge/AppVersion-2025.12.30-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2026.02.19](https://img.shields.io/badge/AppVersion-2026.02.19-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install metube oci://registry.gitlab.com/georgeraven/raven-helm-charts/metube --version 0.5.0
+helm install metube oci://registry.gitlab.com/georgeraven/raven-helm-charts/metube --version 0.6.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: metube
-  version: 0.5.0
+  version: 0.6.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: metube.enabled # optional for more advanced use-cases
@@ -120,7 +120,7 @@ $ helm install metube raven/metube
 | metube.image.pullPolicy | string | `"IfNotPresent"` |  |
 | metube.image.registry | string | `"ghcr.io"` |  |
 | metube.image.repository | string | `"alexta69/metube"` |  |
-| metube.image.tag | string | `"2025.12.30"` |  |
+| metube.image.tag | string | `"2026.02.19"` |  |
 | metube.imagePullSecrets | list | `[]` |  |
 | metube.ingress.annotations | object | `{}` |  |
 | metube.ingress.className | string | `""` |  |
