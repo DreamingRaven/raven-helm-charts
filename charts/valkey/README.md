@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 9.0.0-alpine](https://img.shields.io/badge/AppVersion-9.0.0--alpine-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 9.0.3-alpine](https://img.shields.io/badge/AppVersion-9.0.3--alpine-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install valkey oci://registry.gitlab.com/georgeraven/raven-helm-charts/valkey --version 0.2.0
+helm install valkey oci://registry.gitlab.com/georgeraven/raven-helm-charts/valkey --version 0.2.1
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: valkey
-  version: 0.2.0
+  version: 0.2.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: valkey.enabled # optional for more advanced use-cases
@@ -98,7 +98,7 @@ $ helm install valkey raven/valkey
 | valkey.image.pullPolicy | string | `"IfNotPresent"` |  |
 | valkey.image.registry | string | `"ghcr.io"` |  |
 | valkey.image.repository | string | `"valkey-io/valkey"` |  |
-| valkey.image.tag | string | `"9.0.0-alpine"` |  |
+| valkey.image.tag | string | `"9.0.3-alpine"` |  |
 | valkey.imagePullSecrets | list | `[]` |  |
 | valkey.ingress.annotations | object | `{}` |  |
 | valkey.ingress.className | string | `""` |  |
