@@ -59,7 +59,7 @@ $ helm install open-webui raven/open-webui
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.12.0 |
+| oci://registry.gitlab.com/georgeraven/raven-helm-charts | corvid | 0.21.0 |
 
 ## Values
 

@@ -1,0 +1,6 @@
+dependencies:
+- name: corvid
+  repository: oci://registry.gitlab.com/georgeraven/raven-helm-charts
+  version: 0.21.0
+digest: sha256:5fd232ca59f7e9024bbdd5ba2312e3add3ee0a20d27adba3ec9999c32b693d8c
+generated: "2026-03-27T13:42:45.561534371Z"
