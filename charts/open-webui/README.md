@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.2](https://img.shields.io/badge/AppVersion-0.7.2-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.8.12](https://img.shields.io/badge/AppVersion-0.8.12-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install open-webui oci://registry.gitlab.com/georgeraven/raven-helm-charts/open-webui --version 0.4.0
+helm install open-webui oci://registry.gitlab.com/georgeraven/raven-helm-charts/open-webui --version 0.5.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: open-webui
-  version: 0.4.0
+  version: 0.5.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: open-webui.enabled # optional for more advanced use-cases
@@ -85,7 +85,7 @@ $ helm install open-webui raven/open-webui
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"open-webui/open-webui"` |  |
-| image.tag | string | `"0.7.2"` |  |
+| image.tag | string | `"v0.8.12@sha256:8113fa5510020ef05a44afc0c42d33eabeeb2524a996e3e3fb8c437c00f0d792"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
