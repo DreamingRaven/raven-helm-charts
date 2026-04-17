@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 13.351.0](https://img.shields.io/badge/AppVersion-13.351.0-informational?style=flat-square)
+![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 14.360.0](https://img.shields.io/badge/AppVersion-14.360.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.12.0
+helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.13.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: foundryvtt
-  version: 0.12.0
+  version: 0.13.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: foundryvtt.enabled # optional for more advanced use-cases
@@ -93,7 +93,7 @@ $ helm install foundryvtt raven/foundryvtt
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"felddy/foundryvtt"` |  |
-| image.tag | string | `"13.351.0"` |  |
+| image.tag | string | `"14.360.0@sha256:383417dbf3c442a03dcca9a4813b47c7408addaf6d582b7d3b1ee4b65c24a245"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
