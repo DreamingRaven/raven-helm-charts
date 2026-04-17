@@ -2,7 +2,7 @@
 
 The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v10.19.4](https://img.shields.io/badge/AppVersion-v10.19.4-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v10.19.4](https://img.shields.io/badge/AppVersion-v10.19.4-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,8 +21,29 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install cyberchef oci://registry.gitlab.com/georgeraven/raven-helm-charts/cyberchef --version 0.1.0
+helm install cyberchef oci://registry.gitlab.com/georgeraven/raven-helm-charts/cyberchef --version 0.2.0
 ```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: cyberchef
+  version: 0.2.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: cyberchef.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
 
 ### Install via Helm index.yaml (deprecated method since: 2025-03-24)
 
@@ -82,7 +103,7 @@ $ helm install cyberchef raven/cyberchef
 | cyberchef.initContainers[0].command[0] | string | `"sh"` |  |
 | cyberchef.initContainers[0].command[1] | string | `"-c"` |  |
 | cyberchef.initContainers[0].command[2] | string | `"cp -r /usr/share/nginx/html/ /output/.\n"` |  |
-| cyberchef.initContainers[0].image | string | `"ghcr.io/gchq/cyberchef:10.19.4"` |  |
+| cyberchef.initContainers[0].image | string | `"ghcr.io/gchq/cyberchef:10.23.0@sha256:9f9205cfc20368bd9a4152f7708a9e7626525d8f4eadb1a25e5079708c5c4304"` |  |
 | cyberchef.initContainers[0].imagePullPolicy | string | `"IfNotPresent"` |  |
 | cyberchef.initContainers[0].name | string | `"cyberchef"` |  |
 | cyberchef.initContainers[0].volumeMounts[0].mountPath | string | `"/output/"` |  |
