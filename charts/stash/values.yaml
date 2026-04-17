@@ -9,7 +9,7 @@ stash:
     ## @param image.pullPolicy [string] Image pull policy
     pullPolicy: IfNotPresent
     ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.30.1"
+    tag: "v0.31.1@sha256:df744af5a0c976e2ec671052ecc1f8a9aa757fa12b8f9930b59910b7295f0da6"
 
   persistence:
     enabled: true
