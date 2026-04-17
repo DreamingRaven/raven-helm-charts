@@ -9,7 +9,7 @@ image:
   repository: filebrowser/filebrowser
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v2.54.0"
+  tag: "v2.63.2@sha256:4dce87308b9f9cfbcf8d0a284fc9565d2b515530a6bae2d920b388161e093f26"
 
 persistence:
   enabled: true
