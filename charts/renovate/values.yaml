@@ -13,7 +13,7 @@ image:
   ## @param image.pullPolicy [string] Image pull policy
   pullPolicy: IfNotPresent
   ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-  tag: "41-full"
+  tag: "43-full@sha256:ab564a1a7c94dd1a45aa1f28c4eaa48f831ec4782f1928b767a4cec5fd80d702"
 
 persistence:
   enabled: false
