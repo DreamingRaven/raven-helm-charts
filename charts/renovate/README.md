@@ -1,8 +1,59 @@
 # renovate
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
-
 A Helm chart for Kubernetes
+
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 39-full](https://img.shields.io/badge/AppVersion-39--full-informational?style=flat-square)
+
+## Installing the Chart
+
+### Install via OCI helm registry
+
+To install the chart with the release name `renovate`, run the following commands.
+For a list of all available charts and versions see the [container registry](https://gitlab.com/GeorgeRaven/raven-helm-charts/container_registry)
+
+To pull the latest version without authentication:
+
+```console
+helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate
+```
+
+With authentication:
+
+```console
+helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
+helm install renovate oci://registry.gitlab.com/georgeraven/raven-helm-charts/renovate --version 0.5.0
+```
+
+### As a helm dependency
+
+You can also opt to directly reference this chart as a helm dependency defined in your `Chart.yaml`:
+
+```yaml
+dependencies:
+- name: renovate
+  version: 0.5.0
+  repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
+  # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
+  # condition: renovate.enabled # optional for more advanced use-cases
+```
+
+Then you should pull the chart with the following command:
+
+```console
+helm dependency update <PATH_TO_YOUR_CHART_DIR>
+```
+
+Which should automatically fetch the chart, update your lockfile, etc.
+
+### Install via Helm index.yaml (deprecated method since: 2025-03-24)
+
+To install the chart with the release name `renovate`, run the following commands:
+
+```console
+$ helm repo add raven https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+$ helm repo update raven
+$ helm install renovate raven/renovate
+```
 
 ## Requirements
 
@@ -37,7 +88,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"renovatebot/renovate"` |  |
-| image.tag | string | `"41-full"` |  |
+| image.tag | string | `"43-full@sha256:ab564a1a7c94dd1a45aa1f28c4eaa48f831ec4782f1928b767a4cec5fd80d702"` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
@@ -84,4 +135,24 @@ A Helm chart for Kubernetes
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
+
+# Changelog
+
+## 0.3.0
+
+This changes the behavior of the retries and historic resources.
+While this likely does not affect most users in any substantive manner, I have marked it as a minor change because it does change the default retry behavior.
+
+## 0.2.1
+
+Added backwards compatible change to image source.
+This now sources from ghcr instead of dockerhub.
+
+```yaml
+image:
+  registry: ghcr.io
+  repository: renovatebot/renovate
+  pullPolicy: IfNotPresent
+  tag: "39-full"
+```
 
