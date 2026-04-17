@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: "26.5.1" # renovate: datasource=docker depName=quay.io/keycloak/keycloak
+appVersion: "26.6.1" # renovate: datasource=docker depName=quay.io/keycloak/keycloak
 description: A Helm chart for Kubernetes
 name: keycloak
 type: application
-version: 0.5.0
+version: 0.6.0
 dependencies:
 - alias: keycloak
   name: corvid-app
