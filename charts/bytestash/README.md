@@ -59,7 +59,7 @@ $ helm install bytestash raven/bytestash
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://gitlab.com/api/v4/projects/55284972/packages/helm/stable | corvid | 0.13.1 |
+| oci://registry.gitlab.com/georgeraven/raven-helm-charts | corvid | 0.13.1 |
 
 ## Values
 

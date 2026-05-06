@@ -1,6 +1,6 @@
 dependencies:
 - name: corvid
-  repository: https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+  repository: oci://registry.gitlab.com/georgeraven/raven-helm-charts
   version: 0.13.1
-digest: sha256:6478a394232d9c922fa51985844f36ad49cfeae70e73c858e267bde78a3a861b
-generated: "2026-05-06T13:26:31.056831598+01:00"
+digest: sha256:2a86d74e7260aac53952ceb07601088c1b5ce6b299a3d3fc2ad41d5930279b4a
+generated: "2026-05-06T13:37:30.389867992+01:00"
