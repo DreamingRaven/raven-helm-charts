@@ -3,4 +3,4 @@ appVersion: v2.63.2 # renovate: datasource=docker depName=docker.io/filebrowser/
 description: A Helm chart for Kubernetes
 name: filebrowser
 type: application
-version: 0.7.0
+version: 0.7.1

@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.63.2](https://img.shields.io/badge/AppVersion-v2.63.2-informational?style=flat-square)
+![Version: 0.7.1](https://img.shields.io/badge/Version-0.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.63.2](https://img.shields.io/badge/AppVersion-v2.63.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install filebrowser oci://registry.gitlab.com/georgeraven/raven-helm-charts/filebrowser --version 0.7.0
+helm install filebrowser oci://registry.gitlab.com/georgeraven/raven-helm-charts/filebrowser --version 0.7.1
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: filebrowser
-  version: 0.7.0
+  version: 0.7.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: filebrowser.enabled # optional for more advanced use-cases
