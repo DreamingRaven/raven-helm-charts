@@ -2,7 +2,7 @@ apiVersion: v2
 name: cyberchef
 description: The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis
 type: application
-version: 0.2.0
+version: 0.3.0
 appVersion: "v10.19.4"
 dependencies:
   - alias: cyberchef
