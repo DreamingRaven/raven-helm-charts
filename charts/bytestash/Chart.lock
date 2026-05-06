@@ -1,0 +1,6 @@
+dependencies:
+- name: corvid
+  repository: https://gitlab.com/api/v4/projects/55284972/packages/helm/stable
+  version: 0.13.1
+digest: sha256:6478a394232d9c922fa51985844f36ad49cfeae70e73c858e267bde78a3a861b
+generated: "2026-05-06T13:26:31.056831598+01:00"
