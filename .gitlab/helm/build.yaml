@@ -8,7 +8,7 @@ helm-chart-build:
     for dir in ${CHARTS_DIR}/*/
     do
       DIR=${dir%*/} # removes trailing "/"
-      APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"' | sed -E 's/@sha256:\w+$//g;t' )
+      APP_VER=$(yq ".image.tag" ${DIR}/values.yaml | tr -d '"' | sed -E 's/@sha256:\w+$//g;t')
       if [ "${APP_VER}" == "null" ]; then
         echo "appVersion falling back to ${DIR}/Chart.yaml"
         APP_VER=$(yq ".appVersion" ${DIR}/Chart.yaml | tr -d '"')
