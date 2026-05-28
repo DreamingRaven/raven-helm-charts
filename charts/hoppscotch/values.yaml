@@ -15,7 +15,7 @@ frontend:
   enabled: true
   initContainers:
   - name: hoppscotch-fe
-    image: docker.io/hoppscotch/hoppscotch:2026.3.1@sha256:cee25a775369a74fae85837cd219e8fdd2f9d0ea4b289a4f77b5ca24371bfd99
+    image: docker.io/hoppscotch/hoppscotch:2026.5.0@sha256:e2cac5cdd86664f1406d88b8cafcc99f9f2d08140c2fcd4ba378b0a7c9a04e8e
     command:
     - sh
     - -c
@@ -84,7 +84,7 @@ admin:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2026.3.1@sha256:cee25a775369a74fae85837cd219e8fdd2f9d0ea4b289a4f77b5ca24371bfd99"
+    tag: "2026.5.0@sha256:e2cac5cdd86664f1406d88b8cafcc99f9f2d08140c2fcd4ba378b0a7c9a04e8e"
   deployment:
     enabled: true
 
@@ -93,7 +93,7 @@ backend:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2026.3.1@sha256:cee25a775369a74fae85837cd219e8fdd2f9d0ea4b289a4f77b5ca24371bfd99"
+    tag: "2026.5.0@sha256:e2cac5cdd86664f1406d88b8cafcc99f9f2d08140c2fcd4ba378b0a7c9a04e8e"
   command:
   - /bin/sh
   - -c
@@ -137,7 +137,7 @@ migrate:
   image:
     registry: docker.io
     repository: hoppscotch/hoppscotch
-    tag: "2026.3.1@sha256:cee25a775369a74fae85837cd219e8fdd2f9d0ea4b289a4f77b5ca24371bfd99"
+    tag: "2026.5.0@sha256:e2cac5cdd86664f1406d88b8cafcc99f9f2d08140c2fcd4ba378b0a7c9a04e8e"
   command:
   - /bin/sh
   - -c
