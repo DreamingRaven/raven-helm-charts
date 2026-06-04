@@ -2,226 +2,269 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-## @param replicaCount [string] Server deployment replica count
-replicaCount: 1
+renovate:
+  # -- Server deployment replica count
+  replicaCount: 1
 
-image:
-  ## @param image.registry [string] Image container registry
-  registry: ghcr.io
-  ## @param image.repository [string] Image repository
-  repository: renovatebot/renovate
-  ## @param image.pullPolicy [string] Image pull policy
-  pullPolicy: IfNotPresent
-  ## @param image.tag [string] Overrides the image tag whose default is the chart appVersion.
-  tag: "43-full@sha256:ab564a1a7c94dd1a45aa1f28c4eaa48f831ec4782f1928b767a4cec5fd80d702"
+  image:
+    # -- Image container registry
+    registry: ghcr.io
+    # -- Image repository
+    repository: renovatebot/renovate
+    # -- Image pull policy
+    pullPolicy: IfNotPresent
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: "43-full@sha256:ab564a1a7c94dd1a45aa1f28c4eaa48f831ec4782f1928b767a4cec5fd80d702"
 
-persistence:
-  enabled: false
-  size: 8Gi
-  accessModes:
-  - ReadWriteOnce
-  existingClaim: ""
+  persistence:
+    enabled: false
+    size: 8Gi
+    accessModes:
+    - ReadWriteOnce
+    existingClaim: ""
+    defaultVolumeMounts:
+    - name: data
+      mountPath: /data/
+      subPath: data
 
-command:
-args:
-runtimeClassName:
+  command:
+  args:
+  runtimeClassName:
 
-deployment:
-  # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
-  strategy: ""
+  deployment:
+    enabled: false
+    # -- rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume
+    strategy: ""
 
-cron:
-  # -- enable or disable cronjob
-  enabled: true
-  # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
-  schedule: "@hourly"
-  # -- cronjob will not trigger on schedule but can be manually triggered
-  suspend: false
-  successfulJobsHistoryLimit: 1
-  failedJobsHistoryLimit: 2
-  backoffLimit: 1
-  concurrencyPolicy: Replace # Allow, Forbid, Replace
+  sts:
+    enabled: false
+    updateStrategy: RollingUpdate
 
-## @param initContainers Add bespoke init containers to the pods
-initContainers: []
-# - name: some-pod-name
-#   image: some-image
-#   imagePullPolicy: Always
-#   ports:
-#     - name: some-port
-#       containerPort: 1234
+  cron:
+    # -- enable or disable cronjob
+    enabled: true
+    # -- schedule for cronjob using Cron syntax https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
+    schedule: "@hourly"
+    # -- cronjob will not trigger on schedule but can be manually triggered
+    suspend: false
+    successfulJobsHistoryLimit: 1
+    failedJobsHistoryLimit: 2
+    backoffLimit: 1
+    concurrencyPolicy: Replace # Allow, Forbid, Replace
 
-restartPolicy: Always
+  service:
+    enabled: true
+    annotations: {}
+    type: ClusterIP
 
-## @param imagePullSecrets [array] Image pull secrets
-imagePullSecrets: []
-## @param nameOverride [string] Partial name override
-nameOverride: ""
-## @param fullnameOverride [string] Full name override
-fullnameOverride: ""
+  autoscaling:
+    # -- enable or disable autoscaling (settings are re-used if keda is enabled)
+    enabled: false
+    # -- minimum number of replicas to scale to
+    minReplicas: 1
+    # -- maximum number of replicas to scale to
+    maxReplicas: 5 # CHANGED from 100
+    # -- sets targetCPUUtilizationPercentage resource utilization of HPA
+    targetCPUUtilizationPercentage: 80
+    # -- HPA behavior settings (included in keda ScaledObject if enabled)
+    behavior: {}
+      # scaleDown:
+      #   stabilizationWindowSeconds: 300
+      #   policies:
+      #   - type: Percent
+      #     value: 80 # likely should be the same as targetCPUUtilizationPercentage
+      #     periodSeconds: 15
 
-## @param secrets [array] A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
-secrets: []
-# - name: renovate
-#   lookup:
-#   - key: renovateUsername
-#     env: renovate_USERNAME
-#   - key: renovatePassword
-#     env: renovate_PASSWORD
+  ## @param initContainers Add bespoke init containers to the pods
+  initContainers: []
+  # - name: some-pod-name
+  #   image: some-image
+  #   imagePullPolicy: Always
+  #   ports:
+  #     - name: some-port
+  #       containerPort: 1234
 
-## @param env [array] Raw helm environment variable settings for static or dynamic values
-env:
-- name: RENOVATE_BASE_DIR
-  value: '/tmp/renovate/'
-- name: RENOVATE_CONFIG_FILE
-  value: '/opt/renovate/config.json'
+  restartPolicy: Always
 
-## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
-envFrom:
-- secretRef:
-    name: renovate
-    optional: false
-# - configMapRef:
-#     name: someConfigMap
-#     optional: false
+  # -- Image pull secrets
+  imagePullSecrets: []
+  # -- Partial name override
+  nameOverride: ""
+  # -- Full name override
+  fullnameOverride: ""
+
+  # -- A list of secrets with a list of keys to turn into environment variables, these take precedence over everything else
+  secrets: []
+  # - name: renovate
+  #   lookup:
+  #   - key: renovateUsername
+  #     env: renovate_USERNAME
+  #   - key: renovatePassword
+  #     env: renovate_PASSWORD
+
+  # -- Raw helm environment variable settings for static or dynamic values
+  env:
+  - name: RENOVATE_BASE_DIR
+    value: '/tmp/renovate/'
+  - name: RENOVATE_CONFIG_FILE
+    value: '/opt/renovate/config.json'
+
+  # -- Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
+  envFrom:
+  - secretRef:
+      name: renovate
+      optional: false
+  # - configMapRef:
+  #     name: someConfigMap
+  #     optional: false
 
 
-serviceAccount:
-  ## @param serviceAccount.create [string] Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  ## @param serviceAccount.annotations [object] Annotations to add to the service account
-  annotations: {}
-  ## @param serviceAccount.name [string] The name of the service account to use. If not set and create is true, a name is generated using the fullname template
-  name: ""
+  serviceAccount:
+    # -- Specifies whether a service account should be created
+    create: true
+    # Automatically mount a ServiceAccount's API credentials?
+    automount: true
+    # -- Annotations to add to the service account
+    annotations: {}
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    name: ""
 
-## @param podAnnotations [object] Pod annotations
-podAnnotations: {}
-podLabels: {}
+  # -- Pod annotations
+  podAnnotations: {}
+  podLabels: {}
 
-# -- enable or disable podSecurityContext entirely
-podSecurityContextEnabled: false # TODO: test then enable by default
-# -- default podSecurityContext if none specified
-podSecurityContextDefault:
-  fsGroup: 1000
-# -- podSecurityContext for consumer overrides
-podSecurityContext: {}
-  # fsGroup: 1000
+  # -- enable or disable podSecurityContext entirely
+  podSecurityContextEnabled: true
+  # -- default podSecurityContext if none specified
+  podSecurityContextDefault:
+    fsGroup: 1000
+  # -- podSecurityContext for consumer overrides
+  podSecurityContext: {}
+    # fsGroup: 1000
 
-# -- enable or disable securityContext entirely
-securityContextEnabled: false # TODO: test then enable by default
-# -- default securityContext if none specified
-securityContextDefault:
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
-  allowPrivilegeEscalation: false
-# -- securityContext for consumer overrides
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+  # -- enable or disable securityContext entirely
+  securityContextEnabled: true
+  # -- default securityContext if none specified
+  securityContextDefault:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
+  # -- securityContext for consumer overrides
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
 
-service:
-  ## @param service.type [string] Service type
-  type: ClusterIP
+  service:
+    # -- Service type
+    type: ClusterIP
 
-## @param ports [array] Ports to expose, tie to the service, and ingress
-ports:
-- name: http
-  containerPort: 8080
-  servicePort: 80
-  protocol: TCP
-  appProtocol: http
+  httpRoute:
+    enabled: false
+    annotations: {}
+    parentRefs:
+    - name: my-gateway
+    hostnames:
+    - "corvid.org.example"
+    exposedPorts:
+    - number: 80
 
-# -- enable or disable resources entirely
-resourcesEnabled: false
-# -- default resources if not specified by user
-resourcesDefault:
-  limits:
-    memory: 128Mi
-  requests:
-    cpu: 100m
-# -- raw resources block overrides for user
-resources:
-  # limits:
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
+  # -- Ports to expose, tie to the service, and ingress
+  ports:
+  - name: http
+    containerPort: 8080
+    servicePort: 80
+    protocol: TCP
+    appProtocol: http
 
-# -- enable or disable startup probe entirely
-startupProbeEnabled: false
-# -- default startup probe if not specified by user
-startupProbeDefault:
-  httpGet:
-    path: /
-    port: http
-# -- raw startup probe overrides for user
-startupProbe:
-  # httpGet:
-  #   path: /
-  #   port: http
+  # -- enable or disable resources entirely
+  resourcesEnabled: false
+  # -- default resources if not specified by user
+  resourcesDefault:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 100m
+  # -- raw resources block overrides for user
+  resources:
+    # limits:
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
 
-# -- enable or disable liveness probe entirely
-livenessProbeEnabled: false
-# -- default liveness probe if not specified by user
-livenessProbeDefault:
-  httpGet:
-    path: /
-    port: http
-# -- raw liveness probe overrides for user
-livenessProbe:
-  # httpGet:
-  #   path: /
-  #   port: http
+  # -- enable or disable startup probe entirely
+  startupProbeEnabled: false
+  # -- default startup probe if not specified by user
+  startupProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  # -- raw startup probe overrides for user
+  startupProbe:
+    # httpGet:
+    #   path: /
+    #   port: http
 
-# -- enable or disable readiness probe entirely
-readinessProbeEnabled: false
-# -- default readiness probe if not specified by user
-readinessProbeDefault:
-  httpGet:
-    path: /
-    port: http
-# -- raw readiness probe overrides for user
-readinessProbe:
-  # httpGet:
-  #   path: /
-  #   port: http
+  # -- enable or disable liveness probe entirely
+  livenessProbeEnabled: false
+  # -- default liveness probe if not specified by user
+  livenessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  # -- raw liveness probe overrides for user
+  livenessProbe:
+    # httpGet:
+    #   path: /
+    #   port: http
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+  # -- enable or disable readiness probe entirely
+  readinessProbeEnabled: false
+  # -- default readiness probe if not specified by user
+  readinessProbeDefault:
+    httpGet:
+      path: /
+      port: http
+  # -- raw readiness probe overrides for user
+  readinessProbe:
+    # httpGet:
+    #   path: /
+    #   port: http
 
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+  # Additional volumes on the output Deployment definition.
+  volumes: []
+  # - name: foo
+  #   secret:
+  #     secretName: mysecret
+  #     optional: false
 
-nodeSelector: {}
+  # Additional volumeMounts on the output Deployment definition.
+  volumeMounts: []
+  # - name: foo
+  #   mountPath: "/etc/foo"
+  #   readOnly: true
 
-tolerations: []
+  nodeSelector: {}
 
-affinity: {}
+  tolerations: []
 
-netpol:
-  enabled: true
+  affinity: {}
 
-dnsPolicy: "" # default is ClusterFirst
-dnsConfig: {}
-  # nameservers:
-  # - 1.1.1.1
-  # options:
-  # - name: ndots
-  #   value: "1"
+  netpol:
+    enabled: true
+
+  dnsPolicy: "" # default is ClusterFirst
+  dnsConfig: {}
+    # nameservers:
+    # - 1.1.1.1
+    # options:
+    # - name: ndots
+    #   value: "1"
