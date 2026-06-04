@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.9.11](https://img.shields.io/badge/AppVersion-10.9.11-informational?style=flat-square)
+![Version: 0.9.2](https://img.shields.io/badge/Version-0.9.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.9.11](https://img.shields.io/badge/AppVersion-10.9.11-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install jellyfin oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellyfin --version 0.9.1
+helm install jellyfin oci://registry.gitlab.com/georgeraven/raven-helm-charts/jellyfin --version 0.9.2
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: jellyfin
-  version: 0.9.1
+  version: 0.9.2
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: jellyfin.enabled # optional for more advanced use-cases
@@ -89,7 +89,7 @@ $ helm install jellyfin raven/jellyfin
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"lscr.io"` |  |
 | image.repository | string | `"linuxserver/jellyfin"` |  |
-| image.tag | string | `"10.11.5"` |  |
+| image.tag | string | `"10.11.10@sha256:c0ed73678fb4ca761e0d940a92e49b95352f7f241a9be79a2c575c0099288f46"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
