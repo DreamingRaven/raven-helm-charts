@@ -135,7 +135,7 @@ vaultwarden:
   - name: ROCKET_PORT
     value: "8080"
   - name: DOMAIN
-    value: "vaultwarden.org.example"
+    value: "https://vaultwarden.org.example"
   - name: USER
     value: "1000"
   - name: GROUP

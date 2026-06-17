@@ -2,7 +2,7 @@
 
 Unofficial Bitwarden compatible server written in Rust
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.36.0](https://img.shields.io/badge/AppVersion-1.36.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.36.0](https://img.shields.io/badge/AppVersion-1.36.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install vaultwarden oci://registry.gitlab.com/georgeraven/raven-helm-charts/vaultwarden --version 0.1.0
+helm install vaultwarden oci://registry.gitlab.com/georgeraven/raven-helm-charts/vaultwarden --version 0.1.1
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: vaultwarden
-  version: 0.1.0
+  version: 0.1.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: vaultwarden.enabled # optional for more advanced use-cases
@@ -90,7 +90,7 @@ $ helm install vaultwarden raven/vaultwarden
 | vaultwarden.env[0].name | string | `"ROCKET_PORT"` |  |
 | vaultwarden.env[0].value | string | `"8080"` |  |
 | vaultwarden.env[1].name | string | `"DOMAIN"` |  |
-| vaultwarden.env[1].value | string | `"vaultwarden.org.example"` |  |
+| vaultwarden.env[1].value | string | `"https://vaultwarden.org.example"` |  |
 | vaultwarden.env[2].name | string | `"USER"` |  |
 | vaultwarden.env[2].value | string | `"1000"` |  |
 | vaultwarden.env[3].name | string | `"GROUP"` |  |

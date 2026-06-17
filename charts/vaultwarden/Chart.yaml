@@ -3,7 +3,7 @@ appVersion: 1.36.0 # renovate: datasource=docker depName=ghcr.io/felddy/foundryv
 description: Unofficial Bitwarden compatible server written in Rust
 name: vaultwarden
 type: application
-version: 0.1.0
+version: 0.1.1
 dependencies:
 - name: corvid-app
   alias: vaultwarden
