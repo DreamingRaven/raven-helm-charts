@@ -16,10 +16,15 @@
       "automerge": true
     },
     {
+      "matchDatasources": ["docker"],
+      "minimumReleaseAge": null
+    },
+    {
       "matchManagers": [
         "helm-values",
         "helmv3"
       ],
+      "minimumReleaseAge": null
       "pinDigests": true,
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
