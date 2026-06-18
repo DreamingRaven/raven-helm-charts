@@ -24,7 +24,7 @@
         "helm-values",
         "helmv3"
       ],
-      "minimumReleaseAge": null
+      "minimumReleaseAge": null,
       "pinDigests": true,
       "postUpdateOptions": [
         "helmUpdateSubChartArchives"
