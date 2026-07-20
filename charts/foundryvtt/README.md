@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.13.1](https://img.shields.io/badge/Version-0.13.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 14.360.0](https://img.shields.io/badge/AppVersion-14.360.0-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 14.360.0](https://img.shields.io/badge/AppVersion-14.360.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.13.1
+helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.14.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: foundryvtt
-  version: 0.13.1
+  version: 0.14.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: foundryvtt.enabled # optional for more advanced use-cases
@@ -104,7 +104,7 @@ $ helm install foundryvtt raven/foundryvtt
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe | string | `nil` | raw liveness probe overrides for user |
-| livenessProbeDefault | object | `{"failureThreshold":20,"httpGet":{"path":"/","port":"http"},"periodSeconds":30}` | default liveness probe if not specified by user |
+| livenessProbeDefault | object | `{"failureThreshold":20,"httpGet":{"path":"/api/status","port":"http"},"periodSeconds":30}` | default liveness probe if not specified by user |
 | livenessProbeEnabled | bool | `true` | enable or disable liveness probe entirely |
 | nameOverride | string | `""` |  |
 | netpol.enabled | bool | `true` |  |
@@ -123,7 +123,7 @@ $ helm install foundryvtt raven/foundryvtt
 | ports[0].protocol | string | `"TCP"` |  |
 | ports[0].servicePort | int | `80` |  |
 | readinessProbe | string | `nil` | raw readiness probe overrides for user |
-| readinessProbeDefault | object | `{"failureThreshold":20,"httpGet":{"path":"/","port":"http"},"periodSeconds":30}` | default readiness probe if not specified by user |
+| readinessProbeDefault | object | `{"failureThreshold":20,"httpGet":{"path":"/api/status","port":"http"},"periodSeconds":30}` | default readiness probe if not specified by user |
 | readinessProbeEnabled | bool | `true` | enable or disable readiness probe entirely |
 | replicaCount | int | `1` |  |
 | resources | string | `nil` | raw resources block overrides for user |
@@ -147,13 +147,38 @@ $ helm install foundryvtt raven/foundryvtt
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | startupProbe | string | `nil` | raw startup probe overrides for user |
-| startupProbeDefault | object | `{"failureThreshold":120,"httpGet":{"path":"/","port":"http"},"initialDelaySeconds":5,"periodSeconds":10}` | default startup probe if not specified by user |
+| startupProbeDefault | object | `{"failureThreshold":120,"httpGet":{"path":"/api/status","port":"http"},"initialDelaySeconds":5,"periodSeconds":10}` | default startup probe if not specified by user |
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.14.0
+
+This changes the health probes to target the foundry `/api/status` endpoint instead of the `/` endpoint.
+
+This should improve the health check reliability, and reduce the amount of data being sent to the health check endpoint.
+
+If you would like to maintain the old behaviour you can set the following:
+
+```yaml
+startupProbe:
+  httpGet:
+    path: /
+    port: http
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+```
+
+This should be backwards compatible.
 
 ## 0.6.0
 
