@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.16.0](https://img.shields.io/badge/Version-0.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2026.6.0](https://img.shields.io/badge/AppVersion-2026.6.0-informational?style=flat-square)
+![Version: 0.17.0](https://img.shields.io/badge/Version-0.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2026.8.0](https://img.shields.io/badge/AppVersion-2026.8.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install home-assistant oci://registry.gitlab.com/georgeraven/raven-helm-charts/home-assistant --version 0.16.0
+helm install home-assistant oci://registry.gitlab.com/georgeraven/raven-helm-charts/home-assistant --version 0.17.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: home-assistant
-  version: 0.16.0
+  version: 0.17.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: home-assistant.enabled # optional for more advanced use-cases
@@ -85,7 +85,7 @@ $ helm install home-assistant raven/home-assistant
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"home-assistant/home-assistant"` |  |
-| image.tag | string | `"2026.6.0@sha256:60af7f5d4d13368c86c73611e4a3ce32534eb573bce09f26b98d647291c3df8c"` |  |
+| image.tag | string | `"2026.8.0@sha256:a21689ef0510df9760ee11bab4d6b2fef3ed5c1a29ed9c3224271597a23729eb"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
