@@ -36,7 +36,7 @@ keycloak:
     registry: quay.io
     repository: keycloak/keycloak
     pullPolicy: IfNotPresent
-    tag: "26.6.1@sha256:dea26401d06341095cc4ea9d66896200b55de5ca1daa1d2fcbe58493afa6e0ad"
+    tag: "26.7.1@sha256:f1f1f01e472c8a78df40d8f2a49a925274eda4d3d80d5f6edbb5c880ee3c01c6"
 
   persistence:
     enabled: true
