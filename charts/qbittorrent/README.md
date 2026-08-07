@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.2.1](https://img.shields.io/badge/AppVersion-5.2.1-informational?style=flat-square)
+![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.2.3](https://img.shields.io/badge/AppVersion-5.2.3-informational?style=flat-square)
 
 This helm chart is used to deploy qBittorrent into a kubernetes cluster.
 This uses mostly standard values you will also find in other charts like those of bitnami.
@@ -113,7 +113,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install qbittorrent oci://registry.gitlab.com/georgeraven/raven-helm-charts/qbittorrent --version 0.8.0
+helm install qbittorrent oci://registry.gitlab.com/georgeraven/raven-helm-charts/qbittorrent --version 0.8.1
 ```
 
 ### As a helm dependency
@@ -123,7 +123,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: qbittorrent
-  version: 0.8.0
+  version: 0.8.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: qbittorrent.enabled # optional for more advanced use-cases
@@ -181,7 +181,7 @@ $ helm install qbittorrent raven/qbittorrent
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"linuxserver/qbittorrent"` |  |
-| image.tag | string | `"5.2.1@sha256:1fc3067c4e684a4139be2e17915a63e9355ccba91c954a330d33fcb033bf7e71"` |  |
+| image.tag | string | `"5.2.3@sha256:b024436f8ca665d16d9a997d26fd27fdf867ee5566ba09f32764e7b2976d3e02"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
