@@ -2,7 +2,7 @@
 
 A simple postgres instance for testing and including batteries in other charts for the user to replace with their own CNPG etc
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.5](https://img.shields.io/badge/AppVersion-17.5-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.5](https://img.shields.io/badge/AppVersion-17.5-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install postgres oci://registry.gitlab.com/georgeraven/raven-helm-charts/postgres --version 0.3.0
+helm install postgres oci://registry.gitlab.com/georgeraven/raven-helm-charts/postgres --version 0.4.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: postgres
-  version: 0.3.0
+  version: 0.4.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: postgres.enabled # optional for more advanced use-cases
@@ -108,7 +108,7 @@ $ helm install postgres raven/postgres
 | postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgres.image.registry | string | `"docker.io"` |  |
 | postgres.image.repository | string | `"library/postgres"` |  |
-| postgres.image.tag | string | `"17.6"` |  |
+| postgres.image.tag | string | `"17.10@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317"` |  |
 | postgres.imagePullSecrets | list | `[]` |  |
 | postgres.ingress.annotations | object | `{}` |  |
 | postgres.ingress.className | string | `""` |  |
