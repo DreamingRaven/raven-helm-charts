@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: 1.36.0 # renovate: datasource=docker depName=ghcr.io/dani-garcia/vaultwarden
+appVersion: 1.37.2 # renovate: datasource=docker depName=ghcr.io/dani-garcia/vaultwarden
 description: Unofficial Bitwarden compatible server written in Rust
 name: vaultwarden
 type: application
-version: 0.1.1
+version: 0.2.0
 dependencies:
 - name: corvid-app
   alias: vaultwarden

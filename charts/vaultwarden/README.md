@@ -2,7 +2,7 @@
 
 Unofficial Bitwarden compatible server written in Rust
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.36.0](https://img.shields.io/badge/AppVersion-1.36.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.37.2](https://img.shields.io/badge/AppVersion-1.37.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install vaultwarden oci://registry.gitlab.com/georgeraven/raven-helm-charts/vaultwarden --version 0.1.1
+helm install vaultwarden oci://registry.gitlab.com/georgeraven/raven-helm-charts/vaultwarden --version 0.2.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: vaultwarden
-  version: 0.1.1
+  version: 0.2.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: vaultwarden.enabled # optional for more advanced use-cases
@@ -104,7 +104,7 @@ $ helm install vaultwarden raven/vaultwarden
 | vaultwarden.image.pullPolicy | string | `"IfNotPresent"` |  |
 | vaultwarden.image.registry | string | `"ghcr.io"` |  |
 | vaultwarden.image.repository | string | `"dani-garcia/vaultwarden"` |  |
-| vaultwarden.image.tag | string | `"1.36.0@sha256:d626d04934cd1192ad8ced1adb975099fca78cec33ab467d2d3c923cde7f3b0c"` |  |
+| vaultwarden.image.tag | string | `"1.37.2@sha256:094b5689ed81549bd293418395c7cf495ae9d960fc2d4928cef2083ef913d912"` |  |
 | vaultwarden.imagePullSecrets | list | `[]` |  |
 | vaultwarden.ingress.annotations | object | `{}` |  |
 | vaultwarden.ingress.className | string | `""` |  |
