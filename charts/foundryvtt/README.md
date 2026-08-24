@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.15.0](https://img.shields.io/badge/Version-0.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 14.365.0](https://img.shields.io/badge/AppVersion-14.365.0-informational?style=flat-square)
+![Version: 0.16.0](https://img.shields.io/badge/Version-0.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 14.367.0](https://img.shields.io/badge/AppVersion-14.367.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.15.0
+helm install foundryvtt oci://registry.gitlab.com/georgeraven/raven-helm-charts/foundryvtt --version 0.16.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: foundryvtt
-  version: 0.15.0
+  version: 0.16.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: foundryvtt.enabled # optional for more advanced use-cases
@@ -93,7 +93,7 @@ $ helm install foundryvtt raven/foundryvtt
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"felddy/foundryvtt"` |  |
-| image.tag | string | `"14.365.0@sha256:bb8402d7098d0dcc136bf47c8932c0a1de5e405e021ca1710691cdd0ebdff730"` |  |
+| image.tag | string | `"14.367.0@sha256:5004a67fbbef8e3f5f82afb01c8dbe06626c57519cad541a59b1bdce3c2a97ac"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
