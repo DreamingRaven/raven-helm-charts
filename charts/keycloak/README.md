@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.7.1](https://img.shields.io/badge/AppVersion-26.7.1-informational?style=flat-square)
+![Version: 0.7.1](https://img.shields.io/badge/Version-0.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.7.2](https://img.shields.io/badge/AppVersion-26.7.2-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.7.0
+helm install keycloak oci://registry.gitlab.com/georgeraven/raven-helm-charts/keycloak --version 0.7.1
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: keycloak
-  version: 0.7.0
+  version: 0.7.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: keycloak.enabled # optional for more advanced use-cases
@@ -97,7 +97,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.image.pullPolicy | string | `"IfNotPresent"` |  |
 | keycloak.image.registry | string | `"quay.io"` |  |
 | keycloak.image.repository | string | `"keycloak/keycloak"` |  |
-| keycloak.image.tag | string | `"26.7.1@sha256:f1f1f01e472c8a78df40d8f2a49a925274eda4d3d80d5f6edbb5c880ee3c01c6"` |  |
+| keycloak.image.tag | string | `"26.7.2@sha256:831330513f55695572286e521f94fcd3c7e285250ed5b848090265a33192f669"` |  |
 | keycloak.imagePullSecrets | list | `[]` |  |
 | keycloak.ingress.annotations | object | `{}` |  |
 | keycloak.ingress.className | string | `""` |  |
