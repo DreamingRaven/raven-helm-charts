@@ -97,7 +97,7 @@ $ helm install keycloak raven/keycloak
 | keycloak.image.pullPolicy | string | `"IfNotPresent"` |  |
 | keycloak.image.registry | string | `"quay.io"` |  |
 | keycloak.image.repository | string | `"keycloak/keycloak"` |  |
-| keycloak.image.tag | string | `"26.7.2@sha256:831330513f55695572286e521f94fcd3c7e285250ed5b848090265a33192f669"` |  |
+| keycloak.image.tag | string | `"26.7.2@sha256:9d1f1b2b7261ff53c66cb1092dfcdc34a5fb77e81f9e6a6e75b8b6a795de8067"` |  |
 | keycloak.imagePullSecrets | list | `[]` |  |
 | keycloak.ingress.annotations | object | `{}` |  |
 | keycloak.ingress.className | string | `""` |  |
