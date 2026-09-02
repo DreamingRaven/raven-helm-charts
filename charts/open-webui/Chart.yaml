@@ -1,9 +1,9 @@
 apiVersion: v2
-appVersion: "0.11.0" # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
+appVersion: "0.11.3" # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui
 description: A Helm chart for Kubernetes
 name: open-webui
 type: application
-version: 0.7.0
+version: 0.7.1
 dependencies:
 - name: corvid
   version: 0.21.0
