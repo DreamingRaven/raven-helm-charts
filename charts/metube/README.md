@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2026.02.19](https://img.shields.io/badge/AppVersion-2026.02.19-informational?style=flat-square)
+![Version: 0.8.2](https://img.shields.io/badge/Version-0.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2026.02.19](https://img.shields.io/badge/AppVersion-2026.02.19-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install metube oci://registry.gitlab.com/georgeraven/raven-helm-charts/metube --version 0.8.1
+helm install metube oci://registry.gitlab.com/georgeraven/raven-helm-charts/metube --version 0.8.2
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: metube
-  version: 0.8.1
+  version: 0.8.2
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: metube.enabled # optional for more advanced use-cases
@@ -120,7 +120,7 @@ $ helm install metube raven/metube
 | metube.image.pullPolicy | string | `"IfNotPresent"` |  |
 | metube.image.registry | string | `"ghcr.io"` |  |
 | metube.image.repository | string | `"alexta69/metube"` |  |
-| metube.image.tag | string | `"2026.08.21@sha256:c2920f86f888b5398e5a964e135417fe11418823988399e6ec230293dcc0bb31"` |  |
+| metube.image.tag | string | `"2026.08.28@sha256:397778fccf13d83adf9325fe813b260617a082d1772aff6d678c5b9256dd01fb"` |  |
 | metube.imagePullSecrets | list | `[]` |  |
 | metube.ingress.annotations | object | `{}` |  |
 | metube.ingress.className | string | `""` |  |
