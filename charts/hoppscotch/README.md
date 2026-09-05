@@ -2,7 +2,7 @@
 
 Open-Source API Development Ecosystem
 
-![Version: 0.17.0](https://img.shields.io/badge/Version-0.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.18.0](https://img.shields.io/badge/Version-0.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install hoppscotch oci://registry.gitlab.com/georgeraven/raven-helm-charts/hoppscotch --version 0.17.0
+helm install hoppscotch oci://registry.gitlab.com/georgeraven/raven-helm-charts/hoppscotch --version 0.18.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: hoppscotch
-  version: 0.17.0
+  version: 0.18.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: hoppscotch.enabled # optional for more advanced use-cases
@@ -63,7 +63,7 @@ $ helm install hoppscotch raven/hoppscotch
 | oci://registry.gitlab.com/georgeraven/raven-helm-charts | admin(corvid-app) | 0.16.1 |
 | oci://registry.gitlab.com/georgeraven/raven-helm-charts | backend(corvid-app) | 0.16.1 |
 | oci://registry.gitlab.com/georgeraven/raven-helm-charts | migrate(corvid-app) | 0.16.1 |
-| oci://registry.gitlab.com/georgeraven/raven-helm-charts | postgres | 0.2.0 |
+| oci://registry.gitlab.com/georgeraven/raven-helm-charts | postgres | 0.4.0 |
 
 ## Values
 
