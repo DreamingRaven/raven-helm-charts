@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   renovate:
-    image: ghcr.io/renovatebot/renovate:44-full@sha256:d7d52abce065e36b926e8ed01e36c449db9cbae206c1f893f73b38dab8b002ad
+    image: ghcr.io/renovatebot/renovate:44-full@sha256:aa1126413638b3938575b4e17fb262ac8f8cda5292fa4dd9048482c135ab2871
     volumes:
     - renovate_data:/data
     # - .:/usr/src/app # for local repository testing
