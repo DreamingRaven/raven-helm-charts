@@ -8,7 +8,7 @@ valkey:
     registry: ghcr.io
     repository: valkey-io/valkey
     pullPolicy: IfNotPresent
-    tag: "9.1.2-alpine@sha256:ccfa19b0d743e48927e1c8c14e39e0acb97b5cea347fef0bfe340247fea920cd"
+    tag: "9.1.2-alpine@sha256:48332870af354a799964c0012ae1194a0bf2bf894eb508f945810596dc2d8d11"
 
   persistence:
     enabled: false
