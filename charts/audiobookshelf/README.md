@@ -2,7 +2,7 @@
 
 Self-hosted audiobook and podcast server
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.36.0](https://img.shields.io/badge/AppVersion-2.36.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.37.1](https://img.shields.io/badge/AppVersion-2.37.1-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install audiobookshelf oci://registry.gitlab.com/georgeraven/raven-helm-charts/audiobookshelf --version 0.8.0
+helm install audiobookshelf oci://registry.gitlab.com/georgeraven/raven-helm-charts/audiobookshelf --version 0.9.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: audiobookshelf
-  version: 0.8.0
+  version: 0.9.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: audiobookshelf.enabled # optional for more advanced use-cases
@@ -91,7 +91,7 @@ $ helm install audiobookshelf raven/audiobookshelf
 | audiobookshelf.image.pullPolicy | string | `"IfNotPresent"` |  |
 | audiobookshelf.image.registry | string | `"ghcr.io"` |  |
 | audiobookshelf.image.repository | string | `"advplyr/audiobookshelf"` |  |
-| audiobookshelf.image.tag | string | `"2.36.0@sha256:180acad33d69c99ed208676465d8edcb268fa46967735579a7810859885b1a8e"` |  |
+| audiobookshelf.image.tag | string | `"2.37.1@sha256:581d68b2a6fc7ebf58d81c878a9f387cbbc0d88ac9d37b298b9cee10168af85b"` |  |
 | audiobookshelf.imagePullSecrets | list | `[]` |  |
 | audiobookshelf.ingress.annotations | object | `{}` |  |
 | audiobookshelf.ingress.className | string | `""` |  |
