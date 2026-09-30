@@ -85,7 +85,7 @@ $ helm install pgadmin raven/pgadmin
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"dpage/pgadmin4"` |  |
-| image.tag | string | `"9.17@sha256:2f4ce946ddf8360680d7eff4eaba1d91859eb6b4003e6623bad5c63a322c2f4d"` |  |
+| image.tag | string | `"9.17@sha256:c332c5f6dfba995d9ebc4af261d93506d6876085d712eaaa3defc8dd1a3f26de"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -97,7 +97,7 @@ $ helm install pgadmin raven/pgadmin
 | initContainers[0].command[0] | string | `"bash"` |  |
 | initContainers[0].command[1] | string | `"-c"` |  |
 | initContainers[0].command[2] | string | `"echo \"Chowning the following by changing dir:\"\ncp -r /usr/bin/python3.12 /chowned/.\nls -l /chowned\necho \"fin\"\n"` |  |
-| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.17@sha256:2f4ce946ddf8360680d7eff4eaba1d91859eb6b4003e6623bad5c63a322c2f4d"` |  |
+| initContainers[0].image | string | `"docker.io/dpage/pgadmin4:9.17@sha256:c332c5f6dfba995d9ebc4af261d93506d6876085d712eaaa3defc8dd1a3f26de"` |  |
 | initContainers[0].name | string | `"chown"` |  |
 | initContainers[0].securityContext.allowPrivilegeEscalation | bool | `true` |  |
 | initContainers[0].securityContext.runAsUser | int | `0` |  |
