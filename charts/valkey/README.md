@@ -98,7 +98,7 @@ $ helm install valkey raven/valkey
 | valkey.image.pullPolicy | string | `"IfNotPresent"` |  |
 | valkey.image.registry | string | `"ghcr.io"` |  |
 | valkey.image.repository | string | `"valkey-io/valkey"` |  |
-| valkey.image.tag | string | `"9.1.2-alpine@sha256:ccfa19b0d743e48927e1c8c14e39e0acb97b5cea347fef0bfe340247fea920cd"` |  |
+| valkey.image.tag | string | `"9.1.2-alpine@sha256:48332870af354a799964c0012ae1194a0bf2bf894eb508f945810596dc2d8d11"` |  |
 | valkey.imagePullSecrets | list | `[]` |  |
 | valkey.ingress.annotations | object | `{}` |  |
 | valkey.ingress.className | string | `""` |  |
