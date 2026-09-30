@@ -2,7 +2,7 @@
 
 Open-Source API Development Ecosystem
 
-![Version: 0.18.0](https://img.shields.io/badge/Version-0.18.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.22.0](https://img.shields.io/badge/Version-0.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install hoppscotch oci://registry.gitlab.com/georgeraven/raven-helm-charts/hoppscotch --version 0.18.0
+helm install hoppscotch oci://registry.gitlab.com/georgeraven/raven-helm-charts/hoppscotch --version 0.22.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: hoppscotch
-  version: 0.18.0
+  version: 0.22.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: hoppscotch.enabled # optional for more advanced use-cases
@@ -73,7 +73,7 @@ $ helm install hoppscotch raven/hoppscotch
 | admin.enabled | bool | `false` |  |
 | admin.image.registry | string | `"docker.io"` |  |
 | admin.image.repository | string | `"hoppscotch/hoppscotch"` |  |
-| admin.image.tag | string | `"2026.7.0@sha256:7c868d7210581c94cab8d2f1796c2b4b978abf8a57222ce3ad5d949edc54b730"` |  |
+| admin.image.tag | string | `"2026.9.0@sha256:3160f5b3acf49478552a66a0785ee6c75f64311066f149f7d946fbd540f8388d"` |  |
 | backend.command[0] | string | `"/bin/sh"` |  |
 | backend.command[1] | string | `"-c"` |  |
 | backend.command[2] | string | `"export DATABASE_URL=${DATABASE_URL:-\"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}\"}\necho \"Attempting to run backend...\"\nnode prod_run.mjs\n"` |  |
@@ -82,7 +82,7 @@ $ helm install hoppscotch raven/hoppscotch
 | backend.envFrom[0].secretRef.name | string | `"hoppscotch"` |  |
 | backend.image.registry | string | `"docker.io"` |  |
 | backend.image.repository | string | `"hoppscotch/hoppscotch"` |  |
-| backend.image.tag | string | `"2026.7.0@sha256:7c868d7210581c94cab8d2f1796c2b4b978abf8a57222ce3ad5d949edc54b730"` |  |
+| backend.image.tag | string | `"2026.9.0@sha256:3160f5b3acf49478552a66a0785ee6c75f64311066f149f7d946fbd540f8388d"` |  |
 | backend.livenessProbeDefault.httpGet.path | string | `"/health"` |  |
 | backend.livenessProbeDefault.httpGet.port | string | `"http"` |  |
 | backend.netpol.enabled | bool | `true` |  |
@@ -108,7 +108,7 @@ $ helm install hoppscotch raven/hoppscotch
 | frontend.initContainers[0].command[0] | string | `"sh"` |  |
 | frontend.initContainers[0].command[1] | string | `"-c"` |  |
 | frontend.initContainers[0].command[2] | string | `"cp -r /site/selfhost-web/ /static/html\n# substitute localhost:3000 with the correct frontend url\n# using grep on the entire directory\ngrep -r \"localhost:3000\" /static/html -l | xargs sed -i 's|localhost:3000|localhost:8080|g'\n"` |  |
-| frontend.initContainers[0].image | string | `"docker.io/hoppscotch/hoppscotch:2026.7.0@sha256:7c868d7210581c94cab8d2f1796c2b4b978abf8a57222ce3ad5d949edc54b730"` |  |
+| frontend.initContainers[0].image | string | `"docker.io/hoppscotch/hoppscotch:2026.9.0@sha256:3160f5b3acf49478552a66a0785ee6c75f64311066f149f7d946fbd540f8388d"` |  |
 | frontend.initContainers[0].name | string | `"hoppscotch-fe"` |  |
 | frontend.initContainers[0].volumeMounts[0].mountPath | string | `"/static/"` |  |
 | frontend.initContainers[0].volumeMounts[0].name | string | `"static"` |  |
@@ -162,7 +162,7 @@ $ helm install hoppscotch raven/hoppscotch
 | migrate.env[5].valueFrom.secretKeyRef.name | string | `"hoppscotch"` |  |
 | migrate.image.registry | string | `"docker.io"` |  |
 | migrate.image.repository | string | `"hoppscotch/hoppscotch"` |  |
-| migrate.image.tag | string | `"2026.7.0@sha256:7c868d7210581c94cab8d2f1796c2b4b978abf8a57222ce3ad5d949edc54b730"` |  |
+| migrate.image.tag | string | `"2026.9.0@sha256:3160f5b3acf49478552a66a0785ee6c75f64311066f149f7d946fbd540f8388d"` |  |
 | migrate.job.annotations."helm.sh/hook" | string | `"post-install,post-upgrade"` |  |
 | migrate.job.annotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation"` |  |
 | migrate.job.annotations."helm.sh/hook-weight" | string | `"-1"` |  |
