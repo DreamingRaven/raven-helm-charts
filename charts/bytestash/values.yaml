@@ -8,7 +8,7 @@ image:
   registry: ghcr.io
   repository: jordan-dalby/bytestash
   pullPolicy: IfNotPresent
-  tag: "1.5.12@sha256:eb4f736b8cd45443be0ed6d8da3ee49b76dbf27f4d3925b81b3c407207e62531"
+  tag: "1.6.0@sha256:4326e143e2bd4a0fe4a360d58a86c95ef47d67a7bf8ced8eb830ac257dd89844"
 
 persistence:
   enabled: true
