@@ -1,0 +1,216 @@
+# for a full list of options see the corvid-app or corvid chart values.yaml
+# I have opted to keep the values the corvid defaults where possible to
+# make it clearer where this chart is overriding defaults.
+docling:
+  enabled: true
+  image:
+    registry: ghcr.io
+    repository: docling-project/docling-serve
+    tag: "v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"
+
+  deployment:
+    enabled: true
+
+  replicaCount: 1
+
+  persistence:
+    enabled: false
+
+  command:
+  - sh
+  - -c
+  - |
+    docling-serve run
+
+  env:
+  - name: DOCLING_SERVE_ENABLE_UI
+    value: "true"
+  - name: DOCLING_SERVE_ENG_KIND
+    value: "rq"
+  - name: DOCLING_SERVE_ENG_RQ_REDIS_URL
+    value: "redis://docling-valkey:6379/0"
+  - name: GRADIO_ANALYTICS_ENABLED
+    value: "false"
+  - name: HF_HUB_DISABLE_TELEMETRY
+    value: "1"
+  - name: HF_HUB_OFFLINE
+    value: "1"
+
+  podSecurityContextDefault:
+    fsGroup: 1001
+
+  securityContextDefault:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    allowPrivilegeEscalation: false
+
+  service:
+    enabled: true
+
+  ports:
+  - name: http
+    containerPort: 5001
+    servicePort: 80
+    appProtocol: http
+
+  resourcesDefault:
+    requests:
+      cpu: 100m
+    limits:
+      memory: 750Mi
+
+  startupProbeDefault:
+    httpGet:
+      path: /livez
+      port: http
+    failureThreshold: 10
+    periodSeconds: 15
+
+  livenessProbeDefault:
+    httpGet:
+      path: /livez
+      port: http
+
+  readinessProbeDefault:
+    httpGet:
+      path: /readyz
+      port: http
+
+  volumeMounts:
+    - mountPath: /tmp
+      name: tmp
+
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 10Gi
+
+
+docling-worker:
+  enabled: true
+  image:
+    registry: ghcr.io
+    repository: docling-project/docling-serve
+    tag: "v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"
+
+  deployment:
+    enabled: true
+
+  replicaCount: 1
+
+  persistence:
+    enabled: false
+
+  command:
+  - sh
+  - -c
+  - |
+    docling-serve rq-worker
+
+  env:
+  - name: DOCLING_SERVE_ENABLE_UI
+    value: "false"
+  - name: DOCLING_SERVE_ENG_KIND
+    value: "rq"
+  - name: DOCLING_SERVE_ENG_RQ_REDIS_URL
+    value: "redis://docling-valkey:6379/0"
+  - name: GRADIO_ANALYTICS_ENABLED
+    value: "false"
+  - name: HF_HUB_DISABLE_TELEMETRY
+    value: "1"
+  - name: HF_HUB_OFFLINE
+    value: "1"
+
+  podSecurityContextDefault:
+    fsGroup: 1001
+
+  securityContextDefault:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    allowPrivilegeEscalation: false
+
+  service:
+    enabled: false
+
+  resourcesDefault:
+    requests:
+      cpu: 200m
+    limits:
+      memory: 2Gi
+
+  # docling workers have no probes
+  startupProbeEnabled: false
+  livenessProbeEnabled: false
+  readinessProbeEnabled: false
+
+  volumeMounts:
+    - mountPath: /tmp
+      name: tmp
+
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 10Gi
+
+
+valkey:
+  enabled: true
+  image:
+    registry: ghcr.io
+    repository: valkey-io/valkey
+    tag: "9.0.6-alpine@sha256:187679e3bd4036959631e3f03983ab2ba503ab21e6fd0454d508e909db2ee989"
+
+  deployment:
+    enabled: true
+
+  persistence:
+    enabled: true
+    size: 8Gi
+
+  resourcesDefault:
+    limits:
+      memory: 128Mi
+    requests:
+      cpu: 50m
+
+  service:
+    enabled: true
+
+  ports:
+  - name: redis
+    containerPort: 6379
+    servicePort: 6379
+    protocol: TCP
+    appProtocol: redis
+
+  startupProbe:
+    exec:
+      command:
+      - sh
+      - -c
+      - |
+        valkey-cli ping
+  livenessProbe:
+    exec:
+      command:
+      - sh
+      - -c
+      - |
+        valkey-cli ping
+  readinessProbe:
+    exec:
+      command:
+      - sh
+      - -c
+      - |
+        valkey-cli ping
