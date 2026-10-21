@@ -1,0 +1,12 @@
+dependencies:
+- name: corvid-app
+  repository: oci://registry.gitlab.com/georgeraven/raven-helm-charts
+  version: 0.17.0
+- name: corvid-app
+  repository: oci://registry.gitlab.com/georgeraven/raven-helm-charts
+  version: 0.17.0
+- name: corvid-app
+  repository: oci://registry.gitlab.com/georgeraven/raven-helm-charts
+  version: 0.17.0
+digest: sha256:6e2ecf604f232032c03ef8dad8affa6f2e4a906646417147250a92d7eee33368
+generated: "2026-10-21T21:47:36.004889272+01:00"
