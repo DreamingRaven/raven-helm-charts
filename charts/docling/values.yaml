@@ -29,6 +29,8 @@ docling:
     value: "rq"
   - name: DOCLING_SERVE_ENG_RQ_REDIS_URL
     value: "redis://docling-valkey:6379/0"
+  - name: DOCLING_SERVE_LOG_LEVEL
+    value: "WARNING" # Options: WARNING, INFO, DEBUG
   - name: GRADIO_ANALYTICS_ENABLED
     value: "false"
   - name: HF_HUB_DISABLE_TELEMETRY

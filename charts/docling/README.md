@@ -2,7 +2,7 @@
 
 Document parsing server for gen AI applications
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.37.0](https://img.shields.io/badge/AppVersion-v1.37.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.37.0](https://img.shields.io/badge/AppVersion-v1.37.0-informational?style=flat-square)
 
 Docling is a document parsing tool, in this case deployed as a server via docling-serve.
 
@@ -56,7 +56,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install docling oci://registry.gitlab.com/georgeraven/raven-helm-charts/docling --version 0.1.0
+helm install docling oci://registry.gitlab.com/georgeraven/raven-helm-charts/docling --version 0.1.1
 ```
 
 ### As a helm dependency
@@ -66,7 +66,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: docling
-  version: 0.1.0
+  version: 0.1.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: docling.enabled # optional for more advanced use-cases
@@ -152,12 +152,14 @@ $ helm install docling raven/docling
 | docling.env[1].value | string | `"rq"` |  |
 | docling.env[2].name | string | `"DOCLING_SERVE_ENG_RQ_REDIS_URL"` |  |
 | docling.env[2].value | string | `"redis://docling-valkey:6379/0"` |  |
-| docling.env[3].name | string | `"GRADIO_ANALYTICS_ENABLED"` |  |
-| docling.env[3].value | string | `"false"` |  |
-| docling.env[4].name | string | `"HF_HUB_DISABLE_TELEMETRY"` |  |
-| docling.env[4].value | string | `"1"` |  |
-| docling.env[5].name | string | `"HF_HUB_OFFLINE"` |  |
+| docling.env[3].name | string | `"DOCLING_SERVE_LOG_LEVEL"` |  |
+| docling.env[3].value | string | `"WARNING"` |  |
+| docling.env[4].name | string | `"GRADIO_ANALYTICS_ENABLED"` |  |
+| docling.env[4].value | string | `"false"` |  |
+| docling.env[5].name | string | `"HF_HUB_DISABLE_TELEMETRY"` |  |
 | docling.env[5].value | string | `"1"` |  |
+| docling.env[6].name | string | `"HF_HUB_OFFLINE"` |  |
+| docling.env[6].value | string | `"1"` |  |
 | docling.image.registry | string | `"ghcr.io"` |  |
 | docling.image.repository | string | `"docling-project/docling-serve"` |  |
 | docling.image.tag | string | `"v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"` |  |

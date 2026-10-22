@@ -3,7 +3,7 @@ appVersion: v1.37.0 # renovate: datasource=docker depName=ghcr.io/docling-projec
 description: Document parsing server for gen AI applications
 name: docling
 type: application
-version: 0.1.0
+version: 0.1.1
 dependencies:
 - alias: docling
   name: corvid-app
