@@ -2,7 +2,7 @@
 
 Document parsing server for gen AI applications
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.37.0](https://img.shields.io/badge/AppVersion-v1.37.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.37.0](https://img.shields.io/badge/AppVersion-v1.37.0-informational?style=flat-square)
 
 Docling is a document parsing tool, in this case deployed as a server via docling-serve.
 
@@ -56,7 +56,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install docling oci://registry.gitlab.com/georgeraven/raven-helm-charts/docling --version 0.1.1
+helm install docling oci://registry.gitlab.com/georgeraven/raven-helm-charts/docling --version 0.3.0
 ```
 
 ### As a helm dependency
@@ -66,7 +66,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: docling
-  version: 0.1.1
+  version: 0.3.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: docling.enabled # optional for more advanced use-cases
@@ -121,7 +121,7 @@ $ helm install docling raven/docling
 | docling-worker.env[5].value | string | `"1"` |  |
 | docling-worker.image.registry | string | `"ghcr.io"` |  |
 | docling-worker.image.repository | string | `"docling-project/docling-serve"` |  |
-| docling-worker.image.tag | string | `"v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"` |  |
+| docling-worker.image.tag | string | `"v1.38.2@sha256:8a5fbc993da9dec17c53880e2445834591ad26800ef698ca64096bef29671808"` |  |
 | docling-worker.livenessProbeEnabled | bool | `false` |  |
 | docling-worker.persistence.enabled | bool | `false` |  |
 | docling-worker.podSecurityContextDefault.fsGroup | int | `1001` |  |
@@ -162,7 +162,7 @@ $ helm install docling raven/docling
 | docling.env[6].value | string | `"1"` |  |
 | docling.image.registry | string | `"ghcr.io"` |  |
 | docling.image.repository | string | `"docling-project/docling-serve"` |  |
-| docling.image.tag | string | `"v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"` |  |
+| docling.image.tag | string | `"v1.38.2@sha256:8a5fbc993da9dec17c53880e2445834591ad26800ef698ca64096bef29671808"` |  |
 | docling.livenessProbeDefault.httpGet.path | string | `"/livez"` |  |
 | docling.livenessProbeDefault.httpGet.port | string | `"http"` |  |
 | docling.persistence.enabled | bool | `false` |  |
