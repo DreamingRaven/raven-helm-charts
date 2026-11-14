@@ -177,12 +177,12 @@ startupProbeEnabled: true
 # -- default startup probe if not specified by user
 startupProbeDefault:
   httpGet:
-    path: /
+    path: /health
     port: http
 # -- raw startup probe overrides for user
 startupProbe:
   # httpGet:
-  #   path: /
+  #   path: /health
   #   port: http
 
 # -- enable or disable liveness probe entirely
@@ -190,12 +190,12 @@ livenessProbeEnabled: true
 # -- default liveness probe if not specified by user
 livenessProbeDefault:
   httpGet:
-    path: /
+    path: /health
     port: http
 # -- raw liveness probe overrides for user
 livenessProbe:
   # httpGet:
-  #   path: /
+  #   path: /health
   #   port: http
 
 # -- enable or disable readiness probe entirely
@@ -203,12 +203,12 @@ readinessProbeEnabled: true
 # -- default readiness probe if not specified by user
 readinessProbeDefault:
   httpGet:
-    path: /
+    path: /health
     port: http
 # -- raw readiness probe overrides for user
 readinessProbe:
   # httpGet:
-  #   path: /
+  #   path: /health
   #   port: http
 
 autoscaling:
