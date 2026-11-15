@@ -10,7 +10,7 @@ metube:
     registry: ghcr.io
     repository: alexta69/metube
     pullPolicy: IfNotPresent
-    tag: "2026.10.09@sha256:df929ef2453fd75c1f1cbd8dafb309ee03ff18d8705c7c1e01642b1202d4a650"
+    tag: "2026.11.14@sha256:55ce41ab9a78069dc42bd808b20a96aeef4199560a02698a2205ea8a2bc4fef1"
 
   persistence:
     enabled: true
