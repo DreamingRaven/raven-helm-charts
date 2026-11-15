@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.3](https://img.shields.io/badge/AppVersion-0.12.3-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.3](https://img.shields.io/badge/AppVersion-0.12.3-informational?style=flat-square)
 
 ## Installing the Chart
 
@@ -21,7 +21,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install open-webui oci://registry.gitlab.com/georgeraven/raven-helm-charts/open-webui --version 0.8.1
+helm install open-webui oci://registry.gitlab.com/georgeraven/raven-helm-charts/open-webui --version 0.9.0
 ```
 
 ### As a helm dependency
@@ -31,7 +31,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: open-webui
-  version: 0.8.1
+  version: 0.9.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: open-webui.enabled # optional for more advanced use-cases
@@ -78,9 +78,8 @@ $ helm install open-webui raven/open-webui
 | deployment.strategy | string | `""` | rollout strategy `Recreate` or `RollingUpdate` this chart defaults to Recreate only if we detect a single replica with a volume |
 | dnsConfig | object | `{}` |  |
 | dnsPolicy | string | `""` |  |
+| env | list | `[]` |  |
 | envFrom | string | `nil` |  |
-| env[0].name | string | `"OLLAMA_BASE_URL"` |  |
-| env[0].value | string | `"http://ollama:11434"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -108,8 +107,8 @@ $ helm install open-webui raven/open-webui
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` | podSecurityContext for consumer overrides |
-| podSecurityContextDefault | object | `{"fsGroup":1000}` | default podSecurityContext if none specified |
-| podSecurityContextEnabled | bool | `false` | enable or disable podSecurityContext entirely |
+| podSecurityContextDefault | object | `{"fsGroup":1000,"fsGroupChangePolicy":"OnRootMismatch"}` | default podSecurityContext if none specified |
+| podSecurityContextEnabled | bool | `true` | enable or disable podSecurityContext entirely |
 | ports[0].containerPort | int | `8080` |  |
 | ports[0].name | string | `"http"` |  |
 | ports[0].protocol | string | `"TCP"` |  |
@@ -126,7 +125,7 @@ $ helm install open-webui raven/open-webui
 | secrets | list | `[]` |  |
 | securityContext | object | `{}` | securityContext for consumer overrides |
 | securityContextDefault | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | default securityContext if none specified |
-| securityContextEnabled | bool | `false` | enable or disable securityContext entirely |
+| securityContextEnabled | bool | `true` | enable or disable securityContext entirely |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
@@ -136,6 +135,20 @@ $ helm install open-webui raven/open-webui
 | startupProbeDefault | object | `{"httpGet":{"path":"/health","port":"http"}}` | default startup probe if not specified by user |
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | tolerations | list | `[]` |  |
-| volumeMounts | list | `[]` |  |
-| volumes | list | `[]` |  |
+| volumeMounts[0].mountPath | string | `"/tmp"` |  |
+| volumeMounts[0].name | string | `"scratch"` |  |
+| volumeMounts[0].subPath | string | `"tmp"` |  |
+| volumes[0].emptyDir.sizeLimit | string | `"10Gi"` |  |
+| volumes[0].name | string | `"scratch"` |  |
+
+## Changelog
+
+### 0.9.0
+
+This version focuses on securityContext and podSecurityContext.
+These changes should be backwards compatible, however you can return to the previous settings if you disable both podSecurityContext and securityContext in your values.yaml.
+
+This change will force the 1000 user and group on mounted volumes, and the fsGroupChangePolicy is set to OnRootMismatch to ensure that the group is changed if it does not match the fsGroup.
+This will also restrict the container to run as the 1000 user and group, and will not allow the container to run as root, or elevate, while also dropping all capabilities.
+This also adds a default scratch volume on /tmp to ensure that the container has somewhere to write temporary files since we also set the root filesystem to read-only.
 

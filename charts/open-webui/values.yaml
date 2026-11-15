@@ -67,9 +67,9 @@ secrets: []
 #     env: open-webui_PASSWORD
 
 ## @param env [array] Raw helm environment variable settings for static or dynamic values
-env:
-- name: OLLAMA_BASE_URL
-  value: "http://ollama:11434"
+env: []
+# - name: OLLAMA_BASE_URL
+#   value: "http://ollama:11434"
 
 ## @param envFrom [array] Raw container envFrom https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#container-v1-core
 envFrom:
@@ -96,16 +96,17 @@ podAnnotations: {}
 podLabels: {}
 
 # -- enable or disable podSecurityContext entirely
-podSecurityContextEnabled: false # TODO: test then enable by default
+podSecurityContextEnabled: true
 # -- default podSecurityContext if none specified
 podSecurityContextDefault:
   fsGroup: 1000
+  fsGroupChangePolicy: OnRootMismatch
 # -- podSecurityContext for consumer overrides
 podSecurityContext: {}
   # fsGroup: 1000
 
 # -- enable or disable securityContext entirely
-securityContextEnabled: false # TODO: test then enable by default
+securityContextEnabled: true
 # -- default securityContext if none specified
 securityContextDefault:
   capabilities:
@@ -222,17 +223,16 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: scratch
+  emptyDir:
+    sizeLimit: 10Gi
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- name: scratch
+  mountPath: /tmp
+  subPath: tmp
 
 nodeSelector: {}
 
