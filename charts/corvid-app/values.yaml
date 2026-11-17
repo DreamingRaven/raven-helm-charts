@@ -329,6 +329,8 @@ volumeMounts: []
 
 nodeSelector: {}
 
+terminationGracePeriodSeconds: 30
+
 tolerations: []
 
 topologySpreadConstraints: []

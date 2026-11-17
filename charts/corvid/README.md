@@ -2,7 +2,7 @@
 
 Common helm component and utility library
 
-![Version: 0.21.0](https://img.shields.io/badge/Version-0.21.0-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.21.1](https://img.shields.io/badge/Version-0.21.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This library chart primarily deals with abstracting common boilerplate into customisable components for re-use.
 
@@ -23,7 +23,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.21.0
+helm install corvid oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid --version 0.21.1
 ```
 
 ### As a helm dependency
@@ -33,7 +33,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: corvid
-  version: 0.21.0
+  version: 0.21.1
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: corvid.enabled # optional for more advanced use-cases
@@ -168,6 +168,7 @@ $ helm install corvid raven/corvid
 | startupProbeEnabled | bool | `true` | enable or disable startup probe entirely |
 | sts.enabled | bool | `false` |  |
 | sts.updateStrategy | string | `"RollingUpdate"` |  |
+| terminationGracePeriodSeconds | int | `30` |  |
 | test.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
@@ -175,6 +176,18 @@ $ helm install corvid raven/corvid
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.21.1
+
+Added terminationGracePeriodSeconds support, for batch jobs in particular, that may need a longer termination grace period to complete their work.
+
+This defaults to the kubernetes default of 30 seconds, but can be overridden in the values.yaml:
+
+```yaml
+terminationGracePeriodSeconds: 60
+```
+
+Note: I use with to avoid setting the value, however a value of 0 will be ignored and the default of 30 seconds will be used because in Go both int 0 and null are falsey.
 
 ## 0.21.0
 

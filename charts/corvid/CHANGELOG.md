@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.21.1
+
+Added terminationGracePeriodSeconds support, for batch jobs in particular, that may need a longer termination grace period to complete their work.
+
+This defaults to the kubernetes default of 30 seconds, but can be overridden in the values.yaml:
+
+```yaml
+terminationGracePeriodSeconds: 60
+```
+
+Note: I use with to avoid setting the value, however a value of 0 will be ignored and the default of 30 seconds will be used because in Go both int 0 and null are falsey.
+
 ## 0.21.0
 
 This adds backwards compatible keda scaledJob scalingStrategy support.
