@@ -79,6 +79,7 @@ keda:
     ttlSecondsAfterFinished: 0
     scalingStrategy: {}
       # strategy: "custom"
+    rolloutStrategy: gradual # gradual | immediate
   object:
     cooldownPeriod: 300
     idleReplicaCount: 0

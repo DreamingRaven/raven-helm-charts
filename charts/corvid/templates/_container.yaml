@@ -27,12 +27,14 @@ command:
 args:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+{{- with .Values.ports }}
 ports:
-  {{- range .Values.ports }}
+  {{- range . }}
   - name: {{ .name }}
     containerPort: {{ .containerPort }}
     protocol: {{ .protocol }}
   {{- end }}
+{{- end }}
 {{- with .Values.envFrom }}
 envFrom:
   {{- toYaml . | nindent 2 }}
