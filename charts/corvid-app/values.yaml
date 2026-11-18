@@ -86,6 +86,7 @@ keda:
       #   - "PodScheduled"
       #   - "AnyOtherCustomPodCondition"
       # multipleScalersCalculation : "max"
+    rolloutStrategy: gradual # gradual | immediate
   object:
     cooldownPeriod: 300
     idleReplicaCount: 0

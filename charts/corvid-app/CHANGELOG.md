@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.19.0 (corvid 0.22.0)
+
+Fixed pod ports being rendered when no ports are defined.
+Added a potentially backwards incompatible KEDA ScaledJob support for rollout strategies.
+
+```yaml
+keda:
+  job:
+    rolloutStrategy: gradual # gradual | immediate
+```
+
+To return to the previous behaviour, set `rolloutStrategy` to `immediate`.
+
+I have opted for this approach as it is a safer default (than upstream) for jobs that are actively processing work, this prevents:
+
+- Jobs that have tight turnaround times having to restart work.
+- Jobs that do not return work to the queue from failing to process that work, and thus losing it.
+
+The drawback is that jobs will not update until the previous job has completed, which may be undesirable for some use cases.
+
+Added terminationGracePeriodSeconds support, for batch jobs in particular, that may need a longer termination grace period to complete their work.
+
+This defaults to the kubernetes default of 30 seconds, but can be overridden in the values.yaml:
+
+```yaml
+terminationGracePeriodSeconds: 60
+```
+
+Note: I use with to avoid setting the value, however a value of 0 will be ignored and the default of 30 seconds will be used because in Go both int 0 and null are falsey.
 
 ## 0.18.0 (corvid 0.21.0)
 

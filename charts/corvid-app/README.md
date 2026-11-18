@@ -2,7 +2,7 @@
 
 A Helm chart for Kubernetes
 
-![Version: 0.17.1](https://img.shields.io/badge/Version-0.17.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.19.0](https://img.shields.io/badge/Version-0.19.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 This chart acts as an application abstraction layer so that the corvid library can be dropped in and used, even without the boilerplate templates!
 
@@ -73,7 +73,7 @@ With authentication:
 
 ```console
 helm registry login registry.gitlab.com -u <USERNAME> -p <GITLAB_TOKEN>
-helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.17.1
+helm install corvid-app oci://registry.gitlab.com/georgeraven/raven-helm-charts/corvid-app --version 0.19.0
 ```
 
 ### As a helm dependency
@@ -83,7 +83,7 @@ You can also opt to directly reference this chart as a helm dependency defined i
 ```yaml
 dependencies:
 - name: corvid-app
-  version: 0.17.1
+  version: 0.19.0
   repository: "oci://registry.gitlab.com/georgeraven/raven-helm-charts"
   # alias: <THE_NAME_YOU_WANT_TO_GIVE_THE_CHART> # optional for more advanced use-cases
   # condition: corvid-app.enabled # optional for more advanced use-cases
@@ -111,7 +111,7 @@ $ helm install corvid-app raven/corvid-app
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../corvid | corvid | 0.21.1 |
+| file://../corvid | corvid | 0.22.0 |
 
 ## Values
 
@@ -164,6 +164,7 @@ $ helm install corvid-app raven/corvid-app
 | keda.enabled | bool | `false` |  |
 | keda.job.activeDeadlineSeconds | int | `60` |  |
 | keda.job.backoffLimit | int | `3` |  |
+| keda.job.rolloutStrategy | string | `"gradual"` |  |
 | keda.job.scalingStrategy | object | `{}` |  |
 | keda.job.ttlSecondsAfterFinished | int | `0` |  |
 | keda.kind | string | `"ScaledJob"` |  |
@@ -232,6 +233,36 @@ $ helm install corvid-app raven/corvid-app
 | volumes | list | `[]` |  |
 
 # Changelog
+
+## 0.19.0 (corvid 0.22.0)
+
+Fixed pod ports being rendered when no ports are defined.
+Added a potentially backwards incompatible KEDA ScaledJob support for rollout strategies.
+
+```yaml
+keda:
+  job:
+    rolloutStrategy: gradual # gradual | immediate
+```
+
+To return to the previous behaviour, set `rolloutStrategy` to `immediate`.
+
+I have opted for this approach as it is a safer default (than upstream) for jobs that are actively processing work, this prevents:
+
+- Jobs that have tight turnaround times having to restart work.
+- Jobs that do not return work to the queue from failing to process that work, and thus losing it.
+
+The drawback is that jobs will not update until the previous job has completed, which may be undesirable for some use cases.
+
+Added terminationGracePeriodSeconds support, for batch jobs in particular, that may need a longer termination grace period to complete their work.
+
+This defaults to the kubernetes default of 30 seconds, but can be overridden in the values.yaml:
+
+```yaml
+terminationGracePeriodSeconds: 60
+```
+
+Note: I use with to avoid setting the value, however a value of 0 will be ignored and the default of 30 seconds will be used because in Go both int 0 and null are falsey.
 
 ## 0.18.0 (corvid 0.21.0)
 
