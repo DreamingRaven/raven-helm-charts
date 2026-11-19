@@ -6,7 +6,7 @@ docling:
   image:
     registry: ghcr.io
     repository: docling-project/docling-serve
-    tag: "v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"
+    tag: "v1.38.2@sha256:8a5fbc993da9dec17c53880e2445834591ad26800ef698ca64096bef29671808"
 
   deployment:
     enabled: true
@@ -98,7 +98,7 @@ docling-worker:
   image:
     registry: ghcr.io
     repository: docling-project/docling-serve
-    tag: "v1.37.0@sha256:f11cd52d4cc9251e76f7c29e929a61d24588d7c1333133edb6ca5d55b9b40899"
+    tag: "v1.38.2@sha256:8a5fbc993da9dec17c53880e2445834591ad26800ef698ca64096bef29671808"
 
   deployment:
     enabled: true
