@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.21.0 (corvid-app 0.19.0)
+
+BREAKING CHANGE!
+
+This release converts the chart to use corvid-app as the base.
+This should change very little for the end user, except you will need to indent your values under home-assistant.
+
+I.E the values are now as follows:
+```yaml
+home-assistant:
+  ## @param replicaCount [string] Server deployment replica count
+  replicaCount: 1
+
+  image:
+    ## @param image.registry [string] Image container registry
+    registry: ghcr.io
+    ## @param image.repository [string] Image repository
+    repository: home-assistant/home-assistant
+    ## @param image.pullPolicy [string] Image pull policy
+    pullPolicy: IfNotPresent
+```
+
+If you do not indent under this new key, your values will not be applied, and you will likely get a broken deployment.
+
 ## 0.7.0
 
 Added default volume and volumemount for a secret which should contain the home assistant configuration.

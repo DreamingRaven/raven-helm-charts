@@ -1,3 +1,0 @@
-{{- include "corvid.svc" (list . "home-assistant.svc") -}}
-{{- define "home-assistant.svc" -}}
-{{- end -}}

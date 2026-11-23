@@ -1,5 +1,0 @@
-{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
-{{- include "corvid.pvc" (list . "home-assistant.pvc") -}}
-{{- end }}
-{{- define "home-assistant.pvc" -}}
-{{- end -}}

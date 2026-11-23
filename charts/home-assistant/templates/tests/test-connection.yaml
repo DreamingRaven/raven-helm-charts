@@ -1,3 +1,0 @@
-{{- include "corvid.testConnectivity" (list . "home-assistant.testConnectivity") -}}
-{{- define "home-assistant.testConnectivity" -}}
-{{- end -}}

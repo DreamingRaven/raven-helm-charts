@@ -1,5 +1,0 @@
-{{- define "home-assistant.hpa" -}}
-{{- end -}}
-{{- if .Values.autoscaling.enabled }}
-{{- include "corvid.hpa" (list . "home-assistant.hpa") -}}
-{{- end }}

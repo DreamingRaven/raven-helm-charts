@@ -1,5 +1,0 @@
-{{- if .Values.netpol.enabled }}
-{{- include "corvid.netpol" (list . "home-assistant.netpol") -}}
-{{- end }}
-{{- define "home-assistant.netpol" -}}
-{{- end -}}
